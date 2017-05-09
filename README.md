@@ -12,4 +12,7 @@ Term: Spring 2017 @ Portland State University
 
 ## Deliverables:
 
-Requirements (due 4/25/2017): [Requirements.doc](https://github.com/edev/CS300-term-project/blob/master/Requirements.doc)
+Requirements (due 4/25/2017): [Requirements.doc](https://github.com/edev/CS300-term-project/blob/master/Documents/Requirements/Requirements.doc)
+
+Design (due 5/9/2017):
+[Design.doc](https://github.com/edev/CS300-term-project/blob/master/Documents/Design/Design.doc)
