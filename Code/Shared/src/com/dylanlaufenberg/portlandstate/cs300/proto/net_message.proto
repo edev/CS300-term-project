@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package dylanlaufenberg.cs300.proto;
+
+option java_package = "com.dylanlaufenberg.portlandstate.cs300.proto";
+option java_outer_classname = "NetMessage";
+
+message Message {
+    // A valid NetMessage consists of a message_type field and possibly one, corresponding sub-message as indicated
+    // in the MessageType definition comments. If a sub-message is required, it should be populated as indicated
+    // in the definition for that message type.
+    //
+    // Because of the compatibility limitations on required fields, the required keyword is not used. Instead,
+    // requirements are expected to be enforced by the applications on either end. It is expected that any extra
+    // data sent (e.g. a PrivateMessage with message_type = 0) will be ignored and, most likely, not even detected.
+
+    enum MessageType {
+        REGISTER = 0;           // Requires Credentials message
+        LOGIN = 1;              // Requires Credentials message
+        LOGOUT = 2;             // No associated message
+        DELETE_ACCOUNT = 3;     // No associated message
+        PUBLIC_MESSAGE = 4;     // Requires PublicMessage
+        PRIVATE_MESSAGE = 5;    // Requires PrivateMessage
+        CHAT_HISTORY = 6;       // No message from client to server; requires ChatHistory from server to client
+    }
+
+    message Credentials {
+        // Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
+        // Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
+        string user_name = 1;
+        string password = 2;
+        bool logged_in = 3; // Will be true on successful login, false otherwise.
+    }
+
+    message PublicMessage {
+        // Client to server: requires message. sender will be populated by server and should be omitted.
+        // Server to client: requires all fields. Server should populate sender field.
+        string sender = 1;
+        string message = 2;
+    }
+
+    message PrivateMessage {
+        // Client to server: requires recipient and message. sender will be populated by server and should be omitted.
+        // Server to client: requires all fields. Server should populate sender field.
+        string sender = 1;
+        string recipient = 2;
+        string message = 3;
+    }
+
+    message ChatHistory {
+        // Client to server: no ChatHistory.
+        // Server to client: requires all fields.
+        string text = 1; // TODO Change optional to repeated if and when history becomes a list of strings.
+    }
+
+    MessageType message_type = 1;
+    Credentials credential_data = 2;
+    PublicMessage public_message_data = 3;
+    PrivateMessage private_message_data = 4;
+    ChatHistory chat_history_data = 5;
+}

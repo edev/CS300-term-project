@@ -1,13 +1,15 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 /**
  * Bootstraps the Netty server.
@@ -52,12 +54,22 @@ public class ChatServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ChatConnection());
+                            ChannelPipeline pipeline = ch.pipeline();
+
+                            // Decoders
+                            pipeline.addLast("frameDecoder",
+                                    new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
+                            pipeline.addLast("PRotobufDecoder", new ProtobufDecoder(NetMessage.Message.getDefaultInstance())); // TODO FIXME Add Protobuf class!
+                            pipeline.addLast("ChannelInboundHandler", new ChatConnection());
+
+                            // Encoders
+                            pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
+                            pipeline.addLast("ProtobufEncoder", new ProtobufEncoder());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-
+            // TODO Next Step: Research and Implement Protobuf Integration
             // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
 
