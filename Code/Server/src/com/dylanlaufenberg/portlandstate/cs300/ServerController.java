@@ -10,6 +10,8 @@ class ServerController {
 
     public static User process(User user, NetMessage.Message message, Channel channel) {
         // TODO Do something useful
+        System.out.println("Received message: ");
+        System.out.println(message.toString());
         return user;
     }
 }

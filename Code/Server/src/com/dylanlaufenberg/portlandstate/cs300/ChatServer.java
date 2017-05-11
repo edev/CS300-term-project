@@ -59,7 +59,7 @@ public class ChatServer {
                             // Decoders
                             pipeline.addLast("frameDecoder",
                                     new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
-                            pipeline.addLast("PRotobufDecoder", new ProtobufDecoder(NetMessage.Message.getDefaultInstance())); // TODO FIXME Add Protobuf class!
+                            pipeline.addLast("ProtobufDecoder", new ProtobufDecoder(NetMessage.Message.getDefaultInstance()));
                             pipeline.addLast("ChannelInboundHandler", new ChatConnection());
 
                             // Encoders
@@ -69,7 +69,6 @@ public class ChatServer {
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-            // TODO Next Step: Research and Implement Protobuf Integration
             // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
 
