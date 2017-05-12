@@ -11,6 +11,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message>
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, NetMessage.Message m) throws Exception {
-
+        System.out.println("Received message: ");
+        System.out.println(m.toString());
+        System.out.println();
     }
 }

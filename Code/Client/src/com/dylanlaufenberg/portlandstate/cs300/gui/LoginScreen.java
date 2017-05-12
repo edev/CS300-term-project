@@ -1,7 +1,6 @@
 package com.dylanlaufenberg.portlandstate.cs300.gui;
 
-import com.dylanlaufenberg.portlandstate.cs300.ChatApplication;
-import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
+import com.dylanlaufenberg.portlandstate.cs300.ClientController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -25,11 +24,36 @@ public class LoginScreen {
 
     public LoginScreen() {
         loginButton.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e
-             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doLogin();
+            }
+        });
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doRegister();
+            }
+        });
+        userNameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doLogin();
+            }
+        });
+        passwordField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doLogin();
+            }
+        });
+        hostnameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doLogin();
+            }
+        });
+        portField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 doLogin();
@@ -56,36 +80,63 @@ public class LoginScreen {
     }
 
     private void doLogin() {
+        LoginData d = getLoginData();
+        if(d != null) {
+            ClientController.login(d.hostname, d.port, d.userName, d.password);
+        } else {
+            // TODO Add error message here or in getLoginData.
+        }
+    }
+
+    private void doRegister() {
+        LoginData d = getLoginData();
+        if(d != null) {
+            ClientController.register(d.hostname, d.port, d.userName, d.password);
+        } else {
+            // TODO Add error message here or in getLoginData.
+        }
+    }
+
+    public LoginData getLoginData() {
+        LoginData d = new LoginData();
+
         // Get everything we need
-        String hostname = hostnameField.getText();
-        int port = 0;
+        d.hostname = hostnameField.getText();
+        d.port = 0;
         try {
-            port = Integer.valueOf(portField.getText());
+            d.port = Integer.valueOf(portField.getText());
         } catch (NumberFormatException e) {
             // Detected error: port is not a number.
         }
-        String userName = userNameField.getText();
-        String password = String.valueOf(passwordField.getPassword());
+        d.userName = userNameField.getText();
+        d.password = String.valueOf(passwordField.getPassword());
 
         // If anything is missing, error and don't proceed
         // TODO Add an error label and use it!
         boolean valid = true;
-        if (userName.length() == 0) {
+        if (d.userName.length() == 0) {
             // Detected error.
             valid = false;
-        } else if (password.length() == 0) {
+        } else if (d.password.length() == 0) {
             // Detected error.
             valid = false;
-        } else if (hostname.length() == 0) {
+        } else if (d.hostname.length() == 0) {
             // Detected error.
             valid = false;
-        } else if (port == 0) {
+        } else if (d.port == 0) {
             valid = false;
         }
 
         if (valid) {
             // We have all the information we need, so log in (or try).
-            ChatApplication.login(hostname, port, userName, password);
+            return d;
+        } else {
+            return null;
         }
+    }
+
+    private class LoginData {
+        public String hostname, userName, password;
+        public int port;
     }
 }

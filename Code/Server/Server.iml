@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Shared" />
     <orderEntry type="library" name="netty-all-4.1.10.Final" level="project" />
+    <orderEntry type="library" name="h2-1.4.195" level="project" />
   </component>
 </module>

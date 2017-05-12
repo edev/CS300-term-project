@@ -28,56 +28,65 @@ public final class NetMessage {
     com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType getMessageType();
 
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     boolean hasCredentialData();
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData();
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder();
 
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+     * <code>string sender = 3;</code>
      */
-    boolean hasPublicMessageData();
+    java.lang.String getSender();
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+     * <code>string sender = 3;</code>
      */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getPublicMessageData();
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-     */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder getPublicMessageDataOrBuilder();
+    com.google.protobuf.ByteString
+        getSenderBytes();
 
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
+     * <code>string recipient = 4;</code>
      */
-    boolean hasPrivateMessageData();
+    java.lang.String getRecipient();
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
+     * <code>string recipient = 4;</code>
      */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getPrivateMessageData();
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-     */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder getPrivateMessageDataOrBuilder();
+    com.google.protobuf.ByteString
+        getRecipientBytes();
 
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+     * <code>string message = 5;</code>
      */
-    boolean hasChatHistoryData();
+    java.lang.String getMessage();
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+     * <code>string message = 5;</code>
      */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getChatHistoryData();
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-     */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder getChatHistoryDataOrBuilder();
+    com.google.protobuf.ByteString
+        getMessageBytes();
   }
   /**
    * <pre>
@@ -101,6 +110,9 @@ public final class NetMessage {
     }
     private Message() {
       messageType_ = 0;
+      sender_ = "";
+      recipient_ = "";
+      message_ = "";
     }
 
     @java.lang.Override
@@ -148,42 +160,21 @@ public final class NetMessage {
               break;
             }
             case 26: {
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder subBuilder = null;
-              if (publicMessageData_ != null) {
-                subBuilder = publicMessageData_.toBuilder();
-              }
-              publicMessageData_ = input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(publicMessageData_);
-                publicMessageData_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              sender_ = s;
               break;
             }
             case 34: {
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder subBuilder = null;
-              if (privateMessageData_ != null) {
-                subBuilder = privateMessageData_.toBuilder();
-              }
-              privateMessageData_ = input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(privateMessageData_);
-                privateMessageData_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              recipient_ = s;
               break;
             }
             case 42: {
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder subBuilder = null;
-              if (chatHistoryData_ != null) {
-                subBuilder = chatHistoryData_.toBuilder();
-              }
-              chatHistoryData_ = input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(chatHistoryData_);
-                chatHistoryData_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              message_ = s;
               break;
             }
           }
@@ -216,119 +207,151 @@ public final class NetMessage {
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
        * <pre>
-       * Requires Credentials message
+       * DO NOT USE. Must start at 0, but 0 seems to get lost somewhere along the way. Bug in Protobuf?
        * </pre>
        *
-       * <code>REGISTER = 0;</code>
+       * <code>FAKE = 0;</code>
        */
-      REGISTER(0),
+      FAKE(0),
       /**
        * <pre>
        * Requires Credentials message
        * </pre>
        *
-       * <code>LOGIN = 1;</code>
+       * <code>REGISTER = 1;</code>
        */
-      LOGIN(1),
+      REGISTER(1),
+      /**
+       * <pre>
+       * Requires Credentials message
+       * </pre>
+       *
+       * <code>LOGIN = 2;</code>
+       */
+      LOGIN(2),
       /**
        * <pre>
        * No associated message
        * </pre>
        *
-       * <code>LOGOUT = 2;</code>
+       * <code>LOGOUT = 3;</code>
        */
-      LOGOUT(2),
+      LOGOUT(3),
       /**
        * <pre>
        * No associated message
        * </pre>
        *
-       * <code>DELETE_ACCOUNT = 3;</code>
+       * <code>DELETE_ACCOUNT = 4;</code>
        */
-      DELETE_ACCOUNT(3),
+      DELETE_ACCOUNT(4),
       /**
        * <pre>
        * Requires PublicMessage
        * </pre>
        *
-       * <code>PUBLIC_MESSAGE = 4;</code>
+       * <code>PUBLIC_MESSAGE = 5;</code>
        */
-      PUBLIC_MESSAGE(4),
+      PUBLIC_MESSAGE(5),
       /**
        * <pre>
        * Requires PrivateMessage
        * </pre>
        *
-       * <code>PRIVATE_MESSAGE = 5;</code>
+       * <code>PRIVATE_MESSAGE = 6;</code>
        */
-      PRIVATE_MESSAGE(5),
+      PRIVATE_MESSAGE(6),
+      /**
+       * <pre>
+       * Requires Text
+       * </pre>
+       *
+       * <code>NOTICE = 7;</code>
+       */
+      NOTICE(7),
       /**
        * <pre>
        * No message from client to server; requires ChatHistory from server to client
        * </pre>
        *
-       * <code>CHAT_HISTORY = 6;</code>
+       * <code>CHAT_HISTORY = 8;</code>
        */
-      CHAT_HISTORY(6),
+      CHAT_HISTORY(8),
       UNRECOGNIZED(-1),
       ;
 
       /**
        * <pre>
-       * Requires Credentials message
+       * DO NOT USE. Must start at 0, but 0 seems to get lost somewhere along the way. Bug in Protobuf?
        * </pre>
        *
-       * <code>REGISTER = 0;</code>
+       * <code>FAKE = 0;</code>
        */
-      public static final int REGISTER_VALUE = 0;
+      public static final int FAKE_VALUE = 0;
       /**
        * <pre>
        * Requires Credentials message
        * </pre>
        *
-       * <code>LOGIN = 1;</code>
+       * <code>REGISTER = 1;</code>
        */
-      public static final int LOGIN_VALUE = 1;
+      public static final int REGISTER_VALUE = 1;
+      /**
+       * <pre>
+       * Requires Credentials message
+       * </pre>
+       *
+       * <code>LOGIN = 2;</code>
+       */
+      public static final int LOGIN_VALUE = 2;
       /**
        * <pre>
        * No associated message
        * </pre>
        *
-       * <code>LOGOUT = 2;</code>
+       * <code>LOGOUT = 3;</code>
        */
-      public static final int LOGOUT_VALUE = 2;
+      public static final int LOGOUT_VALUE = 3;
       /**
        * <pre>
        * No associated message
        * </pre>
        *
-       * <code>DELETE_ACCOUNT = 3;</code>
+       * <code>DELETE_ACCOUNT = 4;</code>
        */
-      public static final int DELETE_ACCOUNT_VALUE = 3;
+      public static final int DELETE_ACCOUNT_VALUE = 4;
       /**
        * <pre>
        * Requires PublicMessage
        * </pre>
        *
-       * <code>PUBLIC_MESSAGE = 4;</code>
+       * <code>PUBLIC_MESSAGE = 5;</code>
        */
-      public static final int PUBLIC_MESSAGE_VALUE = 4;
+      public static final int PUBLIC_MESSAGE_VALUE = 5;
       /**
        * <pre>
        * Requires PrivateMessage
        * </pre>
        *
-       * <code>PRIVATE_MESSAGE = 5;</code>
+       * <code>PRIVATE_MESSAGE = 6;</code>
        */
-      public static final int PRIVATE_MESSAGE_VALUE = 5;
+      public static final int PRIVATE_MESSAGE_VALUE = 6;
+      /**
+       * <pre>
+       * Requires Text
+       * </pre>
+       *
+       * <code>NOTICE = 7;</code>
+       */
+      public static final int NOTICE_VALUE = 7;
       /**
        * <pre>
        * No message from client to server; requires ChatHistory from server to client
        * </pre>
        *
-       * <code>CHAT_HISTORY = 6;</code>
+       * <code>CHAT_HISTORY = 8;</code>
        */
-      public static final int CHAT_HISTORY_VALUE = 6;
+      public static final int CHAT_HISTORY_VALUE = 8;
 
 
       public final int getNumber() {
@@ -349,13 +372,15 @@ public final class NetMessage {
 
       public static MessageType forNumber(int value) {
         switch (value) {
-          case 0: return REGISTER;
-          case 1: return LOGIN;
-          case 2: return LOGOUT;
-          case 3: return DELETE_ACCOUNT;
-          case 4: return PUBLIC_MESSAGE;
-          case 5: return PRIVATE_MESSAGE;
-          case 6: return CHAT_HISTORY;
+          case 0: return FAKE;
+          case 1: return REGISTER;
+          case 2: return LOGIN;
+          case 3: return LOGOUT;
+          case 4: return DELETE_ACCOUNT;
+          case 5: return PUBLIC_MESSAGE;
+          case 6: return PRIVATE_MESSAGE;
+          case 7: return NOTICE;
+          case 8: return CHAT_HISTORY;
           default: return null;
         }
       }
@@ -1188,2094 +1213,6 @@ public final class NetMessage {
 
     }
 
-    public interface PublicMessageOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.PublicMessage)
-        com.google.protobuf.MessageOrBuilder {
-
-      /**
-       * <pre>
-       * Client to server: requires message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      java.lang.String getSender();
-      /**
-       * <pre>
-       * Client to server: requires message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      com.google.protobuf.ByteString
-          getSenderBytes();
-
-      /**
-       * <code>string message = 2;</code>
-       */
-      java.lang.String getMessage();
-      /**
-       * <code>string message = 2;</code>
-       */
-      com.google.protobuf.ByteString
-          getMessageBytes();
-    }
-    /**
-     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.PublicMessage}
-     */
-    public  static final class PublicMessage extends
-        com.google.protobuf.GeneratedMessageV3 implements
-        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.PublicMessage)
-        PublicMessageOrBuilder {
-      // Use PublicMessage.newBuilder() to construct.
-      private PublicMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-        super(builder);
-      }
-      private PublicMessage() {
-        sender_ = "";
-        message_ = "";
-      }
-
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet
-      getUnknownFields() {
-        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-      }
-      private PublicMessage(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        this();
-        int mutable_bitField0_ = 0;
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              default: {
-                if (!input.skipField(tag)) {
-                  done = true;
-                }
-                break;
-              }
-              case 10: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                sender_ = s;
-                break;
-              }
-              case 18: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                message_ = s;
-                break;
-              }
-            }
-          }
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(this);
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(
-              e).setUnfinishedMessage(this);
-        } finally {
-          makeExtensionsImmutable();
-        }
-      }
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder.class);
-      }
-
-      public static final int SENDER_FIELD_NUMBER = 1;
-      private volatile java.lang.Object sender_;
-      /**
-       * <pre>
-       * Client to server: requires message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      public java.lang.String getSender() {
-        java.lang.Object ref = sender_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          sender_ = s;
-          return s;
-        }
-      }
-      /**
-       * <pre>
-       * Client to server: requires message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getSenderBytes() {
-        java.lang.Object ref = sender_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          sender_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      public static final int MESSAGE_FIELD_NUMBER = 2;
-      private volatile java.lang.Object message_;
-      /**
-       * <code>string message = 2;</code>
-       */
-      public java.lang.String getMessage() {
-        java.lang.Object ref = message_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          message_ = s;
-          return s;
-        }
-      }
-      /**
-       * <code>string message = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes() {
-        java.lang.Object ref = message_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          message_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        if (!getSenderBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sender_);
-        }
-        if (!getMessageBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
-        }
-      }
-
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (!getSenderBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sender_);
-        }
-        if (!getMessageBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
-        }
-        memoizedSize = size;
-        return size;
-      }
-
-      private static final long serialVersionUID = 0L;
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-         return true;
-        }
-        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage)) {
-          return super.equals(obj);
-        }
-        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage) obj;
-
-        boolean result = true;
-        result = result && getSender()
-            .equals(other.getSender());
-        result = result && getMessage()
-            .equals(other.getMessage());
-        return result;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + SENDER_FIELD_NUMBER;
-        hash = (53 * hash) + getSender().hashCode();
-        hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-        hash = (53 * hash) + getMessage().hashCode();
-        hash = (29 * hash) + unknownFields.hashCode();
-        memoizedHashCode = hash;
-        return hash;
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          java.nio.ByteBuffer data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          java.nio.ByteBuffer data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-      }
-      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE
-            ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      /**
-       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.PublicMessage}
-       */
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.PublicMessage)
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor;
-        }
-
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder.class);
-        }
-
-        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3
-                  .alwaysUseFieldBuilders) {
-          }
-        }
-        public Builder clear() {
-          super.clear();
-          sender_ = "";
-
-          message_ = "";
-
-          return this;
-        }
-
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getDefaultInstanceForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.getDefaultInstance();
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage build() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage buildPartial() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage(this);
-          result.sender_ = sender_;
-          result.message_ = message_;
-          onBuilt();
-          return result;
-        }
-
-        public Builder clone() {
-          return (Builder) super.clone();
-        }
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.setField(field, value);
-        }
-        public Builder clearField(
-            com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return (Builder) super.clearField(field);
-        }
-        public Builder clearOneof(
-            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return (Builder) super.clearOneof(oneof);
-        }
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, Object value) {
-          return (Builder) super.setRepeatedField(field, index, value);
-        }
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.addRepeatedField(field, value);
-        }
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage) {
-            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage other) {
-          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.getDefaultInstance()) return this;
-          if (!other.getSender().isEmpty()) {
-            sender_ = other.sender_;
-            onChanged();
-          }
-          if (!other.getMessage().isEmpty()) {
-            message_ = other.message_;
-            onChanged();
-          }
-          onChanged();
-          return this;
-        }
-
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage parsedMessage = null;
-          try {
-            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage) e.getUnfinishedMessage();
-            throw e.unwrapIOException();
-          } finally {
-            if (parsedMessage != null) {
-              mergeFrom(parsedMessage);
-            }
-          }
-          return this;
-        }
-
-        private java.lang.Object sender_ = "";
-        /**
-         * <pre>
-         * Client to server: requires message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public java.lang.String getSender() {
-          java.lang.Object ref = sender_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            sender_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: requires message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public com.google.protobuf.ByteString
-            getSenderBytes() {
-          java.lang.Object ref = sender_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            sender_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: requires message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder setSender(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          sender_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: requires message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder clearSender() {
-          
-          sender_ = getDefaultInstance().getSender();
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: requires message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder setSenderBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          sender_ = value;
-          onChanged();
-          return this;
-        }
-
-        private java.lang.Object message_ = "";
-        /**
-         * <code>string message = 2;</code>
-         */
-        public java.lang.String getMessage() {
-          java.lang.Object ref = message_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            message_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <code>string message = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-            getMessageBytes() {
-          java.lang.Object ref = message_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            message_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <code>string message = 2;</code>
-         */
-        public Builder setMessage(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          message_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string message = 2;</code>
-         */
-        public Builder clearMessage() {
-          
-          message_ = getDefaultInstance().getMessage();
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string message = 2;</code>
-         */
-        public Builder setMessageBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          message_ = value;
-          onChanged();
-          return this;
-        }
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-        public final Builder mergeUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-
-        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.PublicMessage)
-      }
-
-      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.PublicMessage)
-      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage DEFAULT_INSTANCE;
-      static {
-        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage();
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-      }
-
-      private static final com.google.protobuf.Parser<PublicMessage>
-          PARSER = new com.google.protobuf.AbstractParser<PublicMessage>() {
-        public PublicMessage parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-            return new PublicMessage(input, extensionRegistry);
-        }
-      };
-
-      public static com.google.protobuf.Parser<PublicMessage> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<PublicMessage> getParserForType() {
-        return PARSER;
-      }
-
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
-      }
-
-    }
-
-    public interface PrivateMessageOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.PrivateMessage)
-        com.google.protobuf.MessageOrBuilder {
-
-      /**
-       * <pre>
-       * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      java.lang.String getSender();
-      /**
-       * <pre>
-       * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      com.google.protobuf.ByteString
-          getSenderBytes();
-
-      /**
-       * <code>string recipient = 2;</code>
-       */
-      java.lang.String getRecipient();
-      /**
-       * <code>string recipient = 2;</code>
-       */
-      com.google.protobuf.ByteString
-          getRecipientBytes();
-
-      /**
-       * <code>string message = 3;</code>
-       */
-      java.lang.String getMessage();
-      /**
-       * <code>string message = 3;</code>
-       */
-      com.google.protobuf.ByteString
-          getMessageBytes();
-    }
-    /**
-     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.PrivateMessage}
-     */
-    public  static final class PrivateMessage extends
-        com.google.protobuf.GeneratedMessageV3 implements
-        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.PrivateMessage)
-        PrivateMessageOrBuilder {
-      // Use PrivateMessage.newBuilder() to construct.
-      private PrivateMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-        super(builder);
-      }
-      private PrivateMessage() {
-        sender_ = "";
-        recipient_ = "";
-        message_ = "";
-      }
-
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet
-      getUnknownFields() {
-        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-      }
-      private PrivateMessage(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        this();
-        int mutable_bitField0_ = 0;
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              default: {
-                if (!input.skipField(tag)) {
-                  done = true;
-                }
-                break;
-              }
-              case 10: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                sender_ = s;
-                break;
-              }
-              case 18: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                recipient_ = s;
-                break;
-              }
-              case 26: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                message_ = s;
-                break;
-              }
-            }
-          }
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(this);
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(
-              e).setUnfinishedMessage(this);
-        } finally {
-          makeExtensionsImmutable();
-        }
-      }
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder.class);
-      }
-
-      public static final int SENDER_FIELD_NUMBER = 1;
-      private volatile java.lang.Object sender_;
-      /**
-       * <pre>
-       * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      public java.lang.String getSender() {
-        java.lang.Object ref = sender_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          sender_ = s;
-          return s;
-        }
-      }
-      /**
-       * <pre>
-       * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-       * Server to client: requires all fields. Server should populate sender field.
-       * </pre>
-       *
-       * <code>string sender = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getSenderBytes() {
-        java.lang.Object ref = sender_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          sender_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      public static final int RECIPIENT_FIELD_NUMBER = 2;
-      private volatile java.lang.Object recipient_;
-      /**
-       * <code>string recipient = 2;</code>
-       */
-      public java.lang.String getRecipient() {
-        java.lang.Object ref = recipient_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          recipient_ = s;
-          return s;
-        }
-      }
-      /**
-       * <code>string recipient = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getRecipientBytes() {
-        java.lang.Object ref = recipient_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          recipient_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      public static final int MESSAGE_FIELD_NUMBER = 3;
-      private volatile java.lang.Object message_;
-      /**
-       * <code>string message = 3;</code>
-       */
-      public java.lang.String getMessage() {
-        java.lang.Object ref = message_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          message_ = s;
-          return s;
-        }
-      }
-      /**
-       * <code>string message = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes() {
-        java.lang.Object ref = message_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          message_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        if (!getSenderBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sender_);
-        }
-        if (!getRecipientBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, recipient_);
-        }
-        if (!getMessageBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
-        }
-      }
-
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (!getSenderBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sender_);
-        }
-        if (!getRecipientBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, recipient_);
-        }
-        if (!getMessageBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
-        }
-        memoizedSize = size;
-        return size;
-      }
-
-      private static final long serialVersionUID = 0L;
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-         return true;
-        }
-        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage)) {
-          return super.equals(obj);
-        }
-        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage) obj;
-
-        boolean result = true;
-        result = result && getSender()
-            .equals(other.getSender());
-        result = result && getRecipient()
-            .equals(other.getRecipient());
-        result = result && getMessage()
-            .equals(other.getMessage());
-        return result;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + SENDER_FIELD_NUMBER;
-        hash = (53 * hash) + getSender().hashCode();
-        hash = (37 * hash) + RECIPIENT_FIELD_NUMBER;
-        hash = (53 * hash) + getRecipient().hashCode();
-        hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-        hash = (53 * hash) + getMessage().hashCode();
-        hash = (29 * hash) + unknownFields.hashCode();
-        memoizedHashCode = hash;
-        return hash;
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          java.nio.ByteBuffer data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          java.nio.ByteBuffer data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-      }
-      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE
-            ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      /**
-       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.PrivateMessage}
-       */
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.PrivateMessage)
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor;
-        }
-
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder.class);
-        }
-
-        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3
-                  .alwaysUseFieldBuilders) {
-          }
-        }
-        public Builder clear() {
-          super.clear();
-          sender_ = "";
-
-          recipient_ = "";
-
-          message_ = "";
-
-          return this;
-        }
-
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getDefaultInstanceForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.getDefaultInstance();
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage build() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage buildPartial() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage(this);
-          result.sender_ = sender_;
-          result.recipient_ = recipient_;
-          result.message_ = message_;
-          onBuilt();
-          return result;
-        }
-
-        public Builder clone() {
-          return (Builder) super.clone();
-        }
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.setField(field, value);
-        }
-        public Builder clearField(
-            com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return (Builder) super.clearField(field);
-        }
-        public Builder clearOneof(
-            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return (Builder) super.clearOneof(oneof);
-        }
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, Object value) {
-          return (Builder) super.setRepeatedField(field, index, value);
-        }
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.addRepeatedField(field, value);
-        }
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage) {
-            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage other) {
-          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.getDefaultInstance()) return this;
-          if (!other.getSender().isEmpty()) {
-            sender_ = other.sender_;
-            onChanged();
-          }
-          if (!other.getRecipient().isEmpty()) {
-            recipient_ = other.recipient_;
-            onChanged();
-          }
-          if (!other.getMessage().isEmpty()) {
-            message_ = other.message_;
-            onChanged();
-          }
-          onChanged();
-          return this;
-        }
-
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage parsedMessage = null;
-          try {
-            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage) e.getUnfinishedMessage();
-            throw e.unwrapIOException();
-          } finally {
-            if (parsedMessage != null) {
-              mergeFrom(parsedMessage);
-            }
-          }
-          return this;
-        }
-
-        private java.lang.Object sender_ = "";
-        /**
-         * <pre>
-         * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public java.lang.String getSender() {
-          java.lang.Object ref = sender_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            sender_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public com.google.protobuf.ByteString
-            getSenderBytes() {
-          java.lang.Object ref = sender_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            sender_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder setSender(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          sender_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder clearSender() {
-          
-          sender_ = getDefaultInstance().getSender();
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-         * Server to client: requires all fields. Server should populate sender field.
-         * </pre>
-         *
-         * <code>string sender = 1;</code>
-         */
-        public Builder setSenderBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          sender_ = value;
-          onChanged();
-          return this;
-        }
-
-        private java.lang.Object recipient_ = "";
-        /**
-         * <code>string recipient = 2;</code>
-         */
-        public java.lang.String getRecipient() {
-          java.lang.Object ref = recipient_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            recipient_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <code>string recipient = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-            getRecipientBytes() {
-          java.lang.Object ref = recipient_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            recipient_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <code>string recipient = 2;</code>
-         */
-        public Builder setRecipient(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          recipient_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string recipient = 2;</code>
-         */
-        public Builder clearRecipient() {
-          
-          recipient_ = getDefaultInstance().getRecipient();
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string recipient = 2;</code>
-         */
-        public Builder setRecipientBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          recipient_ = value;
-          onChanged();
-          return this;
-        }
-
-        private java.lang.Object message_ = "";
-        /**
-         * <code>string message = 3;</code>
-         */
-        public java.lang.String getMessage() {
-          java.lang.Object ref = message_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            message_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <code>string message = 3;</code>
-         */
-        public com.google.protobuf.ByteString
-            getMessageBytes() {
-          java.lang.Object ref = message_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            message_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <code>string message = 3;</code>
-         */
-        public Builder setMessage(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          message_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string message = 3;</code>
-         */
-        public Builder clearMessage() {
-          
-          message_ = getDefaultInstance().getMessage();
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string message = 3;</code>
-         */
-        public Builder setMessageBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          message_ = value;
-          onChanged();
-          return this;
-        }
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-        public final Builder mergeUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-
-        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.PrivateMessage)
-      }
-
-      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.PrivateMessage)
-      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage DEFAULT_INSTANCE;
-      static {
-        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage();
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-      }
-
-      private static final com.google.protobuf.Parser<PrivateMessage>
-          PARSER = new com.google.protobuf.AbstractParser<PrivateMessage>() {
-        public PrivateMessage parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-            return new PrivateMessage(input, extensionRegistry);
-        }
-      };
-
-      public static com.google.protobuf.Parser<PrivateMessage> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<PrivateMessage> getParserForType() {
-        return PARSER;
-      }
-
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
-      }
-
-    }
-
-    public interface ChatHistoryOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.ChatHistory)
-        com.google.protobuf.MessageOrBuilder {
-
-      /**
-       * <pre>
-       * Client to server: no ChatHistory.
-       * Server to client: requires all fields.
-       * </pre>
-       *
-       * <code>string text = 1;</code>
-       */
-      java.lang.String getText();
-      /**
-       * <pre>
-       * Client to server: no ChatHistory.
-       * Server to client: requires all fields.
-       * </pre>
-       *
-       * <code>string text = 1;</code>
-       */
-      com.google.protobuf.ByteString
-          getTextBytes();
-    }
-    /**
-     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.ChatHistory}
-     */
-    public  static final class ChatHistory extends
-        com.google.protobuf.GeneratedMessageV3 implements
-        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.ChatHistory)
-        ChatHistoryOrBuilder {
-      // Use ChatHistory.newBuilder() to construct.
-      private ChatHistory(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-        super(builder);
-      }
-      private ChatHistory() {
-        text_ = "";
-      }
-
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet
-      getUnknownFields() {
-        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-      }
-      private ChatHistory(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        this();
-        int mutable_bitField0_ = 0;
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              default: {
-                if (!input.skipField(tag)) {
-                  done = true;
-                }
-                break;
-              }
-              case 10: {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                text_ = s;
-                break;
-              }
-            }
-          }
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(this);
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(
-              e).setUnfinishedMessage(this);
-        } finally {
-          makeExtensionsImmutable();
-        }
-      }
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder.class);
-      }
-
-      public static final int TEXT_FIELD_NUMBER = 1;
-      private volatile java.lang.Object text_;
-      /**
-       * <pre>
-       * Client to server: no ChatHistory.
-       * Server to client: requires all fields.
-       * </pre>
-       *
-       * <code>string text = 1;</code>
-       */
-      public java.lang.String getText() {
-        java.lang.Object ref = text_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          text_ = s;
-          return s;
-        }
-      }
-      /**
-       * <pre>
-       * Client to server: no ChatHistory.
-       * Server to client: requires all fields.
-       * </pre>
-       *
-       * <code>string text = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getTextBytes() {
-        java.lang.Object ref = text_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          text_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        if (!getTextBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
-        }
-      }
-
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (!getTextBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
-        }
-        memoizedSize = size;
-        return size;
-      }
-
-      private static final long serialVersionUID = 0L;
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-         return true;
-        }
-        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory)) {
-          return super.equals(obj);
-        }
-        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory) obj;
-
-        boolean result = true;
-        result = result && getText()
-            .equals(other.getText());
-        return result;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + TEXT_FIELD_NUMBER;
-        hash = (53 * hash) + getText().hashCode();
-        hash = (29 * hash) + unknownFields.hashCode();
-        memoizedHashCode = hash;
-        return hash;
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          java.nio.ByteBuffer data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          java.nio.ByteBuffer data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-      }
-      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE
-            ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      /**
-       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.ChatHistory}
-       */
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.ChatHistory)
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor;
-        }
-
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder.class);
-        }
-
-        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3
-                  .alwaysUseFieldBuilders) {
-          }
-        }
-        public Builder clear() {
-          super.clear();
-          text_ = "";
-
-          return this;
-        }
-
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getDefaultInstanceForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.getDefaultInstance();
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory build() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory buildPartial() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory(this);
-          result.text_ = text_;
-          onBuilt();
-          return result;
-        }
-
-        public Builder clone() {
-          return (Builder) super.clone();
-        }
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.setField(field, value);
-        }
-        public Builder clearField(
-            com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return (Builder) super.clearField(field);
-        }
-        public Builder clearOneof(
-            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return (Builder) super.clearOneof(oneof);
-        }
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, Object value) {
-          return (Builder) super.setRepeatedField(field, index, value);
-        }
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            Object value) {
-          return (Builder) super.addRepeatedField(field, value);
-        }
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory) {
-            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory other) {
-          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.getDefaultInstance()) return this;
-          if (!other.getText().isEmpty()) {
-            text_ = other.text_;
-            onChanged();
-          }
-          onChanged();
-          return this;
-        }
-
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory parsedMessage = null;
-          try {
-            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory) e.getUnfinishedMessage();
-            throw e.unwrapIOException();
-          } finally {
-            if (parsedMessage != null) {
-              mergeFrom(parsedMessage);
-            }
-          }
-          return this;
-        }
-
-        private java.lang.Object text_ = "";
-        /**
-         * <pre>
-         * Client to server: no ChatHistory.
-         * Server to client: requires all fields.
-         * </pre>
-         *
-         * <code>string text = 1;</code>
-         */
-        public java.lang.String getText() {
-          java.lang.Object ref = text_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            text_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: no ChatHistory.
-         * Server to client: requires all fields.
-         * </pre>
-         *
-         * <code>string text = 1;</code>
-         */
-        public com.google.protobuf.ByteString
-            getTextBytes() {
-          java.lang.Object ref = text_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            text_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <pre>
-         * Client to server: no ChatHistory.
-         * Server to client: requires all fields.
-         * </pre>
-         *
-         * <code>string text = 1;</code>
-         */
-        public Builder setText(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  
-          text_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: no ChatHistory.
-         * Server to client: requires all fields.
-         * </pre>
-         *
-         * <code>string text = 1;</code>
-         */
-        public Builder clearText() {
-          
-          text_ = getDefaultInstance().getText();
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Client to server: no ChatHistory.
-         * Server to client: requires all fields.
-         * </pre>
-         *
-         * <code>string text = 1;</code>
-         */
-        public Builder setTextBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-          
-          text_ = value;
-          onChanged();
-          return this;
-        }
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-        public final Builder mergeUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return this;
-        }
-
-
-        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.ChatHistory)
-      }
-
-      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.ChatHistory)
-      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory DEFAULT_INSTANCE;
-      static {
-        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory();
-      }
-
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-      }
-
-      private static final com.google.protobuf.Parser<ChatHistory>
-          PARSER = new com.google.protobuf.AbstractParser<ChatHistory>() {
-        public ChatHistory parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-            return new ChatHistory(input, extensionRegistry);
-        }
-      };
-
-      public static com.google.protobuf.Parser<ChatHistory> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<ChatHistory> getParserForType() {
-        return PARSER;
-      }
-
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
-      }
-
-    }
-
     public static final int MESSAGE_TYPE_FIELD_NUMBER = 1;
     private int messageType_;
     /**
@@ -3295,85 +1232,142 @@ public final class NetMessage {
     public static final int CREDENTIAL_DATA_FIELD_NUMBER = 2;
     private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials credentialData_;
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     public boolean hasCredentialData() {
       return credentialData_ != null;
     }
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData() {
       return credentialData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance() : credentialData_;
     }
     /**
+     * <pre>
+     *    PublicMessage public_message_data = 3;
+     *    PrivateMessage private_message_data = 4;
+     *    ChatHistory chat_history_data = 5;
+     * </pre>
+     *
      * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
      */
     public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder() {
       return getCredentialData();
     }
 
-    public static final int PUBLIC_MESSAGE_DATA_FIELD_NUMBER = 3;
-    private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage publicMessageData_;
+    public static final int SENDER_FIELD_NUMBER = 3;
+    private volatile java.lang.Object sender_;
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+     * <code>string sender = 3;</code>
      */
-    public boolean hasPublicMessageData() {
-      return publicMessageData_ != null;
+    public java.lang.String getSender() {
+      java.lang.Object ref = sender_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sender_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+     * <code>string sender = 3;</code>
      */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getPublicMessageData() {
-      return publicMessageData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.getDefaultInstance() : publicMessageData_;
-    }
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-     */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder getPublicMessageDataOrBuilder() {
-      return getPublicMessageData();
-    }
-
-    public static final int PRIVATE_MESSAGE_DATA_FIELD_NUMBER = 4;
-    private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage privateMessageData_;
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-     */
-    public boolean hasPrivateMessageData() {
-      return privateMessageData_ != null;
-    }
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-     */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getPrivateMessageData() {
-      return privateMessageData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.getDefaultInstance() : privateMessageData_;
-    }
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-     */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder getPrivateMessageDataOrBuilder() {
-      return getPrivateMessageData();
+    public com.google.protobuf.ByteString
+        getSenderBytes() {
+      java.lang.Object ref = sender_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sender_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int CHAT_HISTORY_DATA_FIELD_NUMBER = 5;
-    private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory chatHistoryData_;
+    public static final int RECIPIENT_FIELD_NUMBER = 4;
+    private volatile java.lang.Object recipient_;
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+     * <code>string recipient = 4;</code>
      */
-    public boolean hasChatHistoryData() {
-      return chatHistoryData_ != null;
+    public java.lang.String getRecipient() {
+      java.lang.Object ref = recipient_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        recipient_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+     * <code>string recipient = 4;</code>
      */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getChatHistoryData() {
-      return chatHistoryData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.getDefaultInstance() : chatHistoryData_;
+    public com.google.protobuf.ByteString
+        getRecipientBytes() {
+      java.lang.Object ref = recipient_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        recipient_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 5;
+    private volatile java.lang.Object message_;
+    /**
+     * <code>string message = 5;</code>
+     */
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+     * <code>string message = 5;</code>
      */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder getChatHistoryDataOrBuilder() {
-      return getChatHistoryData();
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -3388,20 +1382,20 @@ public final class NetMessage {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.REGISTER.getNumber()) {
+      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.FAKE.getNumber()) {
         output.writeEnum(1, messageType_);
       }
       if (credentialData_ != null) {
         output.writeMessage(2, getCredentialData());
       }
-      if (publicMessageData_ != null) {
-        output.writeMessage(3, getPublicMessageData());
+      if (!getSenderBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, sender_);
       }
-      if (privateMessageData_ != null) {
-        output.writeMessage(4, getPrivateMessageData());
+      if (!getRecipientBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, recipient_);
       }
-      if (chatHistoryData_ != null) {
-        output.writeMessage(5, getChatHistoryData());
+      if (!getMessageBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, message_);
       }
     }
 
@@ -3410,7 +1404,7 @@ public final class NetMessage {
       if (size != -1) return size;
 
       size = 0;
-      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.REGISTER.getNumber()) {
+      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.FAKE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, messageType_);
       }
@@ -3418,17 +1412,14 @@ public final class NetMessage {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getCredentialData());
       }
-      if (publicMessageData_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getPublicMessageData());
+      if (!getSenderBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, sender_);
       }
-      if (privateMessageData_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getPrivateMessageData());
+      if (!getRecipientBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, recipient_);
       }
-      if (chatHistoryData_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getChatHistoryData());
+      if (!getMessageBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, message_);
       }
       memoizedSize = size;
       return size;
@@ -3452,21 +1443,12 @@ public final class NetMessage {
         result = result && getCredentialData()
             .equals(other.getCredentialData());
       }
-      result = result && (hasPublicMessageData() == other.hasPublicMessageData());
-      if (hasPublicMessageData()) {
-        result = result && getPublicMessageData()
-            .equals(other.getPublicMessageData());
-      }
-      result = result && (hasPrivateMessageData() == other.hasPrivateMessageData());
-      if (hasPrivateMessageData()) {
-        result = result && getPrivateMessageData()
-            .equals(other.getPrivateMessageData());
-      }
-      result = result && (hasChatHistoryData() == other.hasChatHistoryData());
-      if (hasChatHistoryData()) {
-        result = result && getChatHistoryData()
-            .equals(other.getChatHistoryData());
-      }
+      result = result && getSender()
+          .equals(other.getSender());
+      result = result && getRecipient()
+          .equals(other.getRecipient());
+      result = result && getMessage()
+          .equals(other.getMessage());
       return result;
     }
 
@@ -3483,18 +1465,12 @@ public final class NetMessage {
         hash = (37 * hash) + CREDENTIAL_DATA_FIELD_NUMBER;
         hash = (53 * hash) + getCredentialData().hashCode();
       }
-      if (hasPublicMessageData()) {
-        hash = (37 * hash) + PUBLIC_MESSAGE_DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getPublicMessageData().hashCode();
-      }
-      if (hasPrivateMessageData()) {
-        hash = (37 * hash) + PRIVATE_MESSAGE_DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getPrivateMessageData().hashCode();
-      }
-      if (hasChatHistoryData()) {
-        hash = (37 * hash) + CHAT_HISTORY_DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getChatHistoryData().hashCode();
-      }
+      hash = (37 * hash) + SENDER_FIELD_NUMBER;
+      hash = (53 * hash) + getSender().hashCode();
+      hash = (37 * hash) + RECIPIENT_FIELD_NUMBER;
+      hash = (53 * hash) + getRecipient().hashCode();
+      hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getMessage().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3641,24 +1617,12 @@ public final class NetMessage {
           credentialData_ = null;
           credentialDataBuilder_ = null;
         }
-        if (publicMessageDataBuilder_ == null) {
-          publicMessageData_ = null;
-        } else {
-          publicMessageData_ = null;
-          publicMessageDataBuilder_ = null;
-        }
-        if (privateMessageDataBuilder_ == null) {
-          privateMessageData_ = null;
-        } else {
-          privateMessageData_ = null;
-          privateMessageDataBuilder_ = null;
-        }
-        if (chatHistoryDataBuilder_ == null) {
-          chatHistoryData_ = null;
-        } else {
-          chatHistoryData_ = null;
-          chatHistoryDataBuilder_ = null;
-        }
+        sender_ = "";
+
+        recipient_ = "";
+
+        message_ = "";
+
         return this;
       }
 
@@ -3687,21 +1651,9 @@ public final class NetMessage {
         } else {
           result.credentialData_ = credentialDataBuilder_.build();
         }
-        if (publicMessageDataBuilder_ == null) {
-          result.publicMessageData_ = publicMessageData_;
-        } else {
-          result.publicMessageData_ = publicMessageDataBuilder_.build();
-        }
-        if (privateMessageDataBuilder_ == null) {
-          result.privateMessageData_ = privateMessageData_;
-        } else {
-          result.privateMessageData_ = privateMessageDataBuilder_.build();
-        }
-        if (chatHistoryDataBuilder_ == null) {
-          result.chatHistoryData_ = chatHistoryData_;
-        } else {
-          result.chatHistoryData_ = chatHistoryDataBuilder_.build();
-        }
+        result.sender_ = sender_;
+        result.recipient_ = recipient_;
+        result.message_ = message_;
         onBuilt();
         return result;
       }
@@ -3749,14 +1701,17 @@ public final class NetMessage {
         if (other.hasCredentialData()) {
           mergeCredentialData(other.getCredentialData());
         }
-        if (other.hasPublicMessageData()) {
-          mergePublicMessageData(other.getPublicMessageData());
+        if (!other.getSender().isEmpty()) {
+          sender_ = other.sender_;
+          onChanged();
         }
-        if (other.hasPrivateMessageData()) {
-          mergePrivateMessageData(other.getPrivateMessageData());
+        if (!other.getRecipient().isEmpty()) {
+          recipient_ = other.recipient_;
+          onChanged();
         }
-        if (other.hasChatHistoryData()) {
-          mergeChatHistoryData(other.getChatHistoryData());
+        if (!other.getMessage().isEmpty()) {
+          message_ = other.message_;
+          onChanged();
         }
         onChanged();
         return this;
@@ -3832,12 +1787,24 @@ public final class NetMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder> credentialDataBuilder_;
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public boolean hasCredentialData() {
         return credentialDataBuilder_ != null || credentialData_ != null;
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData() {
@@ -3848,6 +1815,12 @@ public final class NetMessage {
         }
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public Builder setCredentialData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials value) {
@@ -3864,6 +1837,12 @@ public final class NetMessage {
         return this;
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public Builder setCredentialData(
@@ -3878,6 +1857,12 @@ public final class NetMessage {
         return this;
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public Builder mergeCredentialData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials value) {
@@ -3896,6 +1881,12 @@ public final class NetMessage {
         return this;
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public Builder clearCredentialData() {
@@ -3910,6 +1901,12 @@ public final class NetMessage {
         return this;
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder getCredentialDataBuilder() {
@@ -3918,6 +1915,12 @@ public final class NetMessage {
         return getCredentialDataFieldBuilder().getBuilder();
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder() {
@@ -3929,6 +1932,12 @@ public final class NetMessage {
         }
       }
       /**
+       * <pre>
+       *    PublicMessage public_message_data = 3;
+       *    PrivateMessage private_message_data = 4;
+       *    ChatHistory chat_history_data = 5;
+       * </pre>
+       *
        * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -3945,355 +1954,211 @@ public final class NetMessage {
         return credentialDataBuilder_;
       }
 
-      private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage publicMessageData_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder> publicMessageDataBuilder_;
+      private java.lang.Object sender_ = "";
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+       * <code>string sender = 3;</code>
        */
-      public boolean hasPublicMessageData() {
-        return publicMessageDataBuilder_ != null || publicMessageData_ != null;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage getPublicMessageData() {
-        if (publicMessageDataBuilder_ == null) {
-          return publicMessageData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.getDefaultInstance() : publicMessageData_;
+      public java.lang.String getSender() {
+        java.lang.Object ref = sender_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          sender_ = s;
+          return s;
         } else {
-          return publicMessageDataBuilder_.getMessage();
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+       * <code>string sender = 3;</code>
        */
-      public Builder setPublicMessageData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage value) {
-        if (publicMessageDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          publicMessageData_ = value;
-          onChanged();
+      public com.google.protobuf.ByteString
+          getSenderBytes() {
+        java.lang.Object ref = sender_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sender_ = b;
+          return b;
         } else {
-          publicMessageDataBuilder_.setMessage(value);
+          return (com.google.protobuf.ByteString) ref;
         }
-
-        return this;
       }
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
+       * <code>string sender = 3;</code>
        */
-      public Builder setPublicMessageData(
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder builderForValue) {
-        if (publicMessageDataBuilder_ == null) {
-          publicMessageData_ = builderForValue.build();
-          onChanged();
-        } else {
-          publicMessageDataBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      public Builder mergePublicMessageData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage value) {
-        if (publicMessageDataBuilder_ == null) {
-          if (publicMessageData_ != null) {
-            publicMessageData_ =
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.newBuilder(publicMessageData_).mergeFrom(value).buildPartial();
-          } else {
-            publicMessageData_ = value;
-          }
-          onChanged();
-        } else {
-          publicMessageDataBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      public Builder clearPublicMessageData() {
-        if (publicMessageDataBuilder_ == null) {
-          publicMessageData_ = null;
-          onChanged();
-        } else {
-          publicMessageData_ = null;
-          publicMessageDataBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder getPublicMessageDataBuilder() {
-        
+      public Builder setSender(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        sender_ = value;
         onChanged();
-        return getPublicMessageDataFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder getPublicMessageDataOrBuilder() {
-        if (publicMessageDataBuilder_ != null) {
-          return publicMessageDataBuilder_.getMessageOrBuilder();
-        } else {
-          return publicMessageData_ == null ?
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.getDefaultInstance() : publicMessageData_;
-        }
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PublicMessage public_message_data = 3;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder> 
-          getPublicMessageDataFieldBuilder() {
-        if (publicMessageDataBuilder_ == null) {
-          publicMessageDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PublicMessageOrBuilder>(
-                  getPublicMessageData(),
-                  getParentForChildren(),
-                  isClean());
-          publicMessageData_ = null;
-        }
-        return publicMessageDataBuilder_;
-      }
-
-      private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage privateMessageData_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder> privateMessageDataBuilder_;
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public boolean hasPrivateMessageData() {
-        return privateMessageDataBuilder_ != null || privateMessageData_ != null;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage getPrivateMessageData() {
-        if (privateMessageDataBuilder_ == null) {
-          return privateMessageData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.getDefaultInstance() : privateMessageData_;
-        } else {
-          return privateMessageDataBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public Builder setPrivateMessageData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage value) {
-        if (privateMessageDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          privateMessageData_ = value;
-          onChanged();
-        } else {
-          privateMessageDataBuilder_.setMessage(value);
-        }
-
         return this;
       }
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
+       * <code>string sender = 3;</code>
        */
-      public Builder setPrivateMessageData(
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder builderForValue) {
-        if (privateMessageDataBuilder_ == null) {
-          privateMessageData_ = builderForValue.build();
-          onChanged();
-        } else {
-          privateMessageDataBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public Builder mergePrivateMessageData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage value) {
-        if (privateMessageDataBuilder_ == null) {
-          if (privateMessageData_ != null) {
-            privateMessageData_ =
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.newBuilder(privateMessageData_).mergeFrom(value).buildPartial();
-          } else {
-            privateMessageData_ = value;
-          }
-          onChanged();
-        } else {
-          privateMessageDataBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public Builder clearPrivateMessageData() {
-        if (privateMessageDataBuilder_ == null) {
-          privateMessageData_ = null;
-          onChanged();
-        } else {
-          privateMessageData_ = null;
-          privateMessageDataBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder getPrivateMessageDataBuilder() {
+      public Builder clearSender() {
         
+        sender_ = getDefaultInstance().getSender();
         onChanged();
-        return getPrivateMessageDataFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder getPrivateMessageDataOrBuilder() {
-        if (privateMessageDataBuilder_ != null) {
-          return privateMessageDataBuilder_.getMessageOrBuilder();
-        } else {
-          return privateMessageData_ == null ?
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.getDefaultInstance() : privateMessageData_;
-        }
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.PrivateMessage private_message_data = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder> 
-          getPrivateMessageDataFieldBuilder() {
-        if (privateMessageDataBuilder_ == null) {
-          privateMessageDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.PrivateMessageOrBuilder>(
-                  getPrivateMessageData(),
-                  getParentForChildren(),
-                  isClean());
-          privateMessageData_ = null;
-        }
-        return privateMessageDataBuilder_;
-      }
-
-      private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory chatHistoryData_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder> chatHistoryDataBuilder_;
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public boolean hasChatHistoryData() {
-        return chatHistoryDataBuilder_ != null || chatHistoryData_ != null;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory getChatHistoryData() {
-        if (chatHistoryDataBuilder_ == null) {
-          return chatHistoryData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.getDefaultInstance() : chatHistoryData_;
-        } else {
-          return chatHistoryDataBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public Builder setChatHistoryData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory value) {
-        if (chatHistoryDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          chatHistoryData_ = value;
-          onChanged();
-        } else {
-          chatHistoryDataBuilder_.setMessage(value);
-        }
-
         return this;
       }
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+       * <code>string sender = 3;</code>
        */
-      public Builder setChatHistoryData(
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder builderForValue) {
-        if (chatHistoryDataBuilder_ == null) {
-          chatHistoryData_ = builderForValue.build();
-          onChanged();
-        } else {
-          chatHistoryDataBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public Builder mergeChatHistoryData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory value) {
-        if (chatHistoryDataBuilder_ == null) {
-          if (chatHistoryData_ != null) {
-            chatHistoryData_ =
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.newBuilder(chatHistoryData_).mergeFrom(value).buildPartial();
-          } else {
-            chatHistoryData_ = value;
-          }
-          onChanged();
-        } else {
-          chatHistoryDataBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public Builder clearChatHistoryData() {
-        if (chatHistoryDataBuilder_ == null) {
-          chatHistoryData_ = null;
-          onChanged();
-        } else {
-          chatHistoryData_ = null;
-          chatHistoryDataBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder getChatHistoryDataBuilder() {
+      public Builder setSenderBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
         
+        sender_ = value;
         onChanged();
-        return getChatHistoryDataFieldBuilder().getBuilder();
+        return this;
       }
+
+      private java.lang.Object recipient_ = "";
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+       * <code>string recipient = 4;</code>
        */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder getChatHistoryDataOrBuilder() {
-        if (chatHistoryDataBuilder_ != null) {
-          return chatHistoryDataBuilder_.getMessageOrBuilder();
+      public java.lang.String getRecipient() {
+        java.lang.Object ref = recipient_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          recipient_ = s;
+          return s;
         } else {
-          return chatHistoryData_ == null ?
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.getDefaultInstance() : chatHistoryData_;
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.ChatHistory chat_history_data = 5;</code>
+       * <code>string recipient = 4;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder> 
-          getChatHistoryDataFieldBuilder() {
-        if (chatHistoryDataBuilder_ == null) {
-          chatHistoryDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistory.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatHistoryOrBuilder>(
-                  getChatHistoryData(),
-                  getParentForChildren(),
-                  isClean());
-          chatHistoryData_ = null;
+      public com.google.protobuf.ByteString
+          getRecipientBytes() {
+        java.lang.Object ref = recipient_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          recipient_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        return chatHistoryDataBuilder_;
+      }
+      /**
+       * <code>string recipient = 4;</code>
+       */
+      public Builder setRecipient(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        recipient_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string recipient = 4;</code>
+       */
+      public Builder clearRecipient() {
+        
+        recipient_ = getDefaultInstance().getRecipient();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string recipient = 4;</code>
+       */
+      public Builder setRecipientBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        recipient_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object message_ = "";
+      /**
+       * <code>string message = 5;</code>
+       */
+      public java.lang.String getMessage() {
+        java.lang.Object ref = message_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          message_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string message = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMessageBytes() {
+        java.lang.Object ref = message_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          message_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string message = 5;</code>
+       */
+      public Builder setMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        message_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string message = 5;</code>
+       */
+      public Builder clearMessage() {
+        
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string message = 5;</code>
+       */
+      public Builder setMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        message_ = value;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4354,21 +2219,6 @@ public final class NetMessage {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4379,27 +2229,19 @@ public final class NetMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\021net_message.proto\022\033dylanlaufenberg.cs3" +
-      "00.proto\"\355\005\n\007Message\022F\n\014message_type\030\001 \001" +
+      "00.proto\"\261\003\n\007Message\022F\n\014message_type\030\001 \001" +
       "(\01620.dylanlaufenberg.cs300.proto.Message" +
       ".MessageType\022I\n\017credential_data\030\002 \001(\01320." +
       "dylanlaufenberg.cs300.proto.Message.Cred" +
-      "entials\022O\n\023public_message_data\030\003 \001(\01322.d" +
-      "ylanlaufenberg.cs300.proto.Message.Publi" +
-      "cMessage\022Q\n\024private_message_data\030\004 \001(\01323" +
-      ".dylanlaufenberg.cs300.proto.Message.Pri" +
-      "vateMessage\022K\n\021chat_history_data\030\005 \001(\01320",
-      ".dylanlaufenberg.cs300.proto.Message.Cha" +
-      "tHistory\032E\n\013Credentials\022\021\n\tuser_name\030\001 \001" +
-      "(\t\022\020\n\010password\030\002 \001(\t\022\021\n\tlogged_in\030\003 \001(\010\032" +
-      "0\n\rPublicMessage\022\016\n\006sender\030\001 \001(\t\022\017\n\007mess" +
-      "age\030\002 \001(\t\032D\n\016PrivateMessage\022\016\n\006sender\030\001 " +
-      "\001(\t\022\021\n\trecipient\030\002 \001(\t\022\017\n\007message\030\003 \001(\t\032" +
-      "\033\n\013ChatHistory\022\014\n\004text\030\001 \001(\t\"\201\001\n\013Message" +
-      "Type\022\014\n\010REGISTER\020\000\022\t\n\005LOGIN\020\001\022\n\n\006LOGOUT\020" +
-      "\002\022\022\n\016DELETE_ACCOUNT\020\003\022\022\n\016PUBLIC_MESSAGE\020" +
-      "\004\022\023\n\017PRIVATE_MESSAGE\020\005\022\020\n\014CHAT_HISTORY\020\006",
-      "B;\n-com.dylanlaufenberg.portlandstate.cs" +
-      "300.protoB\nNetMessageb\006proto3"
+      "entials\022\016\n\006sender\030\003 \001(\t\022\021\n\trecipient\030\004 \001" +
+      "(\t\022\017\n\007message\030\005 \001(\t\032E\n\013Credentials\022\021\n\tus" +
+      "er_name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\021\n\tlogge" +
+      "d_in\030\003 \001(\010\"\227\001\n\013MessageType\022\010\n\004FAKE\020\000\022\014\n\010" +
+      "REGISTER\020\001\022\t\n\005LOGIN\020\002\022\n\n\006LOGOUT\020\003\022\022\n\016DEL",
+      "ETE_ACCOUNT\020\004\022\022\n\016PUBLIC_MESSAGE\020\005\022\023\n\017PRI" +
+      "VATE_MESSAGE\020\006\022\n\n\006NOTICE\020\007\022\020\n\014CHAT_HISTO" +
+      "RY\020\010B;\n-com.dylanlaufenberg.portlandstat" +
+      "e.cs300.protoB\nNetMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4418,31 +2260,13 @@ public final class NetMessage {
     internal_static_dylanlaufenberg_cs300_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dylanlaufenberg_cs300_proto_Message_descriptor,
-        new java.lang.String[] { "MessageType", "CredentialData", "PublicMessageData", "PrivateMessageData", "ChatHistoryData", });
+        new java.lang.String[] { "MessageType", "CredentialData", "Sender", "Recipient", "Message", });
     internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor =
       internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(0);
     internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor,
         new java.lang.String[] { "UserName", "Password", "LoggedIn", });
-    internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor =
-      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(1);
-    internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dylanlaufenberg_cs300_proto_Message_PublicMessage_descriptor,
-        new java.lang.String[] { "Sender", "Message", });
-    internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor =
-      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(2);
-    internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dylanlaufenberg_cs300_proto_Message_PrivateMessage_descriptor,
-        new java.lang.String[] { "Sender", "Recipient", "Message", });
-    internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor =
-      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(3);
-    internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dylanlaufenberg_cs300_proto_Message_ChatHistory_descriptor,
-        new java.lang.String[] { "Text", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
