@@ -18,20 +18,20 @@ public class ChatClient {
 
     public String host;
     public int port;
-    private ChannelFuture future;
+    private Channel channel;
 
     public Channel run() {
-        if(future != null) {
+        if(channel != null) {
             stop();
         }
 
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
-            Bootstrap b = new Bootstrap(); // (1)
-            b.group(workerGroup); // (2)
-            b.channel(NioSocketChannel.class); // (3)
-            b.option(ChannelOption.SO_KEEPALIVE, true); // (4)
+            Bootstrap b = new Bootstrap();
+            b.group(workerGroup);
+            b.channel(NioSocketChannel.class);
+            b.option(ChannelOption.SO_KEEPALIVE, true);
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
@@ -50,8 +50,8 @@ public class ChatClient {
             });
 
             // Start the client.
-            future = b.connect(host, port).sync(); // (5)
-            return future.channel();
+            channel = b.connect(host, port).sync().channel(); // TODO Detect and display error if connection refused, etc.
+            return channel;
         } catch (Exception e) {
             System.err.println(e.toString());
             workerGroup.shutdownGracefully();
@@ -60,14 +60,14 @@ public class ChatClient {
     }
 
     public void stop() {
-        if(future != null) {
+        if(channel != null) {
             try {
                 // Wait until the connection is closed.
-                future.channel().closeFuture().sync();
+                channel.close().sync();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                future = null;
+                channel = null;
             }
         }
     }

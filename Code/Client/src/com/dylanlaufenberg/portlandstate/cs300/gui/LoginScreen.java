@@ -3,6 +3,7 @@ package com.dylanlaufenberg.portlandstate.cs300.gui;
 import com.dylanlaufenberg.portlandstate.cs300.ClientController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,17 +11,23 @@ import java.awt.event.ActionListener;
  * Created by Dylan on 5/10/2017.
  */
 public class LoginScreen {
+    // TODO Implement http://stackoverflow.com/questions/1313390/is-there-any-way-to-accept-only-numeric-values-in-a-jtextfield
+    private JFrame loginFrame;
     private JPasswordField passwordField;
     private JTextField hostnameField;
     private JTextField portField; // TODO Restrict port field to only accept numbers.
     private JTextField userNameField;
     private JButton registerButton;
     private JButton loginButton;
-    private JLabel userNameLabel;
-    private JLabel passwordLabel;
-    private JLabel hostnameLabel;
-    private JLabel portLabel;
     private JPanel rootPanel;
+    private JLabel statusText;
+    private Operation currentOperation;
+
+    private enum Operation {
+        NONE,
+        LOGIN,
+        REGISTER
+    }
 
     public LoginScreen() {
         loginButton.addActionListener(new ActionListener() {
@@ -61,14 +68,6 @@ public class LoginScreen {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("LoginScreen");
-        frame.setContentPane(new LoginScreen().rootPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     public static LoginScreen createAndShow() {
         LoginScreen ls = new LoginScreen();
         JFrame frame = new JFrame("LoginScreen");
@@ -76,12 +75,15 @@ public class LoginScreen {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        ls.loginFrame = frame;
+        ls.currentOperation = Operation.NONE;
         return ls;
     }
 
     private void doLogin() {
         LoginData d = getLoginData();
         if(d != null) {
+            currentOperation = Operation.LOGIN;
             ClientController.login(d.hostname, d.port, d.userName, d.password);
         } else {
             // TODO Add error message here or in getLoginData.
@@ -91,13 +93,14 @@ public class LoginScreen {
     private void doRegister() {
         LoginData d = getLoginData();
         if(d != null) {
+            currentOperation = Operation.REGISTER;
             ClientController.register(d.hostname, d.port, d.userName, d.password);
         } else {
             // TODO Add error message here or in getLoginData.
         }
     }
 
-    public LoginData getLoginData() {
+    private LoginData getLoginData() {
         LoginData d = new LoginData();
 
         // Get everything we need
@@ -107,23 +110,27 @@ public class LoginScreen {
             d.port = Integer.valueOf(portField.getText());
         } catch (NumberFormatException e) {
             // Detected error: port is not a number.
+            setErrorText("Port must be a number between 1 and 65535.");
         }
         d.userName = userNameField.getText();
         d.password = String.valueOf(passwordField.getPassword());
 
         // If anything is missing, error and don't proceed
-        // TODO Add an error label and use it!
         boolean valid = true;
         if (d.userName.length() == 0) {
             // Detected error.
+            setErrorText("Please specify your user name.");
             valid = false;
         } else if (d.password.length() == 0) {
             // Detected error.
+            setErrorText("Please specify your password.");
             valid = false;
         } else if (d.hostname.length() == 0) {
             // Detected error.
+            setErrorText("Please specify a hostname or IP address.");
             valid = false;
-        } else if (d.port == 0) {
+        } else if (d.port == 0 || d.port > 65535) {
+            setErrorText("Port must be a number between 1 and 65535.");
             valid = false;
         }
 
@@ -138,5 +145,46 @@ public class LoginScreen {
     private class LoginData {
         public String hostname, userName, password;
         public int port;
+    }
+
+    public void showUserErrorMessage() {
+        switch(currentOperation) {
+            case LOGIN:
+                setErrorText("That user does not exist.");
+                break;
+
+            case REGISTER:
+                setErrorText("That user already exists.");
+                break;
+
+            case NONE:
+                break;
+        }
+    }
+
+    public void showPasswordErrorMessage() {
+        switch(currentOperation) {
+            case LOGIN:
+                setErrorText("Incorrect password.");
+                break;
+
+            case REGISTER:
+                setErrorText("Invalid password.");
+                break;
+
+            case NONE:
+                break;
+        }
+    }
+
+    private void setErrorText(String text) {
+        statusText.setForeground(Color.red);
+        statusText.setText(text);
+    }
+
+    public void close() {
+        currentOperation = Operation.NONE;
+        loginFrame.setVisible(false);
+        loginFrame.dispose();
     }
 }

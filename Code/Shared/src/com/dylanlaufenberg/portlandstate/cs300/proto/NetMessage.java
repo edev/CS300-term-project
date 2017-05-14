@@ -19,85 +19,35 @@ public final class NetMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
      */
-    int getMessageTypeValue();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getAuthMessage();
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
      */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType getMessageType();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder getAuthMessageOrBuilder();
 
     /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
      */
-    boolean hasCredentialData();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getNoticeMessage();
     /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
      */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData();
-    /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
-     */
-    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder getNoticeMessageOrBuilder();
 
     /**
-     * <code>string sender = 3;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
      */
-    java.lang.String getSender();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getChatMessage();
     /**
-     * <code>string sender = 3;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
      */
-    com.google.protobuf.ByteString
-        getSenderBytes();
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder getChatMessageOrBuilder();
 
-    /**
-     * <code>string recipient = 4;</code>
-     */
-    java.lang.String getRecipient();
-    /**
-     * <code>string recipient = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getRecipientBytes();
-
-    /**
-     * <code>string message = 5;</code>
-     */
-    java.lang.String getMessage();
-    /**
-     * <code>string message = 5;</code>
-     */
-    com.google.protobuf.ByteString
-        getMessageBytes();
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageContentsCase getMessageContentsCase();
   }
   /**
-   * <pre>
-   * A valid NetMessage consists of a message_type field and possibly one, corresponding sub-message as indicated
-   * in the MessageType definition comments. If a sub-message is required, it should be populated as indicated
-   * in the definition for that message type.
-   * Because of the compatibility limitations on required fields, the required keyword is not used. Instead,
-   * requirements are expected to be enforced by the applications on either end. It is expected that any extra
-   * data sent (e.g. a PrivateMessage with message_type = 0) will be ignored and, most likely, not even detected.
-   * </pre>
-   *
    * Protobuf type {@code dylanlaufenberg.cs300.proto.Message}
    */
   public  static final class Message extends
@@ -109,10 +59,6 @@ public final class NetMessage {
       super(builder);
     }
     private Message() {
-      messageType_ = 0;
-      sender_ = "";
-      recipient_ = "";
-      message_ = "";
     }
 
     @java.lang.Override
@@ -140,41 +86,46 @@ public final class NetMessage {
               }
               break;
             }
-            case 8: {
-              int rawValue = input.readEnum();
-
-              messageType_ = rawValue;
-              break;
-            }
             case 18: {
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder subBuilder = null;
-              if (credentialData_ != null) {
-                subBuilder = credentialData_.toBuilder();
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder subBuilder = null;
+              if (messageContentsCase_ == 2) {
+                subBuilder = ((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_).toBuilder();
               }
-              credentialData_ = input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.parser(), extensionRegistry);
+              messageContents_ =
+                  input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom(credentialData_);
-                credentialData_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_);
+                messageContents_ = subBuilder.buildPartial();
               }
-
+              messageContentsCase_ = 2;
               break;
             }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              sender_ = s;
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder subBuilder = null;
+              if (messageContentsCase_ == 3) {
+                subBuilder = ((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_).toBuilder();
+              }
+              messageContents_ =
+                  input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_);
+                messageContents_ = subBuilder.buildPartial();
+              }
+              messageContentsCase_ = 3;
               break;
             }
             case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              recipient_ = s;
-              break;
-            }
-            case 42: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              message_ = s;
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder subBuilder = null;
+              if (messageContentsCase_ == 4) {
+                subBuilder = ((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_).toBuilder();
+              }
+              messageContents_ =
+                  input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_);
+                messageContents_ = subBuilder.buildPartial();
+              }
+              messageContentsCase_ = 4;
               break;
             }
           }
@@ -200,297 +151,54 @@ public final class NetMessage {
               com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code dylanlaufenberg.cs300.proto.Message.MessageType}
-     */
-    public enum MessageType
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <pre>
-       * DO NOT USE. Must start at 0, but 0 seems to get lost somewhere along the way. Bug in Protobuf?
-       * </pre>
-       *
-       * <code>FAKE = 0;</code>
-       */
-      FAKE(0),
-      /**
-       * <pre>
-       * Requires Credentials message
-       * </pre>
-       *
-       * <code>REGISTER = 1;</code>
-       */
-      REGISTER(1),
-      /**
-       * <pre>
-       * Requires Credentials message
-       * </pre>
-       *
-       * <code>LOGIN = 2;</code>
-       */
-      LOGIN(2),
-      /**
-       * <pre>
-       * No associated message
-       * </pre>
-       *
-       * <code>LOGOUT = 3;</code>
-       */
-      LOGOUT(3),
-      /**
-       * <pre>
-       * No associated message
-       * </pre>
-       *
-       * <code>DELETE_ACCOUNT = 4;</code>
-       */
-      DELETE_ACCOUNT(4),
-      /**
-       * <pre>
-       * Requires PublicMessage
-       * </pre>
-       *
-       * <code>PUBLIC_MESSAGE = 5;</code>
-       */
-      PUBLIC_MESSAGE(5),
-      /**
-       * <pre>
-       * Requires PrivateMessage
-       * </pre>
-       *
-       * <code>PRIVATE_MESSAGE = 6;</code>
-       */
-      PRIVATE_MESSAGE(6),
-      /**
-       * <pre>
-       * Requires Text
-       * </pre>
-       *
-       * <code>NOTICE = 7;</code>
-       */
-      NOTICE(7),
-      /**
-       * <pre>
-       * No message from client to server; requires ChatHistory from server to client
-       * </pre>
-       *
-       * <code>CHAT_HISTORY = 8;</code>
-       */
-      CHAT_HISTORY(8),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <pre>
-       * DO NOT USE. Must start at 0, but 0 seems to get lost somewhere along the way. Bug in Protobuf?
-       * </pre>
-       *
-       * <code>FAKE = 0;</code>
-       */
-      public static final int FAKE_VALUE = 0;
-      /**
-       * <pre>
-       * Requires Credentials message
-       * </pre>
-       *
-       * <code>REGISTER = 1;</code>
-       */
-      public static final int REGISTER_VALUE = 1;
-      /**
-       * <pre>
-       * Requires Credentials message
-       * </pre>
-       *
-       * <code>LOGIN = 2;</code>
-       */
-      public static final int LOGIN_VALUE = 2;
-      /**
-       * <pre>
-       * No associated message
-       * </pre>
-       *
-       * <code>LOGOUT = 3;</code>
-       */
-      public static final int LOGOUT_VALUE = 3;
-      /**
-       * <pre>
-       * No associated message
-       * </pre>
-       *
-       * <code>DELETE_ACCOUNT = 4;</code>
-       */
-      public static final int DELETE_ACCOUNT_VALUE = 4;
-      /**
-       * <pre>
-       * Requires PublicMessage
-       * </pre>
-       *
-       * <code>PUBLIC_MESSAGE = 5;</code>
-       */
-      public static final int PUBLIC_MESSAGE_VALUE = 5;
-      /**
-       * <pre>
-       * Requires PrivateMessage
-       * </pre>
-       *
-       * <code>PRIVATE_MESSAGE = 6;</code>
-       */
-      public static final int PRIVATE_MESSAGE_VALUE = 6;
-      /**
-       * <pre>
-       * Requires Text
-       * </pre>
-       *
-       * <code>NOTICE = 7;</code>
-       */
-      public static final int NOTICE_VALUE = 7;
-      /**
-       * <pre>
-       * No message from client to server; requires ChatHistory from server to client
-       * </pre>
-       *
-       * <code>CHAT_HISTORY = 8;</code>
-       */
-      public static final int CHAT_HISTORY_VALUE = 8;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static MessageType valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static MessageType forNumber(int value) {
-        switch (value) {
-          case 0: return FAKE;
-          case 1: return REGISTER;
-          case 2: return LOGIN;
-          case 3: return LOGOUT;
-          case 4: return DELETE_ACCOUNT;
-          case 5: return PUBLIC_MESSAGE;
-          case 6: return PRIVATE_MESSAGE;
-          case 7: return NOTICE;
-          case 8: return CHAT_HISTORY;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<MessageType>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          MessageType> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<MessageType>() {
-              public MessageType findValueByNumber(int number) {
-                return MessageType.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final MessageType[] VALUES = values();
-
-      public static MessageType valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private MessageType(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:dylanlaufenberg.cs300.proto.Message.MessageType)
-    }
-
-    public interface CredentialsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.Credentials)
+    public interface AuthenticationMessageOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage)
         com.google.protobuf.MessageOrBuilder {
 
       /**
-       * <pre>
-       * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-       * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-       * </pre>
-       *
-       * <code>string user_name = 1;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+       */
+      int getAuthMessageTypeValue();
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+       */
+      com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType getAuthMessageType();
+
+      /**
+       * <code>string userName = 2;</code>
        */
       java.lang.String getUserName();
       /**
-       * <pre>
-       * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-       * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-       * </pre>
-       *
-       * <code>string user_name = 1;</code>
+       * <code>string userName = 2;</code>
        */
       com.google.protobuf.ByteString
           getUserNameBytes();
 
       /**
-       * <code>string password = 2;</code>
+       * <code>string password = 3;</code>
        */
       java.lang.String getPassword();
       /**
-       * <code>string password = 2;</code>
+       * <code>string password = 3;</code>
        */
       com.google.protobuf.ByteString
           getPasswordBytes();
-
-      /**
-       * <pre>
-       * Will be true on successful login, false otherwise.
-       * </pre>
-       *
-       * <code>bool logged_in = 3;</code>
-       */
-      boolean getLoggedIn();
     }
     /**
-     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.Credentials}
+     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.AuthenticationMessage}
      */
-    public  static final class Credentials extends
+    public  static final class AuthenticationMessage extends
         com.google.protobuf.GeneratedMessageV3 implements
-        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.Credentials)
-        CredentialsOrBuilder {
-      // Use Credentials.newBuilder() to construct.
-      private Credentials(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage)
+        AuthenticationMessageOrBuilder {
+      // Use AuthenticationMessage.newBuilder() to construct.
+      private AuthenticationMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
       }
-      private Credentials() {
+      private AuthenticationMessage() {
+        authMessageType_ = 0;
         userName_ = "";
         password_ = "";
-        loggedIn_ = false;
       }
 
       @java.lang.Override
@@ -498,7 +206,7 @@ public final class NetMessage {
       getUnknownFields() {
         return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
       }
-      private Credentials(
+      private AuthenticationMessage(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -518,21 +226,22 @@ public final class NetMessage {
                 }
                 break;
               }
-              case 10: {
-                java.lang.String s = input.readStringRequireUtf8();
+              case 8: {
+                int rawValue = input.readEnum();
 
-                userName_ = s;
+                authMessageType_ = rawValue;
                 break;
               }
               case 18: {
                 java.lang.String s = input.readStringRequireUtf8();
 
-                password_ = s;
+                userName_ = s;
                 break;
               }
-              case 24: {
+              case 26: {
+                java.lang.String s = input.readStringRequireUtf8();
 
-                loggedIn_ = input.readBool();
+                password_ = s;
                 break;
               }
             }
@@ -548,25 +257,170 @@ public final class NetMessage {
       }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor;
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder.class);
+                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder.class);
       }
 
-      public static final int USER_NAME_FIELD_NUMBER = 1;
+      /**
+       * Protobuf enum {@code dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType}
+       */
+      public enum AuthMessageType
+          implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        UNSET(0),
+        /**
+         * <code>AUTH_REGISTER = 1;</code>
+         */
+        AUTH_REGISTER(1),
+        /**
+         * <code>AUTH_LOGIN = 2;</code>
+         */
+        AUTH_LOGIN(2),
+        /**
+         * <code>AUTH_SUCCESS = 3;</code>
+         */
+        AUTH_SUCCESS(3),
+        /**
+         * <code>AUTH_ERROR_USER = 4;</code>
+         */
+        AUTH_ERROR_USER(4),
+        /**
+         * <code>AUTH_ERROR_PASSWORD = 5;</code>
+         */
+        AUTH_ERROR_PASSWORD(5),
+        UNRECOGNIZED(-1),
+        ;
+
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        public static final int UNSET_VALUE = 0;
+        /**
+         * <code>AUTH_REGISTER = 1;</code>
+         */
+        public static final int AUTH_REGISTER_VALUE = 1;
+        /**
+         * <code>AUTH_LOGIN = 2;</code>
+         */
+        public static final int AUTH_LOGIN_VALUE = 2;
+        /**
+         * <code>AUTH_SUCCESS = 3;</code>
+         */
+        public static final int AUTH_SUCCESS_VALUE = 3;
+        /**
+         * <code>AUTH_ERROR_USER = 4;</code>
+         */
+        public static final int AUTH_ERROR_USER_VALUE = 4;
+        /**
+         * <code>AUTH_ERROR_PASSWORD = 5;</code>
+         */
+        public static final int AUTH_ERROR_PASSWORD_VALUE = 5;
+
+
+        public final int getNumber() {
+          if (this == UNRECOGNIZED) {
+            throw new java.lang.IllegalArgumentException(
+                "Can't get the number of an unknown enum value.");
+          }
+          return value;
+        }
+
+        /**
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static AuthMessageType valueOf(int value) {
+          return forNumber(value);
+        }
+
+        public static AuthMessageType forNumber(int value) {
+          switch (value) {
+            case 0: return UNSET;
+            case 1: return AUTH_REGISTER;
+            case 2: return AUTH_LOGIN;
+            case 3: return AUTH_SUCCESS;
+            case 4: return AUTH_ERROR_USER;
+            case 5: return AUTH_ERROR_PASSWORD;
+            default: return null;
+          }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<AuthMessageType>
+            internalGetValueMap() {
+          return internalValueMap;
+        }
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+            AuthMessageType> internalValueMap =
+              new com.google.protobuf.Internal.EnumLiteMap<AuthMessageType>() {
+                public AuthMessageType findValueByNumber(int number) {
+                  return AuthMessageType.forNumber(number);
+                }
+              };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+            getValueDescriptor() {
+          return getDescriptor().getValues().get(ordinal());
+        }
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDescriptor().getEnumTypes().get(0);
+        }
+
+        private static final AuthMessageType[] VALUES = values();
+
+        public static AuthMessageType valueOf(
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+          if (desc.getType() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "EnumValueDescriptor is not for this type.");
+          }
+          if (desc.getIndex() == -1) {
+            return UNRECOGNIZED;
+          }
+          return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private AuthMessageType(int value) {
+          this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType)
+      }
+
+      public static final int AUTHMESSAGETYPE_FIELD_NUMBER = 1;
+      private int authMessageType_;
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+       */
+      public int getAuthMessageTypeValue() {
+        return authMessageType_;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType getAuthMessageType() {
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.valueOf(authMessageType_);
+        return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.UNRECOGNIZED : result;
+      }
+
+      public static final int USERNAME_FIELD_NUMBER = 2;
       private volatile java.lang.Object userName_;
       /**
-       * <pre>
-       * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-       * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-       * </pre>
-       *
-       * <code>string user_name = 1;</code>
+       * <code>string userName = 2;</code>
        */
       public java.lang.String getUserName() {
         java.lang.Object ref = userName_;
@@ -581,12 +435,7 @@ public final class NetMessage {
         }
       }
       /**
-       * <pre>
-       * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-       * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-       * </pre>
-       *
-       * <code>string user_name = 1;</code>
+       * <code>string userName = 2;</code>
        */
       public com.google.protobuf.ByteString
           getUserNameBytes() {
@@ -602,10 +451,10 @@ public final class NetMessage {
         }
       }
 
-      public static final int PASSWORD_FIELD_NUMBER = 2;
+      public static final int PASSWORD_FIELD_NUMBER = 3;
       private volatile java.lang.Object password_;
       /**
-       * <code>string password = 2;</code>
+       * <code>string password = 3;</code>
        */
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
@@ -620,7 +469,7 @@ public final class NetMessage {
         }
       }
       /**
-       * <code>string password = 2;</code>
+       * <code>string password = 3;</code>
        */
       public com.google.protobuf.ByteString
           getPasswordBytes() {
@@ -636,19 +485,6 @@ public final class NetMessage {
         }
       }
 
-      public static final int LOGGED_IN_FIELD_NUMBER = 3;
-      private boolean loggedIn_;
-      /**
-       * <pre>
-       * Will be true on successful login, false otherwise.
-       * </pre>
-       *
-       * <code>bool logged_in = 3;</code>
-       */
-      public boolean getLoggedIn() {
-        return loggedIn_;
-      }
-
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -661,14 +497,14 @@ public final class NetMessage {
 
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
+        if (authMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.UNSET.getNumber()) {
+          output.writeEnum(1, authMessageType_);
+        }
         if (!getUserNameBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userName_);
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userName_);
         }
         if (!getPasswordBytes().isEmpty()) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
-        }
-        if (loggedIn_ != false) {
-          output.writeBool(3, loggedIn_);
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 3, password_);
         }
       }
 
@@ -677,15 +513,15 @@ public final class NetMessage {
         if (size != -1) return size;
 
         size = 0;
+        if (authMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.UNSET.getNumber()) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, authMessageType_);
+        }
         if (!getUserNameBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userName_);
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userName_);
         }
         if (!getPasswordBytes().isEmpty()) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
-        }
-        if (loggedIn_ != false) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBoolSize(3, loggedIn_);
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, password_);
         }
         memoizedSize = size;
         return size;
@@ -697,18 +533,17 @@ public final class NetMessage {
         if (obj == this) {
          return true;
         }
-        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials)) {
+        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage)) {
           return super.equals(obj);
         }
-        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials) obj;
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) obj;
 
         boolean result = true;
+        result = result && authMessageType_ == other.authMessageType_;
         result = result && getUserName()
             .equals(other.getUserName());
         result = result && getPassword()
             .equals(other.getPassword());
-        result = result && (getLoggedIn()
-            == other.getLoggedIn());
         return result;
       }
 
@@ -719,81 +554,80 @@ public final class NetMessage {
         }
         int hash = 41;
         hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + USER_NAME_FIELD_NUMBER;
+        hash = (37 * hash) + AUTHMESSAGETYPE_FIELD_NUMBER;
+        hash = (53 * hash) + authMessageType_;
+        hash = (37 * hash) + USERNAME_FIELD_NUMBER;
         hash = (53 * hash) + getUserName().hashCode();
         hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
         hash = (53 * hash) + getPassword().hashCode();
-        hash = (37 * hash) + LOGGED_IN_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getLoggedIn());
         hash = (29 * hash) + unknownFields.hashCode();
         memoizedHashCode = hash;
         return hash;
       }
 
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           java.nio.ByteBuffer data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           java.nio.ByteBuffer data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(byte[] data)
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(java.io.InputStream input)
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseDelimitedFrom(java.io.InputStream input)
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseDelimitedFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input);
       }
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parseFrom(
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -805,7 +639,7 @@ public final class NetMessage {
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials prototype) {
+      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() {
@@ -820,25 +654,25 @@ public final class NetMessage {
         return builder;
       }
       /**
-       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.Credentials}
+       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.AuthenticationMessage}
        */
       public static final class Builder extends
           com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.Credentials)
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder {
+          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage)
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor;
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder.class);
+                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder.class);
         }
 
-        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.newBuilder()
+        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -855,37 +689,37 @@ public final class NetMessage {
         }
         public Builder clear() {
           super.clear();
+          authMessageType_ = 0;
+
           userName_ = "";
 
           password_ = "";
-
-          loggedIn_ = false;
 
           return this;
         }
 
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor;
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor;
         }
 
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getDefaultInstanceForType() {
-          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance();
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getDefaultInstanceForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
         }
 
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials build() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials result = buildPartial();
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage build() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials buildPartial() {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials(this);
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage buildPartial() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage(this);
+          result.authMessageType_ = authMessageType_;
           result.userName_ = userName_;
           result.password_ = password_;
-          result.loggedIn_ = loggedIn_;
           onBuilt();
           return result;
         }
@@ -917,16 +751,19 @@ public final class NetMessage {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials) {
-            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials)other);
+          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) {
+            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials other) {
-          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance()) return this;
+        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage other) {
+          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance()) return this;
+          if (other.authMessageType_ != 0) {
+            setAuthMessageTypeValue(other.getAuthMessageTypeValue());
+          }
           if (!other.getUserName().isEmpty()) {
             userName_ = other.userName_;
             onChanged();
@@ -934,9 +771,6 @@ public final class NetMessage {
           if (!other.getPassword().isEmpty()) {
             password_ = other.password_;
             onChanged();
-          }
-          if (other.getLoggedIn() != false) {
-            setLoggedIn(other.getLoggedIn());
           }
           onChanged();
           return this;
@@ -950,11 +784,11 @@ public final class NetMessage {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials parsedMessage = null;
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials) e.getUnfinishedMessage();
+            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
             if (parsedMessage != null) {
@@ -964,14 +798,53 @@ public final class NetMessage {
           return this;
         }
 
+        private int authMessageType_ = 0;
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+         */
+        public int getAuthMessageTypeValue() {
+          return authMessageType_;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+         */
+        public Builder setAuthMessageTypeValue(int value) {
+          authMessageType_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+         */
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType getAuthMessageType() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.valueOf(authMessageType_);
+          return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType.UNRECOGNIZED : result;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+         */
+        public Builder setAuthMessageType(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.AuthMessageType value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          
+          authMessageType_ = value.getNumber();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage.AuthMessageType authMessageType = 1;</code>
+         */
+        public Builder clearAuthMessageType() {
+          
+          authMessageType_ = 0;
+          onChanged();
+          return this;
+        }
+
         private java.lang.Object userName_ = "";
         /**
-         * <pre>
-         * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-         * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-         * </pre>
-         *
-         * <code>string user_name = 1;</code>
+         * <code>string userName = 2;</code>
          */
         public java.lang.String getUserName() {
           java.lang.Object ref = userName_;
@@ -986,12 +859,7 @@ public final class NetMessage {
           }
         }
         /**
-         * <pre>
-         * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-         * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-         * </pre>
-         *
-         * <code>string user_name = 1;</code>
+         * <code>string userName = 2;</code>
          */
         public com.google.protobuf.ByteString
             getUserNameBytes() {
@@ -1007,12 +875,7 @@ public final class NetMessage {
           }
         }
         /**
-         * <pre>
-         * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-         * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-         * </pre>
-         *
-         * <code>string user_name = 1;</code>
+         * <code>string userName = 2;</code>
          */
         public Builder setUserName(
             java.lang.String value) {
@@ -1025,12 +888,7 @@ public final class NetMessage {
           return this;
         }
         /**
-         * <pre>
-         * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-         * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-         * </pre>
-         *
-         * <code>string user_name = 1;</code>
+         * <code>string userName = 2;</code>
          */
         public Builder clearUserName() {
           
@@ -1039,12 +897,7 @@ public final class NetMessage {
           return this;
         }
         /**
-         * <pre>
-         * Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-         * Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-         * </pre>
-         *
-         * <code>string user_name = 1;</code>
+         * <code>string userName = 2;</code>
          */
         public Builder setUserNameBytes(
             com.google.protobuf.ByteString value) {
@@ -1060,7 +913,7 @@ public final class NetMessage {
 
         private java.lang.Object password_ = "";
         /**
-         * <code>string password = 2;</code>
+         * <code>string password = 3;</code>
          */
         public java.lang.String getPassword() {
           java.lang.Object ref = password_;
@@ -1075,7 +928,7 @@ public final class NetMessage {
           }
         }
         /**
-         * <code>string password = 2;</code>
+         * <code>string password = 3;</code>
          */
         public com.google.protobuf.ByteString
             getPasswordBytes() {
@@ -1091,7 +944,7 @@ public final class NetMessage {
           }
         }
         /**
-         * <code>string password = 2;</code>
+         * <code>string password = 3;</code>
          */
         public Builder setPassword(
             java.lang.String value) {
@@ -1104,7 +957,7 @@ public final class NetMessage {
           return this;
         }
         /**
-         * <code>string password = 2;</code>
+         * <code>string password = 3;</code>
          */
         public Builder clearPassword() {
           
@@ -1113,7 +966,7 @@ public final class NetMessage {
           return this;
         }
         /**
-         * <code>string password = 2;</code>
+         * <code>string password = 3;</code>
          */
         public Builder setPasswordBytes(
             com.google.protobuf.ByteString value) {
@@ -1123,44 +976,6 @@ public final class NetMessage {
   checkByteStringIsUtf8(value);
           
           password_ = value;
-          onChanged();
-          return this;
-        }
-
-        private boolean loggedIn_ ;
-        /**
-         * <pre>
-         * Will be true on successful login, false otherwise.
-         * </pre>
-         *
-         * <code>bool logged_in = 3;</code>
-         */
-        public boolean getLoggedIn() {
-          return loggedIn_;
-        }
-        /**
-         * <pre>
-         * Will be true on successful login, false otherwise.
-         * </pre>
-         *
-         * <code>bool logged_in = 3;</code>
-         */
-        public Builder setLoggedIn(boolean value) {
-          
-          loggedIn_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <pre>
-         * Will be true on successful login, false otherwise.
-         * </pre>
-         *
-         * <code>bool logged_in = 3;</code>
-         */
-        public Builder clearLoggedIn() {
-          
-          loggedIn_ = false;
           onChanged();
           return this;
         }
@@ -1175,199 +990,1966 @@ public final class NetMessage {
         }
 
 
-        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.Credentials)
+        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage)
       }
 
-      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.Credentials)
-      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials DEFAULT_INSTANCE;
+      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.AuthenticationMessage)
+      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage DEFAULT_INSTANCE;
       static {
-        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials();
+        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage();
       }
 
-      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getDefaultInstance() {
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
-      private static final com.google.protobuf.Parser<Credentials>
-          PARSER = new com.google.protobuf.AbstractParser<Credentials>() {
-        public Credentials parsePartialFrom(
+      private static final com.google.protobuf.Parser<AuthenticationMessage>
+          PARSER = new com.google.protobuf.AbstractParser<AuthenticationMessage>() {
+        public AuthenticationMessage parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-            return new Credentials(input, extensionRegistry);
+            return new AuthenticationMessage(input, extensionRegistry);
         }
       };
 
-      public static com.google.protobuf.Parser<Credentials> parser() {
+      public static com.google.protobuf.Parser<AuthenticationMessage> parser() {
         return PARSER;
       }
 
       @java.lang.Override
-      public com.google.protobuf.Parser<Credentials> getParserForType() {
+      public com.google.protobuf.Parser<AuthenticationMessage> getParserForType() {
         return PARSER;
       }
 
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getDefaultInstanceForType() {
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
 
     }
 
-    public static final int MESSAGE_TYPE_FIELD_NUMBER = 1;
-    private int messageType_;
-    /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-     */
-    public int getMessageTypeValue() {
-      return messageType_;
+    public interface NoticeMessageOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.NoticeMessage)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+       */
+      int getNoticeMessageTypeValue();
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+       */
+      com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType getNoticeMessageType();
+
+      /**
+       * <code>string userName = 2;</code>
+       */
+      java.lang.String getUserName();
+      /**
+       * <code>string userName = 2;</code>
+       */
+      com.google.protobuf.ByteString
+          getUserNameBytes();
     }
     /**
-     * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
+     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.NoticeMessage}
      */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType getMessageType() {
-      com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.valueOf(messageType_);
-      return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.UNRECOGNIZED : result;
+    public  static final class NoticeMessage extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.NoticeMessage)
+        NoticeMessageOrBuilder {
+      // Use NoticeMessage.newBuilder() to construct.
+      private NoticeMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private NoticeMessage() {
+        noticeMessageType_ = 0;
+        userName_ = "";
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private NoticeMessage(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+                int rawValue = input.readEnum();
+
+                noticeMessageType_ = rawValue;
+                break;
+              }
+              case 18: {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                userName_ = s;
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder.class);
+      }
+
+      /**
+       * Protobuf enum {@code dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType}
+       */
+      public enum NoticeMessageType
+          implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        UNSET(0),
+        /**
+         * <code>ONLINE = 1;</code>
+         */
+        ONLINE(1),
+        /**
+         * <code>OFFLINE = 2;</code>
+         */
+        OFFLINE(2),
+        UNRECOGNIZED(-1),
+        ;
+
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        public static final int UNSET_VALUE = 0;
+        /**
+         * <code>ONLINE = 1;</code>
+         */
+        public static final int ONLINE_VALUE = 1;
+        /**
+         * <code>OFFLINE = 2;</code>
+         */
+        public static final int OFFLINE_VALUE = 2;
+
+
+        public final int getNumber() {
+          if (this == UNRECOGNIZED) {
+            throw new java.lang.IllegalArgumentException(
+                "Can't get the number of an unknown enum value.");
+          }
+          return value;
+        }
+
+        /**
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static NoticeMessageType valueOf(int value) {
+          return forNumber(value);
+        }
+
+        public static NoticeMessageType forNumber(int value) {
+          switch (value) {
+            case 0: return UNSET;
+            case 1: return ONLINE;
+            case 2: return OFFLINE;
+            default: return null;
+          }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<NoticeMessageType>
+            internalGetValueMap() {
+          return internalValueMap;
+        }
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+            NoticeMessageType> internalValueMap =
+              new com.google.protobuf.Internal.EnumLiteMap<NoticeMessageType>() {
+                public NoticeMessageType findValueByNumber(int number) {
+                  return NoticeMessageType.forNumber(number);
+                }
+              };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+            getValueDescriptor() {
+          return getDescriptor().getValues().get(ordinal());
+        }
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDescriptor().getEnumTypes().get(0);
+        }
+
+        private static final NoticeMessageType[] VALUES = values();
+
+        public static NoticeMessageType valueOf(
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+          if (desc.getType() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "EnumValueDescriptor is not for this type.");
+          }
+          if (desc.getIndex() == -1) {
+            return UNRECOGNIZED;
+          }
+          return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private NoticeMessageType(int value) {
+          this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType)
+      }
+
+      public static final int NOTICEMESSAGETYPE_FIELD_NUMBER = 1;
+      private int noticeMessageType_;
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+       */
+      public int getNoticeMessageTypeValue() {
+        return noticeMessageType_;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType getNoticeMessageType() {
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.valueOf(noticeMessageType_);
+        return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.UNRECOGNIZED : result;
+      }
+
+      public static final int USERNAME_FIELD_NUMBER = 2;
+      private volatile java.lang.Object userName_;
+      /**
+       * <code>string userName = 2;</code>
+       */
+      public java.lang.String getUserName() {
+        java.lang.Object ref = userName_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          userName_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string userName = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUserNameBytes() {
+        java.lang.Object ref = userName_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          userName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (noticeMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.UNSET.getNumber()) {
+          output.writeEnum(1, noticeMessageType_);
+        }
+        if (!getUserNameBytes().isEmpty()) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userName_);
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (noticeMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.UNSET.getNumber()) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, noticeMessageType_);
+        }
+        if (!getUserNameBytes().isEmpty()) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userName_);
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage)) {
+          return super.equals(obj);
+        }
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) obj;
+
+        boolean result = true;
+        result = result && noticeMessageType_ == other.noticeMessageType_;
+        result = result && getUserName()
+            .equals(other.getUserName());
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + NOTICEMESSAGETYPE_FIELD_NUMBER;
+        hash = (53 * hash) + noticeMessageType_;
+        hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+        hash = (53 * hash) + getUserName().hashCode();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.NoticeMessage}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.NoticeMessage)
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder.class);
+        }
+
+        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          noticeMessageType_ = 0;
+
+          userName_ = "";
+
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getDefaultInstanceForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage build() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage buildPartial() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage(this);
+          result.noticeMessageType_ = noticeMessageType_;
+          result.userName_ = userName_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) {
+            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage other) {
+          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance()) return this;
+          if (other.noticeMessageType_ != 0) {
+            setNoticeMessageTypeValue(other.getNoticeMessageTypeValue());
+          }
+          if (!other.getUserName().isEmpty()) {
+            userName_ = other.userName_;
+            onChanged();
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private int noticeMessageType_ = 0;
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+         */
+        public int getNoticeMessageTypeValue() {
+          return noticeMessageType_;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+         */
+        public Builder setNoticeMessageTypeValue(int value) {
+          noticeMessageType_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+         */
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType getNoticeMessageType() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.valueOf(noticeMessageType_);
+          return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType.UNRECOGNIZED : result;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+         */
+        public Builder setNoticeMessageType(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.NoticeMessageType value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          
+          noticeMessageType_ = value.getNumber();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage.NoticeMessageType noticeMessageType = 1;</code>
+         */
+        public Builder clearNoticeMessageType() {
+          
+          noticeMessageType_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object userName_ = "";
+        /**
+         * <code>string userName = 2;</code>
+         */
+        public java.lang.String getUserName() {
+          java.lang.Object ref = userName_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            userName_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string userName = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+            getUserNameBytes() {
+          java.lang.Object ref = userName_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            userName_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string userName = 2;</code>
+         */
+        public Builder setUserName(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          userName_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string userName = 2;</code>
+         */
+        public Builder clearUserName() {
+          
+          userName_ = getDefaultInstance().getUserName();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string userName = 2;</code>
+         */
+        public Builder setUserNameBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          userName_ = value;
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.NoticeMessage)
+      }
+
+      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.NoticeMessage)
+      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage();
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<NoticeMessage>
+          PARSER = new com.google.protobuf.AbstractParser<NoticeMessage>() {
+        public NoticeMessage parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new NoticeMessage(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<NoticeMessage> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<NoticeMessage> getParserForType() {
+        return PARSER;
+      }
+
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
     }
 
-    public static final int CREDENTIAL_DATA_FIELD_NUMBER = 2;
-    private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials credentialData_;
-    /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
-     */
-    public boolean hasCredentialData() {
-      return credentialData_ != null;
+    public interface ChatMessageOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.ChatMessage)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+       */
+      int getChatMessageTypeValue();
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+       */
+      com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType getChatMessageType();
+
+      /**
+       * <code>string sender = 2;</code>
+       */
+      java.lang.String getSender();
+      /**
+       * <code>string sender = 2;</code>
+       */
+      com.google.protobuf.ByteString
+          getSenderBytes();
+
+      /**
+       * <code>string receiver = 3;</code>
+       */
+      java.lang.String getReceiver();
+      /**
+       * <code>string receiver = 3;</code>
+       */
+      com.google.protobuf.ByteString
+          getReceiverBytes();
+
+      /**
+       * <code>string text = 4;</code>
+       */
+      java.lang.String getText();
+      /**
+       * <code>string text = 4;</code>
+       */
+      com.google.protobuf.ByteString
+          getTextBytes();
+
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.UserCase getUserCase();
     }
     /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.ChatMessage}
      */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData() {
-      return credentialData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance() : credentialData_;
-    }
-    /**
-     * <pre>
-     *    PublicMessage public_message_data = 3;
-     *    PrivateMessage private_message_data = 4;
-     *    ChatHistory chat_history_data = 5;
-     * </pre>
-     *
-     * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
-     */
-    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder() {
-      return getCredentialData();
+    public  static final class ChatMessage extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.ChatMessage)
+        ChatMessageOrBuilder {
+      // Use ChatMessage.newBuilder() to construct.
+      private ChatMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private ChatMessage() {
+        chatMessageType_ = 0;
+        text_ = "";
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private ChatMessage(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+                int rawValue = input.readEnum();
+
+                chatMessageType_ = rawValue;
+                break;
+              }
+              case 18: {
+                java.lang.String s = input.readStringRequireUtf8();
+                userCase_ = 2;
+                user_ = s;
+                break;
+              }
+              case 26: {
+                java.lang.String s = input.readStringRequireUtf8();
+                userCase_ = 3;
+                user_ = s;
+                break;
+              }
+              case 34: {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                text_ = s;
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder.class);
+      }
+
+      /**
+       * Protobuf enum {@code dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType}
+       */
+      public enum ChatMessageType
+          implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        UNSET(0),
+        /**
+         * <code>PUBLIC = 1;</code>
+         */
+        PUBLIC(1),
+        /**
+         * <code>PRIVATE = 2;</code>
+         */
+        PRIVATE(2),
+        UNRECOGNIZED(-1),
+        ;
+
+        /**
+         * <code>UNSET = 0;</code>
+         */
+        public static final int UNSET_VALUE = 0;
+        /**
+         * <code>PUBLIC = 1;</code>
+         */
+        public static final int PUBLIC_VALUE = 1;
+        /**
+         * <code>PRIVATE = 2;</code>
+         */
+        public static final int PRIVATE_VALUE = 2;
+
+
+        public final int getNumber() {
+          if (this == UNRECOGNIZED) {
+            throw new java.lang.IllegalArgumentException(
+                "Can't get the number of an unknown enum value.");
+          }
+          return value;
+        }
+
+        /**
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static ChatMessageType valueOf(int value) {
+          return forNumber(value);
+        }
+
+        public static ChatMessageType forNumber(int value) {
+          switch (value) {
+            case 0: return UNSET;
+            case 1: return PUBLIC;
+            case 2: return PRIVATE;
+            default: return null;
+          }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<ChatMessageType>
+            internalGetValueMap() {
+          return internalValueMap;
+        }
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+            ChatMessageType> internalValueMap =
+              new com.google.protobuf.Internal.EnumLiteMap<ChatMessageType>() {
+                public ChatMessageType findValueByNumber(int number) {
+                  return ChatMessageType.forNumber(number);
+                }
+              };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+            getValueDescriptor() {
+          return getDescriptor().getValues().get(ordinal());
+        }
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDescriptor().getEnumTypes().get(0);
+        }
+
+        private static final ChatMessageType[] VALUES = values();
+
+        public static ChatMessageType valueOf(
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+          if (desc.getType() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "EnumValueDescriptor is not for this type.");
+          }
+          if (desc.getIndex() == -1) {
+            return UNRECOGNIZED;
+          }
+          return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private ChatMessageType(int value) {
+          this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType)
+      }
+
+      private int userCase_ = 0;
+      private java.lang.Object user_;
+      public enum UserCase
+          implements com.google.protobuf.Internal.EnumLite {
+        SENDER(2),
+        RECEIVER(3),
+        USER_NOT_SET(0);
+        private final int value;
+        private UserCase(int value) {
+          this.value = value;
+        }
+        /**
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static UserCase valueOf(int value) {
+          return forNumber(value);
+        }
+
+        public static UserCase forNumber(int value) {
+          switch (value) {
+            case 2: return SENDER;
+            case 3: return RECEIVER;
+            case 0: return USER_NOT_SET;
+            default: return null;
+          }
+        }
+        public int getNumber() {
+          return this.value;
+        }
+      };
+
+      public UserCase
+      getUserCase() {
+        return UserCase.forNumber(
+            userCase_);
+      }
+
+      public static final int CHATMESSAGETYPE_FIELD_NUMBER = 1;
+      private int chatMessageType_;
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+       */
+      public int getChatMessageTypeValue() {
+        return chatMessageType_;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType getChatMessageType() {
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.valueOf(chatMessageType_);
+        return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.UNRECOGNIZED : result;
+      }
+
+      public static final int SENDER_FIELD_NUMBER = 2;
+      /**
+       * <code>string sender = 2;</code>
+       */
+      public java.lang.String getSender() {
+        java.lang.Object ref = "";
+        if (userCase_ == 2) {
+          ref = user_;
+        }
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (userCase_ == 2) {
+            user_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>string sender = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSenderBytes() {
+        java.lang.Object ref = "";
+        if (userCase_ == 2) {
+          ref = user_;
+        }
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          if (userCase_ == 2) {
+            user_ = b;
+          }
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      public static final int RECEIVER_FIELD_NUMBER = 3;
+      /**
+       * <code>string receiver = 3;</code>
+       */
+      public java.lang.String getReceiver() {
+        java.lang.Object ref = "";
+        if (userCase_ == 3) {
+          ref = user_;
+        }
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (userCase_ == 3) {
+            user_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>string receiver = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getReceiverBytes() {
+        java.lang.Object ref = "";
+        if (userCase_ == 3) {
+          ref = user_;
+        }
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          if (userCase_ == 3) {
+            user_ = b;
+          }
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      public static final int TEXT_FIELD_NUMBER = 4;
+      private volatile java.lang.Object text_;
+      /**
+       * <code>string text = 4;</code>
+       */
+      public java.lang.String getText() {
+        java.lang.Object ref = text_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          text_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string text = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTextBytes() {
+        java.lang.Object ref = text_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          text_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (chatMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.UNSET.getNumber()) {
+          output.writeEnum(1, chatMessageType_);
+        }
+        if (userCase_ == 2) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, user_);
+        }
+        if (userCase_ == 3) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 3, user_);
+        }
+        if (!getTextBytes().isEmpty()) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 4, text_);
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (chatMessageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.UNSET.getNumber()) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, chatMessageType_);
+        }
+        if (userCase_ == 2) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, user_);
+        }
+        if (userCase_ == 3) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, user_);
+        }
+        if (!getTextBytes().isEmpty()) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, text_);
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage)) {
+          return super.equals(obj);
+        }
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) obj;
+
+        boolean result = true;
+        result = result && chatMessageType_ == other.chatMessageType_;
+        result = result && getText()
+            .equals(other.getText());
+        result = result && getUserCase().equals(
+            other.getUserCase());
+        if (!result) return false;
+        switch (userCase_) {
+          case 2:
+            result = result && getSender()
+                .equals(other.getSender());
+            break;
+          case 3:
+            result = result && getReceiver()
+                .equals(other.getReceiver());
+            break;
+          case 0:
+          default:
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + CHATMESSAGETYPE_FIELD_NUMBER;
+        hash = (53 * hash) + chatMessageType_;
+        hash = (37 * hash) + TEXT_FIELD_NUMBER;
+        hash = (53 * hash) + getText().hashCode();
+        switch (userCase_) {
+          case 2:
+            hash = (37 * hash) + SENDER_FIELD_NUMBER;
+            hash = (53 * hash) + getSender().hashCode();
+            break;
+          case 3:
+            hash = (37 * hash) + RECEIVER_FIELD_NUMBER;
+            hash = (53 * hash) + getReceiver().hashCode();
+            break;
+          case 0:
+          default:
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.ChatMessage}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.ChatMessage)
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder.class);
+        }
+
+        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          chatMessageType_ = 0;
+
+          text_ = "";
+
+          userCase_ = 0;
+          user_ = null;
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getDefaultInstanceForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage build() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage buildPartial() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage(this);
+          result.chatMessageType_ = chatMessageType_;
+          if (userCase_ == 2) {
+            result.user_ = user_;
+          }
+          if (userCase_ == 3) {
+            result.user_ = user_;
+          }
+          result.text_ = text_;
+          result.userCase_ = userCase_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) {
+            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage other) {
+          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance()) return this;
+          if (other.chatMessageType_ != 0) {
+            setChatMessageTypeValue(other.getChatMessageTypeValue());
+          }
+          if (!other.getText().isEmpty()) {
+            text_ = other.text_;
+            onChanged();
+          }
+          switch (other.getUserCase()) {
+            case SENDER: {
+              userCase_ = 2;
+              user_ = other.user_;
+              onChanged();
+              break;
+            }
+            case RECEIVER: {
+              userCase_ = 3;
+              user_ = other.user_;
+              onChanged();
+              break;
+            }
+            case USER_NOT_SET: {
+              break;
+            }
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int userCase_ = 0;
+        private java.lang.Object user_;
+        public UserCase
+            getUserCase() {
+          return UserCase.forNumber(
+              userCase_);
+        }
+
+        public Builder clearUser() {
+          userCase_ = 0;
+          user_ = null;
+          onChanged();
+          return this;
+        }
+
+
+        private int chatMessageType_ = 0;
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+         */
+        public int getChatMessageTypeValue() {
+          return chatMessageType_;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+         */
+        public Builder setChatMessageTypeValue(int value) {
+          chatMessageType_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+         */
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType getChatMessageType() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.valueOf(chatMessageType_);
+          return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType.UNRECOGNIZED : result;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+         */
+        public Builder setChatMessageType(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.ChatMessageType value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          
+          chatMessageType_ = value.getNumber();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage.ChatMessageType chatMessageType = 1;</code>
+         */
+        public Builder clearChatMessageType() {
+          
+          chatMessageType_ = 0;
+          onChanged();
+          return this;
+        }
+
+        /**
+         * <code>string sender = 2;</code>
+         */
+        public java.lang.String getSender() {
+          java.lang.Object ref = "";
+          if (userCase_ == 2) {
+            ref = user_;
+          }
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            if (userCase_ == 2) {
+              user_ = s;
+            }
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string sender = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+            getSenderBytes() {
+          java.lang.Object ref = "";
+          if (userCase_ == 2) {
+            ref = user_;
+          }
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            if (userCase_ == 2) {
+              user_ = b;
+            }
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string sender = 2;</code>
+         */
+        public Builder setSender(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  userCase_ = 2;
+          user_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string sender = 2;</code>
+         */
+        public Builder clearSender() {
+          if (userCase_ == 2) {
+            userCase_ = 0;
+            user_ = null;
+            onChanged();
+          }
+          return this;
+        }
+        /**
+         * <code>string sender = 2;</code>
+         */
+        public Builder setSenderBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          userCase_ = 2;
+          user_ = value;
+          onChanged();
+          return this;
+        }
+
+        /**
+         * <code>string receiver = 3;</code>
+         */
+        public java.lang.String getReceiver() {
+          java.lang.Object ref = "";
+          if (userCase_ == 3) {
+            ref = user_;
+          }
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            if (userCase_ == 3) {
+              user_ = s;
+            }
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string receiver = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+            getReceiverBytes() {
+          java.lang.Object ref = "";
+          if (userCase_ == 3) {
+            ref = user_;
+          }
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            if (userCase_ == 3) {
+              user_ = b;
+            }
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string receiver = 3;</code>
+         */
+        public Builder setReceiver(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  userCase_ = 3;
+          user_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string receiver = 3;</code>
+         */
+        public Builder clearReceiver() {
+          if (userCase_ == 3) {
+            userCase_ = 0;
+            user_ = null;
+            onChanged();
+          }
+          return this;
+        }
+        /**
+         * <code>string receiver = 3;</code>
+         */
+        public Builder setReceiverBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          userCase_ = 3;
+          user_ = value;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object text_ = "";
+        /**
+         * <code>string text = 4;</code>
+         */
+        public java.lang.String getText() {
+          java.lang.Object ref = text_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            text_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string text = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+            getTextBytes() {
+          java.lang.Object ref = text_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            text_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string text = 4;</code>
+         */
+        public Builder setText(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          text_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string text = 4;</code>
+         */
+        public Builder clearText() {
+          
+          text_ = getDefaultInstance().getText();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string text = 4;</code>
+         */
+        public Builder setTextBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          text_ = value;
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.ChatMessage)
+      }
+
+      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.ChatMessage)
+      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage();
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<ChatMessage>
+          PARSER = new com.google.protobuf.AbstractParser<ChatMessage>() {
+        public ChatMessage parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new ChatMessage(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<ChatMessage> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<ChatMessage> getParserForType() {
+        return PARSER;
+      }
+
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
     }
 
-    public static final int SENDER_FIELD_NUMBER = 3;
-    private volatile java.lang.Object sender_;
-    /**
-     * <code>string sender = 3;</code>
-     */
-    public java.lang.String getSender() {
-      java.lang.Object ref = sender_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sender_ = s;
-        return s;
+    private int messageContentsCase_ = 0;
+    private java.lang.Object messageContents_;
+    public enum MessageContentsCase
+        implements com.google.protobuf.Internal.EnumLite {
+      AUTHMESSAGE(2),
+      NOTICEMESSAGE(3),
+      CHATMESSAGE(4),
+      MESSAGECONTENTS_NOT_SET(0);
+      private final int value;
+      private MessageContentsCase(int value) {
+        this.value = value;
       }
-    }
-    /**
-     * <code>string sender = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getSenderBytes() {
-      java.lang.Object ref = sender_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        sender_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static MessageContentsCase valueOf(int value) {
+        return forNumber(value);
       }
+
+      public static MessageContentsCase forNumber(int value) {
+        switch (value) {
+          case 2: return AUTHMESSAGE;
+          case 3: return NOTICEMESSAGE;
+          case 4: return CHATMESSAGE;
+          case 0: return MESSAGECONTENTS_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public MessageContentsCase
+    getMessageContentsCase() {
+      return MessageContentsCase.forNumber(
+          messageContentsCase_);
     }
 
-    public static final int RECIPIENT_FIELD_NUMBER = 4;
-    private volatile java.lang.Object recipient_;
+    public static final int AUTHMESSAGE_FIELD_NUMBER = 2;
     /**
-     * <code>string recipient = 4;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
      */
-    public java.lang.String getRecipient() {
-      java.lang.Object ref = recipient_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        recipient_ = s;
-        return s;
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getAuthMessage() {
+      if (messageContentsCase_ == 2) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_;
       }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
     }
     /**
-     * <code>string recipient = 4;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getRecipientBytes() {
-      java.lang.Object ref = recipient_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        recipient_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder getAuthMessageOrBuilder() {
+      if (messageContentsCase_ == 2) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_;
       }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
     }
 
-    public static final int MESSAGE_FIELD_NUMBER = 5;
-    private volatile java.lang.Object message_;
+    public static final int NOTICEMESSAGE_FIELD_NUMBER = 3;
     /**
-     * <code>string message = 5;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
      */
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        message_ = s;
-        return s;
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getNoticeMessage() {
+      if (messageContentsCase_ == 3) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_;
       }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
     }
     /**
-     * <code>string message = 5;</code>
+     * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        message_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder getNoticeMessageOrBuilder() {
+      if (messageContentsCase_ == 3) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_;
       }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
+    }
+
+    public static final int CHATMESSAGE_FIELD_NUMBER = 4;
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+     */
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getChatMessage() {
+      if (messageContentsCase_ == 4) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_;
+      }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
+    }
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+     */
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder getChatMessageOrBuilder() {
+      if (messageContentsCase_ == 4) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_;
+      }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1382,20 +2964,14 @@ public final class NetMessage {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.FAKE.getNumber()) {
-        output.writeEnum(1, messageType_);
+      if (messageContentsCase_ == 2) {
+        output.writeMessage(2, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_);
       }
-      if (credentialData_ != null) {
-        output.writeMessage(2, getCredentialData());
+      if (messageContentsCase_ == 3) {
+        output.writeMessage(3, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_);
       }
-      if (!getSenderBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, sender_);
-      }
-      if (!getRecipientBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, recipient_);
-      }
-      if (!getMessageBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, message_);
+      if (messageContentsCase_ == 4) {
+        output.writeMessage(4, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_);
       }
     }
 
@@ -1404,22 +2980,17 @@ public final class NetMessage {
       if (size != -1) return size;
 
       size = 0;
-      if (messageType_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.FAKE.getNumber()) {
+      if (messageContentsCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, messageType_);
+          .computeMessageSize(2, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_);
       }
-      if (credentialData_ != null) {
+      if (messageContentsCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getCredentialData());
+          .computeMessageSize(3, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_);
       }
-      if (!getSenderBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, sender_);
-      }
-      if (!getRecipientBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, recipient_);
-      }
-      if (!getMessageBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, message_);
+      if (messageContentsCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_);
       }
       memoizedSize = size;
       return size;
@@ -1437,18 +3008,25 @@ public final class NetMessage {
       com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message) obj;
 
       boolean result = true;
-      result = result && messageType_ == other.messageType_;
-      result = result && (hasCredentialData() == other.hasCredentialData());
-      if (hasCredentialData()) {
-        result = result && getCredentialData()
-            .equals(other.getCredentialData());
+      result = result && getMessageContentsCase().equals(
+          other.getMessageContentsCase());
+      if (!result) return false;
+      switch (messageContentsCase_) {
+        case 2:
+          result = result && getAuthMessage()
+              .equals(other.getAuthMessage());
+          break;
+        case 3:
+          result = result && getNoticeMessage()
+              .equals(other.getNoticeMessage());
+          break;
+        case 4:
+          result = result && getChatMessage()
+              .equals(other.getChatMessage());
+          break;
+        case 0:
+        default:
       }
-      result = result && getSender()
-          .equals(other.getSender());
-      result = result && getRecipient()
-          .equals(other.getRecipient());
-      result = result && getMessage()
-          .equals(other.getMessage());
       return result;
     }
 
@@ -1459,18 +3037,22 @@ public final class NetMessage {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + MESSAGE_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + messageType_;
-      if (hasCredentialData()) {
-        hash = (37 * hash) + CREDENTIAL_DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getCredentialData().hashCode();
+      switch (messageContentsCase_) {
+        case 2:
+          hash = (37 * hash) + AUTHMESSAGE_FIELD_NUMBER;
+          hash = (53 * hash) + getAuthMessage().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + NOTICEMESSAGE_FIELD_NUMBER;
+          hash = (53 * hash) + getNoticeMessage().hashCode();
+          break;
+        case 4:
+          hash = (37 * hash) + CHATMESSAGE_FIELD_NUMBER;
+          hash = (53 * hash) + getChatMessage().hashCode();
+          break;
+        case 0:
+        default:
       }
-      hash = (37 * hash) + SENDER_FIELD_NUMBER;
-      hash = (53 * hash) + getSender().hashCode();
-      hash = (37 * hash) + RECIPIENT_FIELD_NUMBER;
-      hash = (53 * hash) + getRecipient().hashCode();
-      hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getMessage().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1565,15 +3147,6 @@ public final class NetMessage {
       return builder;
     }
     /**
-     * <pre>
-     * A valid NetMessage consists of a message_type field and possibly one, corresponding sub-message as indicated
-     * in the MessageType definition comments. If a sub-message is required, it should be populated as indicated
-     * in the definition for that message type.
-     * Because of the compatibility limitations on required fields, the required keyword is not used. Instead,
-     * requirements are expected to be enforced by the applications on either end. It is expected that any extra
-     * data sent (e.g. a PrivateMessage with message_type = 0) will be ignored and, most likely, not even detected.
-     * </pre>
-     *
      * Protobuf type {@code dylanlaufenberg.cs300.proto.Message}
      */
     public static final class Builder extends
@@ -1609,20 +3182,8 @@ public final class NetMessage {
       }
       public Builder clear() {
         super.clear();
-        messageType_ = 0;
-
-        if (credentialDataBuilder_ == null) {
-          credentialData_ = null;
-        } else {
-          credentialData_ = null;
-          credentialDataBuilder_ = null;
-        }
-        sender_ = "";
-
-        recipient_ = "";
-
-        message_ = "";
-
+        messageContentsCase_ = 0;
+        messageContents_ = null;
         return this;
       }
 
@@ -1645,15 +3206,28 @@ public final class NetMessage {
 
       public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message buildPartial() {
         com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message(this);
-        result.messageType_ = messageType_;
-        if (credentialDataBuilder_ == null) {
-          result.credentialData_ = credentialData_;
-        } else {
-          result.credentialData_ = credentialDataBuilder_.build();
+        if (messageContentsCase_ == 2) {
+          if (authMessageBuilder_ == null) {
+            result.messageContents_ = messageContents_;
+          } else {
+            result.messageContents_ = authMessageBuilder_.build();
+          }
         }
-        result.sender_ = sender_;
-        result.recipient_ = recipient_;
-        result.message_ = message_;
+        if (messageContentsCase_ == 3) {
+          if (noticeMessageBuilder_ == null) {
+            result.messageContents_ = messageContents_;
+          } else {
+            result.messageContents_ = noticeMessageBuilder_.build();
+          }
+        }
+        if (messageContentsCase_ == 4) {
+          if (chatMessageBuilder_ == null) {
+            result.messageContents_ = messageContents_;
+          } else {
+            result.messageContents_ = chatMessageBuilder_.build();
+          }
+        }
+        result.messageContentsCase_ = messageContentsCase_;
         onBuilt();
         return result;
       }
@@ -1695,23 +3269,22 @@ public final class NetMessage {
 
       public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message other) {
         if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.getDefaultInstance()) return this;
-        if (other.messageType_ != 0) {
-          setMessageTypeValue(other.getMessageTypeValue());
-        }
-        if (other.hasCredentialData()) {
-          mergeCredentialData(other.getCredentialData());
-        }
-        if (!other.getSender().isEmpty()) {
-          sender_ = other.sender_;
-          onChanged();
-        }
-        if (!other.getRecipient().isEmpty()) {
-          recipient_ = other.recipient_;
-          onChanged();
-        }
-        if (!other.getMessage().isEmpty()) {
-          message_ = other.message_;
-          onChanged();
+        switch (other.getMessageContentsCase()) {
+          case AUTHMESSAGE: {
+            mergeAuthMessage(other.getAuthMessage());
+            break;
+          }
+          case NOTICEMESSAGE: {
+            mergeNoticeMessage(other.getNoticeMessage());
+            break;
+          }
+          case CHATMESSAGE: {
+            mergeChatMessage(other.getChatMessage());
+            break;
+          }
+          case MESSAGECONTENTS_NOT_SET: {
+            break;
+          }
         }
         onChanged();
         return this;
@@ -1738,427 +3311,410 @@ public final class NetMessage {
         }
         return this;
       }
+      private int messageContentsCase_ = 0;
+      private java.lang.Object messageContents_;
+      public MessageContentsCase
+          getMessageContentsCase() {
+        return MessageContentsCase.forNumber(
+            messageContentsCase_);
+      }
 
-      private int messageType_ = 0;
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-       */
-      public int getMessageTypeValue() {
-        return messageType_;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-       */
-      public Builder setMessageTypeValue(int value) {
-        messageType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType getMessageType() {
-        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType result = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.valueOf(messageType_);
-        return result == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-       */
-      public Builder setMessageType(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        messageType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.dylanlaufenberg.cs300.proto.Message.MessageType message_type = 1;</code>
-       */
-      public Builder clearMessageType() {
-        
-        messageType_ = 0;
+      public Builder clearMessageContents() {
+        messageContentsCase_ = 0;
+        messageContents_ = null;
         onChanged();
         return this;
       }
 
-      private com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials credentialData_ = null;
+
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder> credentialDataBuilder_;
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder> authMessageBuilder_;
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public boolean hasCredentialData() {
-        return credentialDataBuilder_ != null || credentialData_ != null;
-      }
-      /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
-       */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials getCredentialData() {
-        if (credentialDataBuilder_ == null) {
-          return credentialData_ == null ? com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance() : credentialData_;
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage getAuthMessage() {
+        if (authMessageBuilder_ == null) {
+          if (messageContentsCase_ == 2) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
         } else {
-          return credentialDataBuilder_.getMessage();
+          if (messageContentsCase_ == 2) {
+            return authMessageBuilder_.getMessage();
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
         }
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public Builder setCredentialData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials value) {
-        if (credentialDataBuilder_ == null) {
+      public Builder setAuthMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage value) {
+        if (authMessageBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          credentialData_ = value;
+          messageContents_ = value;
           onChanged();
         } else {
-          credentialDataBuilder_.setMessage(value);
+          authMessageBuilder_.setMessage(value);
         }
-
+        messageContentsCase_ = 2;
         return this;
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public Builder setCredentialData(
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder builderForValue) {
-        if (credentialDataBuilder_ == null) {
-          credentialData_ = builderForValue.build();
+      public Builder setAuthMessage(
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder builderForValue) {
+        if (authMessageBuilder_ == null) {
+          messageContents_ = builderForValue.build();
           onChanged();
         } else {
-          credentialDataBuilder_.setMessage(builderForValue.build());
+          authMessageBuilder_.setMessage(builderForValue.build());
         }
-
+        messageContentsCase_ = 2;
         return this;
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public Builder mergeCredentialData(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials value) {
-        if (credentialDataBuilder_ == null) {
-          if (credentialData_ != null) {
-            credentialData_ =
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.newBuilder(credentialData_).mergeFrom(value).buildPartial();
+      public Builder mergeAuthMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage value) {
+        if (authMessageBuilder_ == null) {
+          if (messageContentsCase_ == 2 &&
+              messageContents_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance()) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.newBuilder((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_)
+                .mergeFrom(value).buildPartial();
           } else {
-            credentialData_ = value;
+            messageContents_ = value;
           }
           onChanged();
         } else {
-          credentialDataBuilder_.mergeFrom(value);
+          if (messageContentsCase_ == 2) {
+            authMessageBuilder_.mergeFrom(value);
+          }
+          authMessageBuilder_.setMessage(value);
         }
-
+        messageContentsCase_ = 2;
         return this;
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public Builder clearCredentialData() {
-        if (credentialDataBuilder_ == null) {
-          credentialData_ = null;
-          onChanged();
+      public Builder clearAuthMessage() {
+        if (authMessageBuilder_ == null) {
+          if (messageContentsCase_ == 2) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+            onChanged();
+          }
         } else {
-          credentialData_ = null;
-          credentialDataBuilder_ = null;
+          if (messageContentsCase_ == 2) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+          }
+          authMessageBuilder_.clear();
         }
-
         return this;
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder getCredentialDataBuilder() {
-        
-        onChanged();
-        return getCredentialDataFieldBuilder().getBuilder();
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder getAuthMessageBuilder() {
+        return getAuthMessageFieldBuilder().getBuilder();
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
-      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder getCredentialDataOrBuilder() {
-        if (credentialDataBuilder_ != null) {
-          return credentialDataBuilder_.getMessageOrBuilder();
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder getAuthMessageOrBuilder() {
+        if ((messageContentsCase_ == 2) && (authMessageBuilder_ != null)) {
+          return authMessageBuilder_.getMessageOrBuilder();
         } else {
-          return credentialData_ == null ?
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.getDefaultInstance() : credentialData_;
+          if (messageContentsCase_ == 2) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
         }
       }
       /**
-       * <pre>
-       *    PublicMessage public_message_data = 3;
-       *    PrivateMessage private_message_data = 4;
-       *    ChatHistory chat_history_data = 5;
-       * </pre>
-       *
-       * <code>.dylanlaufenberg.cs300.proto.Message.Credentials credential_data = 2;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.AuthenticationMessage authMessage = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder> 
-          getCredentialDataFieldBuilder() {
-        if (credentialDataBuilder_ == null) {
-          credentialDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.Credentials.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.CredentialsOrBuilder>(
-                  getCredentialData(),
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder> 
+          getAuthMessageFieldBuilder() {
+        if (authMessageBuilder_ == null) {
+          if (!(messageContentsCase_ == 2)) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.getDefaultInstance();
+          }
+          authMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessageOrBuilder>(
+                  (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.AuthenticationMessage) messageContents_,
                   getParentForChildren(),
                   isClean());
-          credentialData_ = null;
+          messageContents_ = null;
         }
-        return credentialDataBuilder_;
+        messageContentsCase_ = 2;
+        onChanged();;
+        return authMessageBuilder_;
       }
 
-      private java.lang.Object sender_ = "";
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder> noticeMessageBuilder_;
       /**
-       * <code>string sender = 3;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
        */
-      public java.lang.String getSender() {
-        java.lang.Object ref = sender_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          sender_ = s;
-          return s;
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage getNoticeMessage() {
+        if (noticeMessageBuilder_ == null) {
+          if (messageContentsCase_ == 3) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
         } else {
-          return (java.lang.String) ref;
+          if (messageContentsCase_ == 3) {
+            return noticeMessageBuilder_.getMessage();
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>string sender = 3;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
        */
-      public com.google.protobuf.ByteString
-          getSenderBytes() {
-        java.lang.Object ref = sender_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          sender_ = b;
-          return b;
+      public Builder setNoticeMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage value) {
+        if (noticeMessageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          messageContents_ = value;
+          onChanged();
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          noticeMessageBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
+       */
+      public Builder setNoticeMessage(
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder builderForValue) {
+        if (noticeMessageBuilder_ == null) {
+          messageContents_ = builderForValue.build();
+          onChanged();
+        } else {
+          noticeMessageBuilder_.setMessage(builderForValue.build());
+        }
+        messageContentsCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
+       */
+      public Builder mergeNoticeMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage value) {
+        if (noticeMessageBuilder_ == null) {
+          if (messageContentsCase_ == 3 &&
+              messageContents_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance()) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.newBuilder((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            messageContents_ = value;
+          }
+          onChanged();
+        } else {
+          if (messageContentsCase_ == 3) {
+            noticeMessageBuilder_.mergeFrom(value);
+          }
+          noticeMessageBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
+       */
+      public Builder clearNoticeMessage() {
+        if (noticeMessageBuilder_ == null) {
+          if (messageContentsCase_ == 3) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+            onChanged();
+          }
+        } else {
+          if (messageContentsCase_ == 3) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+          }
+          noticeMessageBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder getNoticeMessageBuilder() {
+        return getNoticeMessageFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder getNoticeMessageOrBuilder() {
+        if ((messageContentsCase_ == 3) && (noticeMessageBuilder_ != null)) {
+          return noticeMessageBuilder_.getMessageOrBuilder();
+        } else {
+          if (messageContentsCase_ == 3) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>string sender = 3;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.NoticeMessage noticeMessage = 3;</code>
        */
-      public Builder setSender(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        sender_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string sender = 3;</code>
-       */
-      public Builder clearSender() {
-        
-        sender_ = getDefaultInstance().getSender();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string sender = 3;</code>
-       */
-      public Builder setSenderBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        sender_ = value;
-        onChanged();
-        return this;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder> 
+          getNoticeMessageFieldBuilder() {
+        if (noticeMessageBuilder_ == null) {
+          if (!(messageContentsCase_ == 3)) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.getDefaultInstance();
+          }
+          noticeMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessageOrBuilder>(
+                  (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.NoticeMessage) messageContents_,
+                  getParentForChildren(),
+                  isClean());
+          messageContents_ = null;
+        }
+        messageContentsCase_ = 3;
+        onChanged();;
+        return noticeMessageBuilder_;
       }
 
-      private java.lang.Object recipient_ = "";
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder> chatMessageBuilder_;
       /**
-       * <code>string recipient = 4;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
        */
-      public java.lang.String getRecipient() {
-        java.lang.Object ref = recipient_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          recipient_ = s;
-          return s;
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage getChatMessage() {
+        if (chatMessageBuilder_ == null) {
+          if (messageContentsCase_ == 4) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
         } else {
-          return (java.lang.String) ref;
+          if (messageContentsCase_ == 4) {
+            return chatMessageBuilder_.getMessage();
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>string recipient = 4;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getRecipientBytes() {
-        java.lang.Object ref = recipient_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          recipient_ = b;
-          return b;
+      public Builder setChatMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage value) {
+        if (chatMessageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          messageContents_ = value;
+          onChanged();
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          chatMessageBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+       */
+      public Builder setChatMessage(
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder builderForValue) {
+        if (chatMessageBuilder_ == null) {
+          messageContents_ = builderForValue.build();
+          onChanged();
+        } else {
+          chatMessageBuilder_.setMessage(builderForValue.build());
+        }
+        messageContentsCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+       */
+      public Builder mergeChatMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage value) {
+        if (chatMessageBuilder_ == null) {
+          if (messageContentsCase_ == 4 &&
+              messageContents_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance()) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.newBuilder((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            messageContents_ = value;
+          }
+          onChanged();
+        } else {
+          if (messageContentsCase_ == 4) {
+            chatMessageBuilder_.mergeFrom(value);
+          }
+          chatMessageBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+       */
+      public Builder clearChatMessage() {
+        if (chatMessageBuilder_ == null) {
+          if (messageContentsCase_ == 4) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+            onChanged();
+          }
+        } else {
+          if (messageContentsCase_ == 4) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+          }
+          chatMessageBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder getChatMessageBuilder() {
+        return getChatMessageFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder getChatMessageOrBuilder() {
+        if ((messageContentsCase_ == 4) && (chatMessageBuilder_ != null)) {
+          return chatMessageBuilder_.getMessageOrBuilder();
+        } else {
+          if (messageContentsCase_ == 4) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>string recipient = 4;</code>
+       * <code>.dylanlaufenberg.cs300.proto.Message.ChatMessage chatMessage = 4;</code>
        */
-      public Builder setRecipient(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        recipient_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string recipient = 4;</code>
-       */
-      public Builder clearRecipient() {
-        
-        recipient_ = getDefaultInstance().getRecipient();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string recipient = 4;</code>
-       */
-      public Builder setRecipientBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        recipient_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object message_ = "";
-      /**
-       * <code>string message = 5;</code>
-       */
-      public java.lang.String getMessage() {
-        java.lang.Object ref = message_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          message_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder> 
+          getChatMessageFieldBuilder() {
+        if (chatMessageBuilder_ == null) {
+          if (!(messageContentsCase_ == 4)) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
+          }
+          chatMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder>(
+                  (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_,
+                  getParentForChildren(),
+                  isClean());
+          messageContents_ = null;
         }
-      }
-      /**
-       * <code>string message = 5;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes() {
-        java.lang.Object ref = message_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          message_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string message = 5;</code>
-       */
-      public Builder setMessage(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        message_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string message = 5;</code>
-       */
-      public Builder clearMessage() {
-        
-        message_ = getDefaultInstance().getMessage();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string message = 5;</code>
-       */
-      public Builder setMessageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        message_ = value;
-        onChanged();
-        return this;
+        messageContentsCase_ = 4;
+        onChanged();;
+        return chatMessageBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2215,10 +3771,20 @@ public final class NetMessage {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_dylanlaufenberg_cs300_proto_Message_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor;
+    internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable;
+      internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2229,19 +3795,33 @@ public final class NetMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\021net_message.proto\022\033dylanlaufenberg.cs3" +
-      "00.proto\"\261\003\n\007Message\022F\n\014message_type\030\001 \001" +
-      "(\01620.dylanlaufenberg.cs300.proto.Message" +
-      ".MessageType\022I\n\017credential_data\030\002 \001(\01320." +
-      "dylanlaufenberg.cs300.proto.Message.Cred" +
-      "entials\022\016\n\006sender\030\003 \001(\t\022\021\n\trecipient\030\004 \001" +
-      "(\t\022\017\n\007message\030\005 \001(\t\032E\n\013Credentials\022\021\n\tus" +
-      "er_name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\021\n\tlogge" +
-      "d_in\030\003 \001(\010\"\227\001\n\013MessageType\022\010\n\004FAKE\020\000\022\014\n\010" +
-      "REGISTER\020\001\022\t\n\005LOGIN\020\002\022\n\n\006LOGOUT\020\003\022\022\n\016DEL",
-      "ETE_ACCOUNT\020\004\022\022\n\016PUBLIC_MESSAGE\020\005\022\023\n\017PRI" +
-      "VATE_MESSAGE\020\006\022\n\n\006NOTICE\020\007\022\020\n\014CHAT_HISTO" +
-      "RY\020\010B;\n-com.dylanlaufenberg.portlandstat" +
-      "e.cs300.protoB\nNetMessageb\006proto3"
+      "00.proto\"\305\007\n\007Message\022Q\n\013authMessage\030\002 \001(" +
+      "\0132:.dylanlaufenberg.cs300.proto.Message." +
+      "AuthenticationMessageH\000\022K\n\rnoticeMessage" +
+      "\030\003 \001(\01322.dylanlaufenberg.cs300.proto.Mes" +
+      "sage.NoticeMessageH\000\022G\n\013chatMessage\030\004 \001(" +
+      "\01320.dylanlaufenberg.cs300.proto.Message." +
+      "ChatMessageH\000\032\241\002\n\025AuthenticationMessage\022" +
+      "c\n\017authMessageType\030\001 \001(\0162J.dylanlaufenbe" +
+      "rg.cs300.proto.Message.AuthenticationMes",
+      "sage.AuthMessageType\022\020\n\010userName\030\002 \001(\t\022\020" +
+      "\n\010password\030\003 \001(\t\"\177\n\017AuthMessageType\022\t\n\005U" +
+      "NSET\020\000\022\021\n\rAUTH_REGISTER\020\001\022\016\n\nAUTH_LOGIN\020" +
+      "\002\022\020\n\014AUTH_SUCCESS\020\003\022\023\n\017AUTH_ERROR_USER\020\004" +
+      "\022\027\n\023AUTH_ERROR_PASSWORD\020\005\032\273\001\n\rNoticeMess" +
+      "age\022_\n\021noticeMessageType\030\001 \001(\0162D.dylanla" +
+      "ufenberg.cs300.proto.Message.NoticeMessa" +
+      "ge.NoticeMessageType\022\020\n\010userName\030\002 \001(\t\"7" +
+      "\n\021NoticeMessageType\022\t\n\005UNSET\020\000\022\n\n\006ONLINE" +
+      "\020\001\022\013\n\007OFFLINE\020\002\032\333\001\n\013ChatMessage\022Y\n\017chatM",
+      "essageType\030\001 \001(\0162@.dylanlaufenberg.cs300" +
+      ".proto.Message.ChatMessage.ChatMessageTy" +
+      "pe\022\020\n\006sender\030\002 \001(\tH\000\022\022\n\010receiver\030\003 \001(\tH\000" +
+      "\022\014\n\004text\030\004 \001(\t\"5\n\017ChatMessageType\022\t\n\005UNS" +
+      "ET\020\000\022\n\n\006PUBLIC\020\001\022\013\n\007PRIVATE\020\002B\006\n\004userB\021\n" +
+      "\017messageContentsB;\n-com.dylanlaufenberg." +
+      "portlandstate.cs300.protoB\nNetMessageb\006p" +
+      "roto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2260,13 +3840,25 @@ public final class NetMessage {
     internal_static_dylanlaufenberg_cs300_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dylanlaufenberg_cs300_proto_Message_descriptor,
-        new java.lang.String[] { "MessageType", "CredentialData", "Sender", "Recipient", "Message", });
-    internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor =
+        new java.lang.String[] { "AuthMessage", "NoticeMessage", "ChatMessage", "MessageContents", });
+    internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor =
       internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(0);
-    internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_fieldAccessorTable = new
+    internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dylanlaufenberg_cs300_proto_Message_Credentials_descriptor,
-        new java.lang.String[] { "UserName", "Password", "LoggedIn", });
+        internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor,
+        new java.lang.String[] { "AuthMessageType", "UserName", "Password", });
+    internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor =
+      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(1);
+    internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_dylanlaufenberg_cs300_proto_Message_NoticeMessage_descriptor,
+        new java.lang.String[] { "NoticeMessageType", "UserName", });
+    internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor =
+      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(2);
+    internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor,
+        new java.lang.String[] { "ChatMessageType", "Sender", "Receiver", "Text", "User", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -22,26 +22,44 @@ class ServerController {
         System.out.println("Received message: ");
         System.out.println(message.toString());
 
-        switch(message.getMessageType()) {
-            case REGISTER:
-                // TODO Replace registration stub with real code.
-                if(message.hasCredentialData()) {
-                    user = register(message.getCredentialData().getUserName(),
-                            message.getCredentialData().getPassword(),
-                            channel);
-                }
-
+        // See which type of message is actually present.
+        switch(message.getMessageContentsCase()) {
+            case AUTHMESSAGE:
+                user = processAuthMessage(user, message.getAuthMessage(), channel);
                 break;
 
-            case LOGIN:
-                // TODO Allow login.
+                // TODO Handle other cases.
+            // TODO Handle unset case.
+        }
+
+        return user;
+    }
+
+    private static User processAuthMessage(User user, NetMessage.Message.AuthenticationMessage message, Channel channel) {
+        switch(message.getAuthMessageType()) {
+            case AUTH_REGISTER:
+                // TODO Replace registration stub with real code.
+                user = register(message.getUserName(), message.getPassword(), channel);
+                break;
+
+            case AUTH_LOGIN:
+                // Temporary response: user doesn't exist.
+                channel.writeAndFlush(
+                        NetMessage.Message.newBuilder()
+                                .setAuthMessage(
+                                        NetMessage.Message.AuthenticationMessage.newBuilder()
+                                                .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER)
+                                                .build()
+                                )
+                                .build()
+                );
+                // TODO Allow login. Remove temporary response above.
                 break;
 
             default:
                 System.out.println("Unrecognized message type. (This may be an unimplemented feature.)");
                 break;
         }
-
         return user;
     }
 
@@ -55,47 +73,76 @@ class ServerController {
             return null;
         }
 
-        User newUser = User.newUser(userName, password);
-        if(newUser == null) {
+        User.AuthResult result = User.newUser(userName, password);
+        if(result.result == User.AuthResult.Result.BAD_USER) {
+
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
                     NetMessage.Message.newBuilder()
-                            .setMessageType(NetMessage.Message.MessageType.REGISTER)
-                            .setCredentialData(
-                                    NetMessage.Message.Credentials.newBuilder()
-                                            .setLoggedIn(false)
-                                            .build()
+                            .setAuthMessage(
+                                    NetMessage.Message.AuthenticationMessage.newBuilder()
+                                        .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER)
+                                        .build()
                             )
+                    .build()
             );
 
-            return null;
-        } // Else created a new User.
-        newUser.channel = channel;
-        newUser.broadcast = channels;
+        } else if(result.result == User.AuthResult.Result.BAD_PASSWORD) {
 
-        // Write login notification message to online users
-        channels.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setMessageType(NetMessage.Message.MessageType.NOTICE)
-                        .setMessage(userName + " is now online.")
-                        .build()
-        );
+            // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
+            channel.writeAndFlush(
+                    NetMessage.Message.newBuilder()
+                            .setAuthMessage(
+                                    NetMessage.Message.AuthenticationMessage.newBuilder()
+                                            .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD)
+                                            .build()
+                            )
+                            .build()
+            );
 
-        // Add new user to other users' broadcasts and to the user collection, and add channel to our channel group.
-        users.forEach((name, user)->user.broadcast.add(channel));
-        users.putIfAbsent(userName, newUser);
-        channels.add(channel);
+        } else if(result.result == User.AuthResult.Result.SUCCESS && result.user != null) {
 
-        // Respond to registration request.
-        channel.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setMessageType(NetMessage.Message.MessageType.REGISTER)
-                        .setCredentialData(
-                                NetMessage.Message.Credentials.newBuilder()
-                                        .setLoggedIn(true)
-                                        .build()
-                        )
-        );
-        return newUser;
+            // Success!
+            User newUser = result.user;
+
+            newUser.channel = channel;
+            newUser.broadcast = channels;
+
+            // Write login notification message to online users
+            channels.writeAndFlush(
+                    NetMessage.Message.newBuilder()
+                            .setNoticeMessage(
+                                    NetMessage.Message.NoticeMessage.newBuilder()
+                                            .setNoticeMessageType(NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE)
+                                            .setUserName(userName)
+                                            .build()
+                            )
+                            .build()
+            );
+
+            // Add new user to other users' broadcasts and to the user collection, and add channel to our channel group.
+            users.forEach((name, user) -> user.broadcast.add(channel));
+            users.putIfAbsent(userName, newUser);
+            channels.add(channel);
+
+            // Respond affirmatively to registration request.
+            channels.writeAndFlush(
+                    NetMessage.Message.newBuilder()
+                            .setAuthMessage(
+                                    NetMessage.Message.AuthenticationMessage.newBuilder()
+                                            .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS)
+                                            .build()
+                            )
+                            .build()
+            );
+
+            return newUser;
+
+        } else {
+            // What the hell? Invalid result object!
+        }
+
+        // We haven't yet found and returned a user, so our result defaults to null.
+        return null;
     }
 }

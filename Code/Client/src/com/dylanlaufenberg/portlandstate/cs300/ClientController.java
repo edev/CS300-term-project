@@ -1,5 +1,6 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import com.dylanlaufenberg.portlandstate.cs300.gui.ChatScreen;
 import com.dylanlaufenberg.portlandstate.cs300.gui.LoginScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.Channel;
@@ -11,13 +12,16 @@ public class ClientController {
 
     private static ChatClient client;
     private static Channel channel;
+    public static String userName;
+    public static ChatScreen chatScreen;
+    public static LoginScreen loginScreen;
 
     public static void main(String[] args) throws Exception {
-        LoginScreen.createAndShow();
+        loginScreen = LoginScreen.createAndShow();
     }
 
     public static void login(String hostname, int port, String userName, String password) {
-        if(loginOrRegister(NetMessage.Message.MessageType.LOGIN, hostname, port, userName, password)) {
+        if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN, hostname, port, userName, password)) {
             // Login request sent.
         } else {
             // Login request was not sent.
@@ -25,7 +29,7 @@ public class ClientController {
     }
 
     public static void register(String hostname, int port, String userName, String password) {
-        if(loginOrRegister(NetMessage.Message.MessageType.REGISTER, hostname, port, userName, password)) {
+        if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_REGISTER, hostname, port, userName, password)) {
             // Register request sent.
         } else {
             // Register request was not sent.
@@ -43,14 +47,14 @@ public class ClientController {
      * @param password Password to be sent to the server to authenticate.
      * @return True if the message was sent, false otherwise. (DOES NOT indicate a successful login.)
      */
-    private static boolean loginOrRegister(NetMessage.Message.MessageType messageType,
+    private static boolean loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType messageType,
                                            String hostname,
                                            int port,
                                            String userName,
                                            String password) {
         if(messageType == null
-                || (messageType != NetMessage.Message.MessageType.LOGIN
-                    && messageType != NetMessage.Message.MessageType.REGISTER)
+                || (messageType != NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN
+                    && messageType != NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_REGISTER)
                 || hostname == null
                 || hostname.length() == 0
                 || port <= 0
@@ -62,16 +66,16 @@ public class ClientController {
             System.err.println("Called ClientController.login(...) with invalid arguments. Ignoring.");
         } else {
             NetMessage.Message message = NetMessage.Message.newBuilder()
-                    .setCredentialData(
-                            NetMessage.Message.Credentials.newBuilder()
+                    .setAuthMessage(
+                            NetMessage.Message.AuthenticationMessage.newBuilder()
+                                    .setAuthMessageType(messageType)
                                     .setUserName(userName)
                                     .setPassword(password)
                                     .build())
-                    .setMessageType(messageType)
                     .build();
 
             if(client != null) {
-                client.stop(); // TODO Do this gracefully and prevent or deal with IOException on server. Fix client hang.
+                client.stop();
             }
 
             client = new ChatClient();
@@ -89,5 +93,17 @@ public class ClientController {
             }
         }
         return false;
+    }
+
+    public static void goOnline() {
+        if(loginScreen != null) {
+            loginScreen.close();
+            loginScreen = null;
+            chatScreen = ChatScreen.createAndShow();
+        } // Else we're already online.
+    }
+
+    public static void goOffline() {
+        // TODO Implement. (Reverse of goOnline.)
     }
 }

@@ -6,63 +6,56 @@ option java_package = "com.dylanlaufenberg.portlandstate.cs300.proto";
 option java_outer_classname = "NetMessage";
 
 message Message {
-    // A valid NetMessage consists of a message_type field and possibly one, corresponding sub-message as indicated
-    // in the MessageType definition comments. If a sub-message is required, it should be populated as indicated
-    // in the definition for that message type.
-    //
-    // Because of the compatibility limitations on required fields, the required keyword is not used. Instead,
-    // requirements are expected to be enforced by the applications on either end. It is expected that any extra
-    // data sent (e.g. a PrivateMessage with message_type = 0) will be ignored and, most likely, not even detected.
 
-    enum MessageType {
-        FAKE = 0;               // DO NOT USE. Must start at 0, but 0 seems to get lost somewhere along the way. Bug in Protobuf?
-        REGISTER = 1;           // Requires Credentials message
-        LOGIN = 2;              // Requires Credentials message
-        LOGOUT = 3;             // No associated message
-        DELETE_ACCOUNT = 4;     // No associated message
-        PUBLIC_MESSAGE = 5;     // Requires PublicMessage
-        PRIVATE_MESSAGE = 6;    // Requires PrivateMessage
-        NOTICE = 7;             // Requires Text
-        CHAT_HISTORY = 8;       // No message from client to server; requires ChatHistory from server to client
+    // Definitions of message types.
+
+    message AuthenticationMessage {
+        enum AuthMessageType {
+            UNSET = 0;
+            AUTH_REGISTER = 1;
+            AUTH_LOGIN = 2;
+            AUTH_SUCCESS = 3;
+            AUTH_ERROR_USER = 4;
+            AUTH_ERROR_PASSWORD = 5;
+        }
+
+        AuthMessageType authMessageType = 1;
+        string userName = 2;
+        string password = 3;
     }
 
-    message Credentials {
-        // Client to server: requires user_name and password. logged_in will be ignored and should be omitted.
-        // Server to client: requires logged_in. user_name and password will be ignored and should be omitted.
-        string user_name = 1;
-        string password = 2;
-        bool logged_in = 3; // Will be true on successful login, false otherwise.
+    message NoticeMessage {
+        enum NoticeMessageType {
+            UNSET = 0;
+            ONLINE = 1;
+            OFFLINE = 2;
+        }
+
+        NoticeMessageType noticeMessageType = 1;
+        string userName = 2;
     }
 
-    // TODO Either delete the commented v1 or revert to it if we really need all this structure.
-//    message PublicMessage {
-        // Client to server: requires message. sender will be populated by server and should be omitted.
-        // Server to client: requires all fields. Server should populate sender field.
-//        string sender = 1;
-//        string message = 2;
-//    }
+    message ChatMessage {
+        enum ChatMessageType {
+            UNSET = 0;
+            PUBLIC = 1;
+            PRIVATE = 2;
+        }
 
-//    message PrivateMessage {
-        // Client to server: requires recipient and message. sender will be populated by server and should be omitted.
-        // Server to client: requires all fields. Server should populate sender field.
-//        string sender = 1;
-//        string recipient = 2;
-//        string message = 3;
-//    }
+        ChatMessageType chatMessageType = 1;
+        oneof user {
+            string sender = 2;
+            string receiver = 3;
+        }
+        string text = 4;
+    }
 
-//    message ChatHistory {
-        // Client to server: no ChatHistory.
-        // Server to client: requires all fields.
-//        string text = 1; // TODO Change optional to repeated if and when history becomes a list of strings.
-//    }
 
-    MessageType message_type = 1;
-    Credentials credential_data = 2;
-//    PublicMessage public_message_data = 3;
-//    PrivateMessage private_message_data = 4;
-//    ChatHistory chat_history_data = 5;
 
-    string sender = 3;
-    string recipient = 4;
-    string message = 5;
+    // Message: contains exactly one message of a type defined above.
+    oneof messageContents {
+        AuthenticationMessage authMessage = 2;
+        NoticeMessage noticeMessage = 3;
+        ChatMessage chatMessage = 4;
+    }
 }

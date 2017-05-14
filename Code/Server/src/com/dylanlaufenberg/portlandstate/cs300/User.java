@@ -12,16 +12,30 @@ public class User {
     public Channel channel;
     public ChannelGroup broadcast;
 
-    public static User loadUser(String userName, String password) {
+    public static class AuthResult {
+        User user;
+        Result result;
+
+        enum Result {
+            SUCCESS,        // user will be set.
+            BAD_USER,       // user will be null.
+            BAD_PASSWORD    // user will be null.
+        }
+    }
+
+    public static AuthResult loadUser(String userName, String password) {
         // TODO Load the user from persistence, once we have some....
         return null;
     }
 
-    public static User newUser(String userName, String password) {
+    public static AuthResult newUser(String userName, String password) {
         // TODO Check for existing User in persistence, once we have some....
-        // if(user exists) { return null; }
+        // if(user exists) { return a BAD_USER result; }
 
-        return new User(userName, password);
+        AuthResult ar = new AuthResult();
+        ar.user = new User(userName, password);
+        ar.result = AuthResult.Result.SUCCESS;
+        return ar;
     }
 
     private User(String userName, String password) {
