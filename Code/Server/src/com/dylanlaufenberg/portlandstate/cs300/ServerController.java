@@ -14,9 +14,17 @@ import java.util.TreeMap;
  * Controller for the server program. Receives and routes incoming requests from ChatConnections.
  */
 class ServerController {
+    // FIXME IMPORTANT When a channel closes, remove the user from users!
     public static SortedMap<String, User> users = Collections.synchronizedSortedMap((new TreeMap<String, User>()));
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
+    /**
+     * Processes an incoming message from a channel.
+     * @param user The user to whom the channel belongs (null if no user yet)
+     * @param message The NetMessage.Message object to be processed
+     * @param channel The channel on which the message arrived
+     * @return The user associated with the channel, which may have changed during the transaction
+     */
     public static User process(User user, NetMessage.Message message, Channel channel) {
         // TODO Do something useful
         System.out.println("Received message: ");
@@ -28,6 +36,16 @@ class ServerController {
                 user = processAuthMessage(user, message.getAuthMessage(), channel);
                 break;
 
+            case NOTICEMESSAGE:
+                // Do nothing. Why is a client telling the server something with a notice message?!
+                System.out.println("Ignoring received notice:");
+                System.out.println(message.getNoticeMessage().toString());
+                break;
+
+            case CHATMESSAGE:
+                if(processChatMessage(user, message.getChatMessage(), channel)) {
+                    // Message successfully delivered.
+                } // Else message not successfully delivered.
                 // TODO Handle other cases.
             // TODO Handle unset case.
         }
@@ -145,4 +163,79 @@ class ServerController {
         // We haven't yet found and returned a user, so our result defaults to null.
         return null;
     }
+
+    private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
+        if(user == null
+                || message == null
+                || channel == null) {
+            return false;
+        }
+
+        // Dispatch appropriately and pass the return value through.
+        switch(message.getChatMessageType()) {
+            case PUBLIC:
+                return publicMessage(user, message.getText());
+
+            case PRIVATE:
+                return true; // TODO implement.
+
+            case UNSET:
+            default:
+                return false;
+        }
+    }
+
+    private static boolean publicMessage(User sender, String text) {
+        if(sender == null
+                || text == null
+                || text.equals("")
+                || sender.broadcast == null) {
+            return false;
+        }
+
+        // Send the message to everyone else, with the sender marked.
+        sender.broadcast.writeAndFlush(
+                NetMessage.Message.newBuilder()
+                        .setChatMessage(
+                                NetMessage.Message.ChatMessage.newBuilder()
+                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC)
+                                        .setSender(sender.name)
+                                        .setText(text)
+                                        .build()
+                        )
+                        .build()
+        );
+
+        users.forEach((name, user)->{
+            // TODO Record message in history, if we're doing that on the server.
+        });
+        return true;
+    }
+
+    private static boolean privateMessage(User sender, User receiver, String text) {
+        if(sender == null
+                || receiver == null
+                || text == null
+                || text.equals("")
+                || receiver.channel == null) {
+            return false;
+        }
+
+        // Send the message to the receiver, with the sender marked.
+        receiver.channel.writeAndFlush(
+                NetMessage.Message.newBuilder()
+                        .setChatMessage(
+                                NetMessage.Message.ChatMessage.newBuilder()
+                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE)
+                                        .setSender(sender.name)
+                                        .setText(text)
+                                        .build()
+                        )
+                        .build()
+        );
+
+        // TODO Record message in both users' histories, if we're doing that on the server.
+        return true;
+    }
+
 }
