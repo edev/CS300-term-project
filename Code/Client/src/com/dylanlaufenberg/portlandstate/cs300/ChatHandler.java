@@ -20,7 +20,11 @@ public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message>
         }
     }
 
-    /*
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ClientController.showLoginError(cause.toString());
+    }
+/*
     private void processNotice(NetMessage.Message m) {
         if(m != null
                 && m.getMessageType() == NetMessage.Message.MessageType.NOTICE

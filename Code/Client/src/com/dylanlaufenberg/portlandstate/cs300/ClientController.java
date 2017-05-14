@@ -127,20 +127,14 @@ public class ClientController {
             client = new ChatClient();
             client.host = hostname;
             client.port = port;
-            channel = client.run(); // Synchronous. // TODO Make this asynchronous, using a future.
-
-            if(channel != null) {
-                // Successfully connected!
-                System.out.println("Successfully connected! Sending message:");
-                System.out.println(message.toString());
-                System.out.println();
-                channel.writeAndFlush(message);
-                return true;
-            }
+            channel = client.run(message);
         }
         return false;
     }
 
+    /**
+     * Closes the login screen and opens the chat screen.
+     */
     public static void goOnline() {
         if(loginScreen != null) {
             loginScreen.close();
@@ -149,7 +143,33 @@ public class ClientController {
         } // Else we're already online.
     }
 
+    /**
+     * Closes the connection to the server and returns to the login screen.
+     */
     public static void goOffline() {
-        // TODO Implement. (Reverse of goOnline.)
+        if(chatScreen != null) {
+            chatScreen.close();
+            chatScreen = null;
+            shutdown();
+            loginScreen = LoginScreen.createAndShow();
+        }
+    }
+
+    /**
+     * Closes the server connection.
+     */
+    public static void shutdown() {
+        if(client != null) {
+            client.stop();
+            client = null;
+        }
+    }
+
+    /**
+     * Wrapper for LoginScreen's error display mechanism.
+     * @param errorText A SHORT (one-line) description of the error.
+     */
+    public static void showLoginError(String errorText) {
+        loginScreen.showErrorMessage(errorText);
     }
 }

@@ -22,4 +22,9 @@ class ChatConnection extends SimpleChannelInboundHandler<NetMessage.Message> {
             ctx.close();
         }
     }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("Exception caught: " + cause.getMessage());
+    }
 }

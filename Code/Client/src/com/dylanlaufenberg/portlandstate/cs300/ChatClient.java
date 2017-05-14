@@ -19,13 +19,14 @@ public class ChatClient {
     public String host;
     public int port;
     private Channel channel;
+    private EventLoopGroup workerGroup;
 
-    public Channel run() {
+    public Channel run(NetMessage.Message firstMessage) {
         if(channel != null) {
             stop();
         }
 
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        workerGroup = new NioEventLoopGroup();
 
         try {
             Bootstrap b = new Bootstrap();
@@ -50,7 +51,26 @@ public class ChatClient {
             });
 
             // Start the client.
-            channel = b.connect(host, port).sync().channel(); // TODO Detect and display error if connection refused, etc.
+            ChannelFuture future = b.connect(host, port);
+            future.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture f) throws Exception {
+                    if(f.isSuccess()) {
+                        if(firstMessage != null) {
+                            System.out.println("Successfully connected! Sending message:");
+                            System.out.println(firstMessage.toString());
+                            System.out.println();
+
+                            f.channel().writeAndFlush(firstMessage);
+                        }
+                    } else {
+                        ClientController.showLoginError(f.cause().getMessage());
+                    }
+                }
+            });
+
+            channel = future.channel();
+
             return channel;
         } catch (Exception e) {
             System.err.println(e.toString());
@@ -61,14 +81,13 @@ public class ChatClient {
 
     public void stop() {
         if(channel != null) {
-            try {
-                // Wait until the connection is closed.
-                channel.close().sync();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                channel = null;
-            }
+            // Wait until the connection is closed.
+            channel.close();
+            channel = null;
+        }
+        if(workerGroup != null) {
+            workerGroup.shutdownGracefully();
+            workerGroup = null;
         }
     }
 }

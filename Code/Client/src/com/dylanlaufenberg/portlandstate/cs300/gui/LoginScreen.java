@@ -85,8 +85,6 @@ public class LoginScreen {
         if(d != null) {
             currentOperation = Operation.LOGIN;
             ClientController.login(d.hostname, d.port, d.userName, d.password);
-        } else {
-            // TODO Add error message here or in getLoginData.
         }
     }
 
@@ -95,8 +93,6 @@ public class LoginScreen {
         if(d != null) {
             currentOperation = Operation.REGISTER;
             ClientController.register(d.hostname, d.port, d.userName, d.password);
-        } else {
-            // TODO Add error message here or in getLoginData.
         }
     }
 
@@ -110,7 +106,6 @@ public class LoginScreen {
             d.port = Integer.valueOf(portField.getText());
         } catch (NumberFormatException e) {
             // Detected error: port is not a number.
-            setErrorText("Port must be a number between 1 and 65535.");
         }
         d.userName = userNameField.getText();
         d.password = String.valueOf(passwordField.getPassword());
@@ -160,6 +155,7 @@ public class LoginScreen {
             case NONE:
                 break;
         }
+        currentOperation = Operation.NONE;
     }
 
     public void showPasswordErrorMessage() {
@@ -175,11 +171,22 @@ public class LoginScreen {
             case NONE:
                 break;
         }
+        currentOperation = Operation.NONE;
+    }
+
+    /**
+     * Displays the given error message (presumably a network connection failure, etc.) and clears any interal record
+     * of an in-progress operation.
+     * @param text The (SHORT!) error text to display.
+     */
+    public void showErrorMessage(String text) {
+        setErrorText(text);
+        currentOperation = Operation.NONE;
     }
 
     private void setErrorText(String text) {
         statusText.setForeground(Color.red);
-        statusText.setText(text);
+        statusText.setText("<html>" + text + "</html>");
     }
 
     public void close() {
