@@ -16,49 +16,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message>
             System.out.println(m.toString());
             System.out.println();
 
-            switch(m.getMessageContentsCase()) {
-                case AUTHMESSAGE:
-                    processAuthMessage(m.getAuthMessage());
-                    break;
-
-                case NOTICEMESSAGE:
-                    // processNotice(m); // TODO Fix processNotice
-                    break;
-
-                case CHATMESSAGE:
-                    // TODO Process Chat messages
-                    break;
-            }
-        }
-    }
-
-    private void processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
-        if(m == null) {
-            return;
-        }
-
-        switch(m.getAuthMessageType()) {
-            case UNSET:
-            case AUTH_LOGIN:
-            case AUTH_REGISTER:
-            case UNRECOGNIZED:
-                break;
-
-            case AUTH_SUCCESS:
-                ClientController.goOnline();
-                break;
-
-            case AUTH_ERROR_USER:
-                if(ClientController.loginScreen != null) {
-                    ClientController.loginScreen.showUserErrorMessage();
-                }
-                break;
-
-            case AUTH_ERROR_PASSWORD:
-                if(ClientController.loginScreen != null) {
-                    ClientController.loginScreen.showPasswordErrorMessage();
-                }
-                break;
+            ClientController.processMessage(m);
         }
     }
 

@@ -20,6 +20,52 @@ public class ClientController {
         loginScreen = LoginScreen.createAndShow();
     }
 
+    public static void processMessage(NetMessage.Message m) {
+        switch(m.getMessageContentsCase()) {
+            case AUTHMESSAGE:
+                processAuthMessage(m.getAuthMessage());
+                break;
+
+            case NOTICEMESSAGE:
+                // processNotice(m); // TODO Fix processNotice
+                break;
+
+            case CHATMESSAGE:
+                // TODO Process Chat messages
+                break;
+        }
+    }
+
+    private static void processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
+        if(m == null) {
+            return;
+        }
+
+        switch(m.getAuthMessageType()) {
+            case UNSET:
+            case AUTH_LOGIN:
+            case AUTH_REGISTER:
+            case UNRECOGNIZED:
+                break;
+
+            case AUTH_SUCCESS:
+                goOnline();
+                break;
+
+            case AUTH_ERROR_USER:
+                if(loginScreen != null) {
+                    loginScreen.showUserErrorMessage();
+                }
+                break;
+
+            case AUTH_ERROR_PASSWORD:
+                if(loginScreen != null) {
+                    loginScreen.showPasswordErrorMessage();
+                }
+                break;
+        }
+    }
+
     public static void login(String hostname, int port, String userName, String password) {
         if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN, hostname, port, userName, password)) {
             // Login request sent.
