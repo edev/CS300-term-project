@@ -10,20 +10,21 @@ import io.netty.channel.Channel;
  */
 public class ClientController {
 
-    private static ChatClient client;
-    private static Channel channel;
-    public static String userName;
-    public static ChatScreen chatScreen;
-    public static LoginScreen loginScreen;
+    private ChatClient client;
+    private Channel channel;
+    public String userName;
+    public ChatScreen chatScreen;
+    public LoginScreen loginScreen;
 
     public static void main(String[] args) throws Exception {
         // FIXME Try making ClientController non-static so the object can be passed between classes.
-        loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
-        chatScreen = new ChatScreen();
-        loginScreen.show();
+        ClientController c = new ClientController();
+        c.loginScreen = LoginScreen.createAndShow(c); // FIXME Refactor and reorganize appropriately
+        c.chatScreen = new ChatScreen(c);
+        c.loginScreen.show();
     }
 
-    public static void processMessage(NetMessage.Message m) {
+    public void processMessage(NetMessage.Message m) {
         switch(m.getMessageContentsCase()) {
             case AUTHMESSAGE:
                 processAuthMessage(m.getAuthMessage());
@@ -39,7 +40,7 @@ public class ClientController {
         }
     }
 
-    private static void processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
+    private void processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
         if(m == null) {
             return;
         }
@@ -69,7 +70,7 @@ public class ClientController {
         }
     }
 
-    public static void login(String hostname, int port, String userName, String password) {
+    public void login(String hostname, int port, String userName, String password) {
         if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN, hostname, port, userName, password)) {
             // Login request sent.
         } else {
@@ -77,7 +78,7 @@ public class ClientController {
         }
     }
 
-    public static void register(String hostname, int port, String userName, String password) {
+    public void register(String hostname, int port, String userName, String password) {
         if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_REGISTER, hostname, port, userName, password)) {
             // Register request sent.
         } else {
@@ -96,7 +97,7 @@ public class ClientController {
      * @param password Password to be sent to the server to authenticate.
      * @return True if the message was sent, false otherwise. (DOES NOT indicate a successful login.)
      */
-    private static boolean loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType messageType,
+    private boolean loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType messageType,
                                            String hostname,
                                            int port,
                                            String userName,
@@ -114,7 +115,7 @@ public class ClientController {
             // Error detected.
             System.err.println("Called ClientController.login(...) with invalid arguments. Ignoring.");
         } else {
-            ClientController.userName = userName;
+            userName = userName;
             NetMessage.Message message = NetMessage.Message.newBuilder()
                     .setAuthMessage(
                             NetMessage.Message.AuthenticationMessage.newBuilder()
@@ -131,7 +132,7 @@ public class ClientController {
             client = new ChatClient();
             client.host = hostname;
             client.port = port;
-            channel = client.run(chatScreen, message);
+            channel = client.run(this, message);
         }
         return false;
     }
@@ -139,7 +140,7 @@ public class ClientController {
     /**
      * Closes the login screen and opens the chat screen.
      */
-    public static void goOnline() {
+    public void goOnline() {
         if(loginScreen != null) {
             loginScreen.hide();
             chatScreen.show();
@@ -157,7 +158,7 @@ public class ClientController {
     /**
      * Closes the connection to the server and returns to the login screen.
      */
-    public static void goOffline() {
+    public void goOffline() {
         chatScreen.hide();
         loginScreen.show();
 //        if(chatScreen != null) {
@@ -175,7 +176,7 @@ public class ClientController {
     /**
      * Closes the server connection.
      */
-    public static void shutdown() {
+    public void shutdown() {
         if(client != null) {
             client.stop();
             client = null;
@@ -186,11 +187,11 @@ public class ClientController {
      * Wrapper for LoginScreen's error display mechanism.
      * @param errorText A SHORT (one-line) description of the error.
      */
-    public static void showLoginError(String errorText) {
+    public void showLoginError(String errorText) {
         loginScreen.showErrorMessage(errorText);
     }
 
-    private static void processChatMessage(NetMessage.Message.ChatMessage message) {
+    private void processChatMessage(NetMessage.Message.ChatMessage message) {
         if (message == null
                 || message.getChatMessageType() == NetMessage.Message.ChatMessage.ChatMessageType.UNSET
                 || message.getUserCase() != NetMessage.Message.ChatMessage.UserCase.SENDER
@@ -224,7 +225,7 @@ public class ClientController {
         }
     }
 
-    public static void sendPublicMessage(String message) {
+    public void sendPublicMessage(String message) {
         if(message == null || message.equals("")) {
             return;
         }

@@ -19,6 +19,7 @@ public class ChatScreen {
     private JScrollPane chatAreaScrollPane;
     private JTextField messageField;
     private JButton sendButton;
+    private ClientController controller;
 
     private enum SendMessageType {
         PUBLIC,
@@ -27,7 +28,8 @@ public class ChatScreen {
     private SendMessageType sendType = SendMessageType.PUBLIC;
     private String privateMessageRecipient;
 
-    public ChatScreen() {
+    public ChatScreen(ClientController controller) {
+        this.controller = controller;
         initComponents();
 
         sendButton.addActionListener(new ActionListener() {
@@ -56,14 +58,14 @@ public class ChatScreen {
 
     public void show() {
         JFrame frame = new JFrame("ChatScreen");
-        frame.setContentPane(new ChatScreen().rootPanel);
+        frame.setContentPane(rootPanel); // TODO FIXME IS THIS THE CAUSE?!?!
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chatFrame = frame;
 
         chatFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                ClientController.shutdown();
+                controller.shutdown();
                 e.getWindow().dispose();
             }
         });
@@ -110,8 +112,8 @@ public class ChatScreen {
             }
         } else if(sendType == SendMessageType.PUBLIC) {
             // Send public message.
-            addPublicMessage(ClientController.userName, message);
-            ClientController.sendPublicMessage(message);
+            addPublicMessage(controller.userName, message);
+            controller.sendPublicMessage(message);
         } else {
             System.err.println("ChatScreen.sendType is invalid! (Neither PUBLIC nor PRIVATE.)");
         }

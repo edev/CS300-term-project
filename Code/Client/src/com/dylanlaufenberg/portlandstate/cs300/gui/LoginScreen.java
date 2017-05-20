@@ -22,6 +22,7 @@ public class LoginScreen {
     private JPanel rootPanel;
     private JLabel statusText;
     private Operation currentOperation;
+    private ClientController controller;
 
     private enum Operation {
         NONE,
@@ -29,7 +30,9 @@ public class LoginScreen {
         REGISTER
     }
 
-    public LoginScreen() {
+    public LoginScreen(ClientController controller) {
+        this.controller = controller;
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,8 +71,9 @@ public class LoginScreen {
         });
     }
 
-    public static LoginScreen createAndShow() {
-        LoginScreen ls = new LoginScreen();
+    // TODO Refactor me into contructor and show methods.
+    public static LoginScreen createAndShow(ClientController controller) {
+        LoginScreen ls = new LoginScreen(controller);
         JFrame frame = new JFrame("LoginScreen");
         frame.setContentPane(ls.rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,7 +91,7 @@ public class LoginScreen {
         LoginData d = getLoginData();
         if(d != null) {
             currentOperation = Operation.LOGIN;
-            ClientController.login(d.hostname, d.port, d.userName, d.password);
+            controller.login(d.hostname, d.port, d.userName, d.password);
         }
     }
 
@@ -95,7 +99,7 @@ public class LoginScreen {
         LoginData d = getLoginData();
         if(d != null) {
             currentOperation = Operation.REGISTER;
-            ClientController.register(d.hostname, d.port, d.userName, d.password);
+            controller.register(d.hostname, d.port, d.userName, d.password);
         }
     }
 

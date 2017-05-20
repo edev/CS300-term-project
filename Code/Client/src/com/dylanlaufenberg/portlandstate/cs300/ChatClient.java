@@ -1,6 +1,5 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
-import com.dylanlaufenberg.portlandstate.cs300.gui.ChatScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -22,7 +21,7 @@ public class ChatClient {
     private Channel channel;
     private EventLoopGroup workerGroup;
 
-    public Channel run(ChatScreen screen, NetMessage.Message firstMessage) {
+    public Channel run(ClientController controller, NetMessage.Message firstMessage) {
         if(channel != null) {
             stop();
         }
@@ -43,7 +42,7 @@ public class ChatClient {
                     pipeline.addLast("frameDecoder",
                             new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
                     pipeline.addLast("ProtobufDecoder", new ProtobufDecoder(NetMessage.Message.getDefaultInstance()));
-                    pipeline.addLast("ChannelInboundHandler", new ChatHandler(screen));
+                    pipeline.addLast("ChannelInboundHandler", new ChatHandler(controller));
 
                     // Encoders
                     pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
@@ -65,7 +64,7 @@ public class ChatClient {
                             f.channel().writeAndFlush(firstMessage);
                         }
                     } else {
-                        ClientController.showLoginError(f.cause().getMessage());
+                        controller.showLoginError(f.cause().getMessage());
                     }
                 }
             });
