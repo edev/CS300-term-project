@@ -30,6 +30,7 @@
         <properties>
           <editable value="false"/>
           <lineWrap value="true"/>
+          <text value="You are now logged in.&#10;"/>
           <wrapStyleWord value="true"/>
         </properties>
       </component>

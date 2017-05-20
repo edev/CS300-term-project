@@ -1,13 +1,27 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import com.dylanlaufenberg.portlandstate.cs300.gui.ChatScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import javax.swing.*;
 
 /**
  * Defines the handler used to respond to state changes and data reads on the Netty Channel talking to the server.
  */
 public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message> {
+
+    public ChatScreen chatScreen;
+
+    public ChatHandler() {
+        super();
+    }
+
+    public ChatHandler(ChatScreen chatScreen) {
+        this();
+        this.chatScreen = chatScreen;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, NetMessage.Message m) throws Exception {
@@ -15,8 +29,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message>
             System.out.println("Received message: ");
             System.out.println(m.toString());
             System.out.println();
-
-            ClientController.processMessage(m);
+            SwingUtilities.invokeLater(() -> {
+                ClientController.processMessage(m);
+            });
         }
     }
 

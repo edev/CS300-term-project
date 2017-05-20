@@ -17,7 +17,10 @@ public class ClientController {
     public static LoginScreen loginScreen;
 
     public static void main(String[] args) throws Exception {
-        loginScreen = LoginScreen.createAndShow();
+        // FIXME Try making ClientController non-static so the object can be passed between classes.
+        loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
+        chatScreen = new ChatScreen();
+        loginScreen.show();
     }
 
     public static void processMessage(NetMessage.Message m) {
@@ -31,7 +34,7 @@ public class ClientController {
                 break;
 
             case CHATMESSAGE:
-                // TODO Process Chat messages
+                processChatMessage(m.getChatMessage());
                 break;
         }
     }
@@ -111,6 +114,7 @@ public class ClientController {
             // Error detected.
             System.err.println("Called ClientController.login(...) with invalid arguments. Ignoring.");
         } else {
+            ClientController.userName = userName;
             NetMessage.Message message = NetMessage.Message.newBuilder()
                     .setAuthMessage(
                             NetMessage.Message.AuthenticationMessage.newBuilder()
@@ -127,7 +131,7 @@ public class ClientController {
             client = new ChatClient();
             client.host = hostname;
             client.port = port;
-            channel = client.run(message);
+            channel = client.run(chatScreen, message);
         }
         return false;
     }
@@ -137,9 +141,16 @@ public class ClientController {
      */
     public static void goOnline() {
         if(loginScreen != null) {
-            loginScreen.close();
-            loginScreen = null;
-            chatScreen = ChatScreen.createAndShow();
+            loginScreen.hide();
+            chatScreen.show();
+//            loginScreen.close();
+//            loginScreen = null;
+//            if(chatScreen != null) {
+//                chatScreen.close();;
+//                System.err.println("Error: goOnline() found a ChatScreen already in place!");
+//            }
+//            chatScreen = new ChatScreen();
+
         } // Else we're already online.
     }
 
@@ -147,12 +158,18 @@ public class ClientController {
      * Closes the connection to the server and returns to the login screen.
      */
     public static void goOffline() {
-        if(chatScreen != null) {
-            chatScreen.close();
-            chatScreen = null;
-            shutdown();
-            loginScreen = LoginScreen.createAndShow();
-        }
+        chatScreen.hide();
+        loginScreen.show();
+//        if(chatScreen != null) {
+//            chatScreen.close();
+//            chatScreen = null;
+//            shutdown();
+//            if(loginScreen != null) {
+//                loginScreen.close();
+//                System.err.println("ClientController.goOffline() found a LoginScreen already in place!");
+//            }
+//            loginScreen = LoginScreen.createAndShow();
+//        }
     }
 
     /**
@@ -171,5 +188,62 @@ public class ClientController {
      */
     public static void showLoginError(String errorText) {
         loginScreen.showErrorMessage(errorText);
+    }
+
+    private static void processChatMessage(NetMessage.Message.ChatMessage message) {
+        if (message == null
+                || message.getChatMessageType() == NetMessage.Message.ChatMessage.ChatMessageType.UNSET
+                || message.getUserCase() != NetMessage.Message.ChatMessage.UserCase.SENDER
+                || message.getText().trim().equals("")) {
+
+            // A field is flatly missing.
+            return;
+
+        } else if (chatScreen == null) {
+
+            // We're in the wrong state! We can't display this, and we really shouldn't have received it.
+            System.err.println("Received chat message while not in chat mode:");
+            System.err.println(message.toString());
+            System.err.println();
+            return;
+        }
+
+        // Else, the message has everything it needs: a type, a sender, and a text body.
+        switch(message.getChatMessageType()) {
+            case PUBLIC:
+                chatScreen.addPublicMessage(message.getSender(), message.getText());
+                // TODO Record public message on client if we're doing that.
+                break;
+
+            case PRIVATE:
+                // TODO Implement private messages.
+                break;
+
+            case UNRECOGNIZED:
+                System.err.println("Received chat message with unrecognized ChatMessageType. Ignoring.");
+        }
+    }
+
+    public static void sendPublicMessage(String message) {
+        if(message == null || message.equals("")) {
+            return;
+        }
+
+        if(channel == null) {
+            System.err.println("Tried to send a public message without a valid channel. Ignoring.");
+            return;
+        }
+
+        channel.writeAndFlush(
+                NetMessage.Message.newBuilder()
+                        .setChatMessage(
+                                NetMessage.Message.ChatMessage.newBuilder()
+                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC)
+                                        .setText(message)
+                                        .build()
+                        )
+                        .build()
+        );
+        System.out.println("Public message sent!");
     }
 }

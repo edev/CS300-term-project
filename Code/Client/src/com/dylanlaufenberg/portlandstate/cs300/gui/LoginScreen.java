@@ -74,10 +74,13 @@ public class LoginScreen {
         frame.setContentPane(ls.rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setVisible(true);
         ls.loginFrame = frame;
         ls.currentOperation = Operation.NONE;
         return ls;
+    }
+
+    public void show() {
+        loginFrame.setVisible(true);
     }
 
     private void doLogin() {
@@ -189,9 +192,13 @@ public class LoginScreen {
         statusText.setText("<html>" + text + "</html>");
     }
 
-    public void close() {
+    public void hide() {
         currentOperation = Operation.NONE;
         loginFrame.setVisible(false);
+    }
+
+    public void close() {
+        hide();
         loginFrame.dispose();
     }
 }
