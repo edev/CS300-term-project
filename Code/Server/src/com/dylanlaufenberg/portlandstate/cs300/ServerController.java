@@ -124,7 +124,8 @@ class ServerController {
             User newUser = result.user;
 
             newUser.channel = channel;
-            newUser.broadcast = channels;
+            newUser.broadcast = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+            newUser.broadcast.addAll(channels);
 
             // Write login notification message to online users
             channels.writeAndFlush(
@@ -144,7 +145,7 @@ class ServerController {
             channels.add(channel);
 
             // Respond affirmatively to registration request.
-            channels.writeAndFlush(
+            channel.writeAndFlush(
                     NetMessage.Message.newBuilder()
                             .setAuthMessage(
                                     NetMessage.Message.AuthenticationMessage.newBuilder()

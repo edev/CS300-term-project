@@ -1,5 +1,6 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import com.dylanlaufenberg.portlandstate.cs300.gui.ChatScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -11,15 +12,15 @@ import javax.swing.*;
  */
 public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message> {
 
-    public ClientController controller;
+    public ChatScreen chatScreen;
 
     public ChatHandler() {
         super();
     }
 
-    public ChatHandler(ClientController controller) {
+    public ChatHandler(ChatScreen chatScreen) {
         this();
-        this.controller = controller;
+        this.chatScreen = chatScreen;
     }
 
     @Override
@@ -29,14 +30,14 @@ public class ChatHandler extends SimpleChannelInboundHandler<NetMessage.Message>
             System.out.println(m.toString());
             System.out.println();
             SwingUtilities.invokeLater(() -> {
-                controller.processMessage(m);
+                ClientController.processMessage(m);
             });
         }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        controller.showLoginError(cause.toString());
+        ClientController.showLoginError(cause.toString());
     }
 /*
     private void processNotice(NetMessage.Message m) {

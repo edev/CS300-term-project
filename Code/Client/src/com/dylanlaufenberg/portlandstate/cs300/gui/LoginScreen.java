@@ -22,7 +22,6 @@ public class LoginScreen {
     private JPanel rootPanel;
     private JLabel statusText;
     private Operation currentOperation;
-    private ClientController controller;
 
     private enum Operation {
         NONE,
@@ -30,9 +29,7 @@ public class LoginScreen {
         REGISTER
     }
 
-    public LoginScreen(ClientController controller) {
-        this.controller = controller;
-
+    public LoginScreen() {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,9 +68,8 @@ public class LoginScreen {
         });
     }
 
-    // TODO Refactor me into contructor and show methods.
-    public static LoginScreen createAndShow(ClientController controller) {
-        LoginScreen ls = new LoginScreen(controller);
+    public static LoginScreen createAndShow() {
+        LoginScreen ls = new LoginScreen();
         JFrame frame = new JFrame("LoginScreen");
         frame.setContentPane(ls.rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,14 +80,16 @@ public class LoginScreen {
     }
 
     public void show() {
-        loginFrame.setVisible(true);
+        if(!loginFrame.isVisible()){
+            loginFrame.setVisible(true);
+        }
     }
 
     private void doLogin() {
         LoginData d = getLoginData();
         if(d != null) {
             currentOperation = Operation.LOGIN;
-            controller.login(d.hostname, d.port, d.userName, d.password);
+            ClientController.login(d.hostname, d.port, d.userName, d.password);
         }
     }
 
@@ -99,7 +97,7 @@ public class LoginScreen {
         LoginData d = getLoginData();
         if(d != null) {
             currentOperation = Operation.REGISTER;
-            controller.register(d.hostname, d.port, d.userName, d.password);
+            ClientController.register(d.hostname, d.port, d.userName, d.password);
         }
     }
 
