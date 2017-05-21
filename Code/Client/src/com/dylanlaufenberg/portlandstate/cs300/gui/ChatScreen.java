@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * ChatScreen represents the main chat window visible to the user when the client is logged in.
@@ -15,10 +17,20 @@ public class ChatScreen {
     private JFrame chatFrame;
     private JPanel rootPanel;
     private JList userList;
+    private UserListModel userListModel;
     private JTextArea chatArea;
     private JScrollPane chatAreaScrollPane;
     private JTextField messageField;
     private JButton sendButton;
+
+    /**
+     * Automatically called through IDEA's generated UI code.
+     * Custom creation code goes here, corresponding to components for which "custom create" is set in ChatScreen.form.
+     */
+    private void createUIComponents() {
+        userListModel = new UserListModel();
+        userList = new JList<>(userListModel);
+    }
 
     private enum SendMessageType {
         PUBLIC,
@@ -110,4 +122,63 @@ public class ChatScreen {
         }
     }
 
+    /**
+     * Called when the client receives a notice that a user has come online. Updates chat screen accordingly.
+     * @param userName The name of the now-online user.
+     */
+    public void userAdded(String userName) { // FIXME Make userList add correctly!
+        userListModel.add(userName); // This and the line below should do the same thing.
+        ((UserListModel)userList.getModel()).add(userName);
+    }
+
+    /**
+     * Called when the client receives a notice that a user has gone offline. Updates chat screen accordingly.
+     * @param userName The name of the now-offline user.
+     */
+    public void userRemoved(String userName) { // FIXME Make userList remove correctly!
+        userListModel.remove(userName);
+    }
+
+    private class UserListModel extends AbstractListModel<String> {
+        private ArrayList<String> users;
+
+        public UserListModel() {
+            users = new ArrayList<>();
+        }
+
+        public void add(String user) {
+            if(user == null) {
+                return;
+            }
+
+            users.add(user);
+            users.sort(Comparator.naturalOrder());
+            fireContentsChanged(this, 0, users.size() - 1);
+            fireIntervalAdded(this, 0, users.size() - 1);
+        }
+
+        public void remove(String user) {
+            if(user == null) {
+                return;
+            }
+
+            users.remove(user);
+            fireContentsChanged(this, 0, users.size() - 1);
+            fireIntervalRemoved(this, 0, users.size() - 1);
+        }
+
+        @Override
+        public int getSize() {
+            return users.size();
+        }
+
+        @Override
+        public String getElementAt(int index) {
+            if(index < users.size()) {
+                return users.get(index);
+            } else {
+                return null;
+            }
+        }
+    }
 }

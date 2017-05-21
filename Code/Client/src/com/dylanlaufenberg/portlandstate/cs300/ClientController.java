@@ -29,7 +29,7 @@ public class ClientController {
                 break;
 
             case NOTICEMESSAGE:
-                // processNotice(m); // TODO Fix processNotice
+                processNotice(m.getNoticeMessage()); // TODO Fix processNotice
                 break;
 
             case CHATMESSAGE:
@@ -138,7 +138,7 @@ public class ClientController {
     /**
      * Closes the login screen and opens the chat screen.
      */
-    public static void goOnline() {
+    public static void goOnline() { // TODO Refactor goOnline and goOffline with shutdown; integrate more closely with netty status.
         loginScreen.hide();
         chatScreen.show();
     }
@@ -149,6 +149,7 @@ public class ClientController {
     public static void goOffline() {
         chatScreen.hide();
         loginScreen.show();
+        shutdown();
     }
 
     /**
@@ -167,6 +168,32 @@ public class ClientController {
      */
     public static void showLoginError(String errorText) {
         loginScreen.showErrorMessage(errorText);
+    }
+
+    private static void processNotice(NetMessage.Message.NoticeMessage message) {
+        if(message == null
+                || message.getUserName().equals("")) {
+            // Required information is missing.
+            return;
+        }
+
+        switch(message.getNoticeMessageType()) {
+            case ONLINE:
+                chatScreen.userAdded(message.getUserName());
+                break;
+
+            case OFFLINE:
+                chatScreen.userRemoved(message.getUserName());
+                break;
+
+            case UNSET: // TODO Make sure other processXMessage switches have this triple-default-case structure, too. Or simply default.
+            case UNRECOGNIZED:
+            default:
+                System.err.println("Received invalid notice message: ");
+                System.err.println(message.toString());
+                break;
+
+        }
     }
 
     private static void processChatMessage(NetMessage.Message.ChatMessage message) {
