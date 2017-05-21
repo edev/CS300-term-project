@@ -72,7 +72,7 @@ public class LoginScreen {
         LoginScreen ls = new LoginScreen();
         JFrame frame = new JFrame("LoginScreen");
         frame.setContentPane(ls.rootPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         ls.loginFrame = frame;
         ls.currentOperation = Operation.NONE;
@@ -197,10 +197,5 @@ public class LoginScreen {
     public void hide() {
         currentOperation = Operation.NONE;
         loginFrame.setVisible(false);
-    }
-
-    public void close() {
-        hide();
-        loginFrame.dispose();
     }
 }

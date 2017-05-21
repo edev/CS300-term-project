@@ -9,7 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Created by Dylan on 5/12/2017.
+ * ChatScreen represents the main chat window visible to the user when the client is logged in.
  */
 public class ChatScreen {
     private JFrame chatFrame;
@@ -53,7 +53,7 @@ public class ChatScreen {
     private void initComponents() {
         JFrame frame = new JFrame("ChatScreen");
         frame.setContentPane(rootPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         chatFrame = frame;
 
         chatFrame.addWindowListener(new WindowAdapter() {
@@ -77,24 +77,16 @@ public class ChatScreen {
         chatFrame.setVisible(false);
     }
 
-    public void close() {
-        chatFrame.setVisible(false);
-        chatFrame.dispose();
-    }
-
     /**
      * Adds the public message to the chat screen, i.e. displays it in the main chat area.
      * @param sender The user name of the message's sender.
      * @param text The text of the message.
      */
     public void addPublicMessage(String sender, String text) {
-        chatArea.append(sender + ": " + text + "\n"); // FIXME Receiving messages doesn't work properly! Pretty sure it's because it happens in a Netty thread!
-        if(javax.swing.SwingUtilities.isEventDispatchThread()) {
-            System.out.println("addPublicMessage on Swing EDT.");
-        } else {
-            System.out.println("addPublicMessage NOT on Swing EDT.");
+        chatArea.append(sender + ": " + text + "\n");
+        if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+            System.err.println("ChatScreen addPublicMessage NOT on Swing Event Dispatch Thread.");
         }
-        System.out.println("Added public message to chat area:\t\t" + sender + ": " + text);
     }
 
     private void sendMessage(String message) {

@@ -17,7 +17,6 @@ public class ClientController {
     public static LoginScreen loginScreen;
 
     public static void main(String[] args) throws Exception {
-        // FIXME Try making ClientController non-static so the object can be passed between classes.
         loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
         chatScreen = new ChatScreen();
         loginScreen.show();
@@ -131,7 +130,7 @@ public class ClientController {
             client = new ChatClient();
             client.host = hostname;
             client.port = port;
-            channel = client.run(chatScreen, message);
+            channel = client.run(message);
         }
         return false;
     }
@@ -140,18 +139,8 @@ public class ClientController {
      * Closes the login screen and opens the chat screen.
      */
     public static void goOnline() {
-        if(loginScreen != null) {
-            loginScreen.hide();
-            chatScreen.show();
-//            loginScreen.close();
-//            loginScreen = null;
-//            if(chatScreen != null) {
-//                chatScreen.close();;
-//                System.err.println("Error: goOnline() found a ChatScreen already in place!");
-//            }
-//            chatScreen = new ChatScreen();
-
-        } // Else we're already online.
+        loginScreen.hide();
+        chatScreen.show();
     }
 
     /**
@@ -160,16 +149,6 @@ public class ClientController {
     public static void goOffline() {
         chatScreen.hide();
         loginScreen.show();
-//        if(chatScreen != null) {
-//            chatScreen.close();
-//            chatScreen = null;
-//            shutdown();
-//            if(loginScreen != null) {
-//                loginScreen.close();
-//                System.err.println("ClientController.goOffline() found a LoginScreen already in place!");
-//            }
-//            loginScreen = LoginScreen.createAndShow();
-//        }
     }
 
     /**
