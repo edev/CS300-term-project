@@ -14,7 +14,6 @@ import java.util.TreeMap;
  * Controller for the server program. Receives and routes incoming requests from ChatConnections.
  */
 class ServerController {
-    // FIXME IMPORTANT When a channel closes, remove the user from users!
     public static SortedMap<String, User> users = Collections.synchronizedSortedMap((new TreeMap<String, User>()));
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 

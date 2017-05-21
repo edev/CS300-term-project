@@ -27,4 +27,11 @@ class ChatConnection extends SimpleChannelInboundHandler<NetMessage.Message> {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         System.out.println("Exception caught: " + cause.getMessage());
     }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+        ServerController.users.remove(user.name);
+        // ChannelGroups, i.e. ServerController.channels and user.broadcast, will be cleaned up automatically.
+    }
 }
