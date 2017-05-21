@@ -66,14 +66,7 @@ class ServerController {
             case AUTH_LOGIN:
                 // Temporary response: user doesn't exist.
                 channel.writeAndFlush(
-                        NetMessage.Message.newBuilder()
-                                .setAuthMessage(
-                                        NetMessage.Message.AuthenticationMessage.newBuilder()
-                                                .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER)
-                                                .build()
-                                )
-                                .build()
-                );
+                        buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER));
                 // TODO Allow login. Remove temporary response above.
                 break;
 
@@ -99,26 +92,13 @@ class ServerController {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    NetMessage.Message.newBuilder()
-                            .setAuthMessage(
-                                    NetMessage.Message.AuthenticationMessage.newBuilder()
-                                        .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER)
-                                        .build()
-                            )
-                    .build()
-            );
+                    buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER));
 
         } else if(result.result == User.AuthResult.Result.BAD_PASSWORD) {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    NetMessage.Message.newBuilder()
-                            .setAuthMessage(
-                                    NetMessage.Message.AuthenticationMessage.newBuilder()
-                                            .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD)
-                                            .build()
-                            )
-                            .build()
+                    buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD)
             );
 
         } else if(result.result == User.AuthResult.Result.SUCCESS && result.user != null) {
@@ -132,14 +112,10 @@ class ServerController {
 
             // Write login notification message to online users
             channels.writeAndFlush(
-                    NetMessage.Message.newBuilder()
-                            .setNoticeMessage(
-                                    NetMessage.Message.NoticeMessage.newBuilder()
-                                            .setNoticeMessageType(NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE)
-                                            .setUserName(userName)
-                                            .build()
-                            )
-                            .build()
+                    buildNoticeMessage(
+                            NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE,
+                            userName
+                    )
             );
 
             // Add new user to other users' broadcasts and to the user collection, and add channel to our channel group.
@@ -149,14 +125,7 @@ class ServerController {
 
             // Respond affirmatively to registration request.
             channel.writeAndFlush(
-                    NetMessage.Message.newBuilder()
-                            .setAuthMessage(
-                                    NetMessage.Message.AuthenticationMessage.newBuilder()
-                                            .setAuthMessageType(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS)
-                                            .build()
-                            )
-                            .build()
-            );
+                    buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS));
 
             return newUser;
 
@@ -166,6 +135,28 @@ class ServerController {
 
         // We haven't yet found and returned a user, so our result defaults to null.
         return null;
+    }
+
+    private static NetMessage.Message buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType type) {
+        return NetMessage.Message.newBuilder()
+                .setAuthMessage(
+                        NetMessage.Message.AuthenticationMessage.newBuilder()
+                                .setAuthMessageType(type)
+                                .build()
+                )
+                .build();
+    }
+
+    private static NetMessage.Message buildNoticeMessage(NetMessage.Message.NoticeMessage.NoticeMessageType type,
+                                                         String userName) {
+        return NetMessage.Message.newBuilder()
+                .setNoticeMessage(
+                        NetMessage.Message.NoticeMessage.newBuilder()
+                                .setNoticeMessageType(type)
+                                .setUserName(userName)
+                                .build()
+                )
+                .build();
     }
 
     private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
@@ -199,15 +190,11 @@ class ServerController {
 
         // Send the message to everyone else, with the sender marked.
         sender.broadcast.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setChatMessage(
-                                NetMessage.Message.ChatMessage.newBuilder()
-                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC)
-                                        .setSender(sender.name)
-                                        .setText(text)
-                                        .build()
-                        )
-                        .build()
+                buildChatResponseMessage(
+                        NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC,
+                        sender.name,
+                        text
+                )
         );
 
         users.forEach((name, user)->{
@@ -227,19 +214,29 @@ class ServerController {
 
         // Send the message to the receiver, with the sender marked.
         receiver.channel.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setChatMessage(
-                                NetMessage.Message.ChatMessage.newBuilder()
-                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE)
-                                        .setSender(sender.name)
-                                        .setText(text)
-                                        .build()
-                        )
-                        .build()
+                buildChatResponseMessage(
+                        NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE,
+                        sender.name,
+                        text
+                )
         );
 
         // TODO Record message in both users' histories, if we're doing that on the server.
         return true;
+    }
+
+    private static NetMessage.Message buildChatResponseMessage(NetMessage.Message.ChatMessage.ChatMessageType type,
+                                                               String senderName,
+                                                               String text) {
+        return NetMessage.Message.newBuilder()
+                .setChatMessage(
+                        NetMessage.Message.ChatMessage.newBuilder()
+                                .setChatMessageType(type)
+                                .setSender(senderName)
+                                .setText(text)
+                                .build()
+                )
+                .build();
     }
 
 }
