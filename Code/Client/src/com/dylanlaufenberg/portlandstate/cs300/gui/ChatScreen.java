@@ -21,6 +21,7 @@ public class ChatScreen {
     private JTextArea chatArea;
     private JTextField messageField;
     private JButton sendButton;
+    private JLabel messageFieldLabel;
 
     /**
      * Automatically called through IDEA's generated UI code.
@@ -152,7 +153,6 @@ public class ChatScreen {
 
         public UserListModel() {
             users = new ArrayList<>();
-            users.add("Good morning, sunshine");
         }
 
         public void add(String user) {
