@@ -25,7 +25,6 @@ class ServerController {
      * @return The user associated with the channel, which may have changed during the transaction
      */
     public static User process(User user, NetMessage.Message message, Channel channel) {
-        // TODO Do something useful
         System.out.println("Received message: ");
         System.out.println(message.toString());
 
@@ -42,11 +41,16 @@ class ServerController {
                 break;
 
             case CHATMESSAGE:
-                if(processChatMessage(user, message.getChatMessage(), channel)) {
-                    // Message successfully delivered.
-                } // Else message not successfully delivered.
-                // TODO Handle other cases.
-            // TODO Handle unset case.
+                if(!processChatMessage(user, message.getChatMessage(), channel)) {
+                    // message not successfully delivered.
+                    System.err.println("Could not process message from " + user.name + ": " + message.toString());
+                }
+                break;
+
+            case MESSAGECONTENTS_NOT_SET:
+            default:
+                System.err.println("Invalid incoming message from " + user.name + ": " + message.toString());
+                break;
         }
 
         return user;
