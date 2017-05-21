@@ -19,7 +19,6 @@ public class ChatScreen {
     private JList userList;
     private UserListModel userListModel;
     private JTextArea chatArea;
-    private JScrollPane chatAreaScrollPane;
     private JTextField messageField;
     private JButton sendButton;
 
@@ -126,9 +125,8 @@ public class ChatScreen {
      * Called when the client receives a notice that a user has come online. Updates chat screen accordingly.
      * @param userName The name of the now-online user.
      */
-    public void userAdded(String userName) { // FIXME Make userList add correctly!
-        userListModel.add(userName); // This and the line below should do the same thing.
-        ((UserListModel)userList.getModel()).add(userName);
+    public void userAdded(String userName) {
+        userListModel.add(userName);
     }
 
     /**
@@ -144,6 +142,7 @@ public class ChatScreen {
 
         public UserListModel() {
             users = new ArrayList<>();
+            users.add("Good morning, sunshine");
         }
 
         public void add(String user) {
@@ -153,7 +152,6 @@ public class ChatScreen {
 
             users.add(user);
             users.sort(Comparator.naturalOrder());
-            fireContentsChanged(this, 0, users.size() - 1);
             fireIntervalAdded(this, 0, users.size() - 1);
         }
 
@@ -163,7 +161,6 @@ public class ChatScreen {
             }
 
             users.remove(user);
-            fireContentsChanged(this, 0, users.size() - 1);
             fireIntervalRemoved(this, 0, users.size() - 1);
         }
 
