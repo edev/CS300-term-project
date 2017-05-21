@@ -29,12 +29,20 @@ public class ClientController {
                 break;
 
             case NOTICEMESSAGE:
-                processNotice(m.getNoticeMessage()); // TODO Fix processNotice
+                processNotice(m.getNoticeMessage());
                 break;
 
             case CHATMESSAGE:
                 processChatMessage(m.getChatMessage());
                 break;
+
+            case USERLIST:
+                processUserList(m.getUserList());
+                break;
+
+            default:
+                System.err.println("Received a message of an unknown type:");
+                System.err.println(m.toString());
         }
     }
 
@@ -227,6 +235,16 @@ public class ClientController {
 
             case UNRECOGNIZED:
                 System.err.println("Received chat message with unrecognized ChatMessageType. Ignoring.");
+        }
+    }
+
+    private static void processUserList(NetMessage.Message.UserList users) {
+        if(chatScreen == null) {
+            return;
+        }
+
+        for(String user : users.getUserList()) {
+            chatScreen.userAdded(user);
         }
     }
 

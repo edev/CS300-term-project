@@ -50,6 +50,10 @@ message Message {
         string text = 4;
     }
 
+    message UserList {
+        repeated string user = 1;
+    }
+
 
 
     // Message: contains exactly one message of a type defined above.
@@ -57,5 +61,6 @@ message Message {
         AuthenticationMessage authMessage = 2;
         NoticeMessage noticeMessage = 3;
         ChatMessage chatMessage = 4;
+        UserList userList = 5;
     }
 }

@@ -94,10 +94,18 @@ public class ChatScreen {
      * @param text The text of the message.
      */
     public void addPublicMessage(String sender, String text) {
-        chatArea.append(sender + ": " + text + "\n");
+        addMessage(sender + ": " + text);
         if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
             System.err.println("ChatScreen addPublicMessage NOT on Swing Event Dispatch Thread.");
         }
+    }
+
+    /**
+     * Adds the specified message to the chat area, plus a newline.
+     * @param message The text to add (newline will be added automatically).
+     */
+    private void addMessage(String message) {
+        chatArea.append(message + "\n");
     }
 
     private void sendMessage(String message) {
@@ -127,14 +135,16 @@ public class ChatScreen {
      */
     public void userAdded(String userName) {
         userListModel.add(userName);
+        addMessage(userName + " is now online.");
     }
 
     /**
      * Called when the client receives a notice that a user has gone offline. Updates chat screen accordingly.
      * @param userName The name of the now-offline user.
      */
-    public void userRemoved(String userName) { // FIXME Make userList remove correctly!
+    public void userRemoved(String userName) {
         userListModel.remove(userName);
+        addMessage(userName + " is now offline.");
     }
 
     private class UserListModel extends AbstractListModel<String> {

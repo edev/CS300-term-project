@@ -45,6 +45,15 @@ public final class NetMessage {
      */
     com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessageOrBuilder getChatMessageOrBuilder();
 
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+     */
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getUserList();
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+     */
+    com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder getUserListOrBuilder();
+
     public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.MessageContentsCase getMessageContentsCase();
   }
   /**
@@ -126,6 +135,20 @@ public final class NetMessage {
                 messageContents_ = subBuilder.buildPartial();
               }
               messageContentsCase_ = 4;
+              break;
+            }
+            case 42: {
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder subBuilder = null;
+              if (messageContentsCase_ == 5) {
+                subBuilder = ((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_).toBuilder();
+              }
+              messageContents_ =
+                  input.readMessage(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_);
+                messageContents_ = subBuilder.buildPartial();
+              }
+              messageContentsCase_ = 5;
               break;
             }
           }
@@ -2852,6 +2875,574 @@ public final class NetMessage {
 
     }
 
+    public interface UserListOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:dylanlaufenberg.cs300.proto.Message.UserList)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      java.util.List<java.lang.String>
+          getUserList();
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      int getUserCount();
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      java.lang.String getUser(int index);
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getUserBytes(int index);
+    }
+    /**
+     * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.UserList}
+     */
+    public  static final class UserList extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:dylanlaufenberg.cs300.proto.Message.UserList)
+        UserListOrBuilder {
+      // Use UserList.newBuilder() to construct.
+      private UserList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private UserList() {
+        user_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private UserList(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                java.lang.String s = input.readStringRequireUtf8();
+                if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                  user_ = new com.google.protobuf.LazyStringArrayList();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                user_.add(s);
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+            user_ = user_.getUnmodifiableView();
+          }
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_UserList_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder.class);
+      }
+
+      public static final int USER_FIELD_NUMBER = 1;
+      private com.google.protobuf.LazyStringList user_;
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getUserList() {
+        return user_;
+      }
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      public int getUserCount() {
+        return user_.size();
+      }
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      public java.lang.String getUser(int index) {
+        return user_.get(index);
+      }
+      /**
+       * <code>repeated string user = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUserBytes(int index) {
+        return user_.getByteString(index);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        for (int i = 0; i < user_.size(); i++) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, user_.getRaw(i));
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        {
+          int dataSize = 0;
+          for (int i = 0; i < user_.size(); i++) {
+            dataSize += computeStringSizeNoTag(user_.getRaw(i));
+          }
+          size += dataSize;
+          size += 1 * getUserList().size();
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList)) {
+          return super.equals(obj);
+        }
+        com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList other = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) obj;
+
+        boolean result = true;
+        result = result && getUserList()
+            .equals(other.getUserList());
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getUserCount() > 0) {
+          hash = (37 * hash) + USER_FIELD_NUMBER;
+          hash = (53 * hash) + getUserList().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code dylanlaufenberg.cs300.proto.Message.UserList}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:dylanlaufenberg.cs300.proto.Message.UserList)
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_UserList_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.class, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder.class);
+        }
+
+        // Construct using com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          user_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getDefaultInstanceForType() {
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList build() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList buildPartial() {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList result = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList(this);
+          int from_bitField0_ = bitField0_;
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            user_ = user_.getUnmodifiableView();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.user_ = user_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) {
+            return mergeFrom((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList other) {
+          if (other == com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance()) return this;
+          if (!other.user_.isEmpty()) {
+            if (user_.isEmpty()) {
+              user_ = other.user_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureUserIsMutable();
+              user_.addAll(other.user_);
+            }
+            onChanged();
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private com.google.protobuf.LazyStringList user_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        private void ensureUserIsMutable() {
+          if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+            user_ = new com.google.protobuf.LazyStringArrayList(user_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public com.google.protobuf.ProtocolStringList
+            getUserList() {
+          return user_.getUnmodifiableView();
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public int getUserCount() {
+          return user_.size();
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public java.lang.String getUser(int index) {
+          return user_.get(index);
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getUserBytes(int index) {
+          return user_.getByteString(index);
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public Builder setUser(
+            int index, java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureUserIsMutable();
+          user_.set(index, value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public Builder addUser(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureUserIsMutable();
+          user_.add(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public Builder addAllUser(
+            java.lang.Iterable<java.lang.String> values) {
+          ensureUserIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, user_);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public Builder clearUser() {
+          user_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated string user = 1;</code>
+         */
+        public Builder addUserBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          ensureUserIsMutable();
+          user_.add(value);
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:dylanlaufenberg.cs300.proto.Message.UserList)
+      }
+
+      // @@protoc_insertion_point(class_scope:dylanlaufenberg.cs300.proto.Message.UserList)
+      private static final com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList();
+      }
+
+      public static com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<UserList>
+          PARSER = new com.google.protobuf.AbstractParser<UserList>() {
+        public UserList parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new UserList(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<UserList> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<UserList> getParserForType() {
+        return PARSER;
+      }
+
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
     private int messageContentsCase_ = 0;
     private java.lang.Object messageContents_;
     public enum MessageContentsCase
@@ -2859,6 +3450,7 @@ public final class NetMessage {
       AUTHMESSAGE(2),
       NOTICEMESSAGE(3),
       CHATMESSAGE(4),
+      USERLIST(5),
       MESSAGECONTENTS_NOT_SET(0);
       private final int value;
       private MessageContentsCase(int value) {
@@ -2877,6 +3469,7 @@ public final class NetMessage {
           case 2: return AUTHMESSAGE;
           case 3: return NOTICEMESSAGE;
           case 4: return CHATMESSAGE;
+          case 5: return USERLIST;
           case 0: return MESSAGECONTENTS_NOT_SET;
           default: return null;
         }
@@ -2952,6 +3545,26 @@ public final class NetMessage {
       return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage.getDefaultInstance();
     }
 
+    public static final int USERLIST_FIELD_NUMBER = 5;
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+     */
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getUserList() {
+      if (messageContentsCase_ == 5) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_;
+      }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+    }
+    /**
+     * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+     */
+    public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder getUserListOrBuilder() {
+      if (messageContentsCase_ == 5) {
+         return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_;
+      }
+      return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2973,6 +3586,9 @@ public final class NetMessage {
       if (messageContentsCase_ == 4) {
         output.writeMessage(4, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_);
       }
+      if (messageContentsCase_ == 5) {
+        output.writeMessage(5, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2991,6 +3607,10 @@ public final class NetMessage {
       if (messageContentsCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.ChatMessage) messageContents_);
+      }
+      if (messageContentsCase_ == 5) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_);
       }
       memoizedSize = size;
       return size;
@@ -3024,6 +3644,10 @@ public final class NetMessage {
           result = result && getChatMessage()
               .equals(other.getChatMessage());
           break;
+        case 5:
+          result = result && getUserList()
+              .equals(other.getUserList());
+          break;
         case 0:
         default:
       }
@@ -3049,6 +3673,10 @@ public final class NetMessage {
         case 4:
           hash = (37 * hash) + CHATMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getChatMessage().hashCode();
+          break;
+        case 5:
+          hash = (37 * hash) + USERLIST_FIELD_NUMBER;
+          hash = (53 * hash) + getUserList().hashCode();
           break;
         case 0:
         default:
@@ -3227,6 +3855,13 @@ public final class NetMessage {
             result.messageContents_ = chatMessageBuilder_.build();
           }
         }
+        if (messageContentsCase_ == 5) {
+          if (userListBuilder_ == null) {
+            result.messageContents_ = messageContents_;
+          } else {
+            result.messageContents_ = userListBuilder_.build();
+          }
+        }
         result.messageContentsCase_ = messageContentsCase_;
         onBuilt();
         return result;
@@ -3280,6 +3915,10 @@ public final class NetMessage {
           }
           case CHATMESSAGE: {
             mergeChatMessage(other.getChatMessage());
+            break;
+          }
+          case USERLIST: {
+            mergeUserList(other.getUserList());
             break;
           }
           case MESSAGECONTENTS_NOT_SET: {
@@ -3716,6 +4355,136 @@ public final class NetMessage {
         onChanged();;
         return chatMessageBuilder_;
       }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder> userListBuilder_;
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList getUserList() {
+        if (userListBuilder_ == null) {
+          if (messageContentsCase_ == 5) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+        } else {
+          if (messageContentsCase_ == 5) {
+            return userListBuilder_.getMessage();
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public Builder setUserList(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList value) {
+        if (userListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          messageContents_ = value;
+          onChanged();
+        } else {
+          userListBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 5;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public Builder setUserList(
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder builderForValue) {
+        if (userListBuilder_ == null) {
+          messageContents_ = builderForValue.build();
+          onChanged();
+        } else {
+          userListBuilder_.setMessage(builderForValue.build());
+        }
+        messageContentsCase_ = 5;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public Builder mergeUserList(com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList value) {
+        if (userListBuilder_ == null) {
+          if (messageContentsCase_ == 5 &&
+              messageContents_ != com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance()) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.newBuilder((com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            messageContents_ = value;
+          }
+          onChanged();
+        } else {
+          if (messageContentsCase_ == 5) {
+            userListBuilder_.mergeFrom(value);
+          }
+          userListBuilder_.setMessage(value);
+        }
+        messageContentsCase_ = 5;
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public Builder clearUserList() {
+        if (userListBuilder_ == null) {
+          if (messageContentsCase_ == 5) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+            onChanged();
+          }
+        } else {
+          if (messageContentsCase_ == 5) {
+            messageContentsCase_ = 0;
+            messageContents_ = null;
+          }
+          userListBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder getUserListBuilder() {
+        return getUserListFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      public com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder getUserListOrBuilder() {
+        if ((messageContentsCase_ == 5) && (userListBuilder_ != null)) {
+          return userListBuilder_.getMessageOrBuilder();
+        } else {
+          if (messageContentsCase_ == 5) {
+            return (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_;
+          }
+          return com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.dylanlaufenberg.cs300.proto.Message.UserList userList = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder> 
+          getUserListFieldBuilder() {
+        if (userListBuilder_ == null) {
+          if (!(messageContentsCase_ == 5)) {
+            messageContents_ = com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.getDefaultInstance();
+          }
+          userListBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList.Builder, com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserListOrBuilder>(
+                  (com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage.Message.UserList) messageContents_,
+                  getParentForChildren(),
+                  isClean());
+          messageContents_ = null;
+        }
+        messageContentsCase_ = 5;
+        onChanged();;
+        return userListBuilder_;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -3785,6 +4554,11 @@ public final class NetMessage {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_dylanlaufenberg_cs300_proto_Message_UserList_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3795,33 +4569,35 @@ public final class NetMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\021net_message.proto\022\033dylanlaufenberg.cs3" +
-      "00.proto\"\305\007\n\007Message\022Q\n\013authMessage\030\002 \001(" +
+      "00.proto\"\242\010\n\007Message\022Q\n\013authMessage\030\002 \001(" +
       "\0132:.dylanlaufenberg.cs300.proto.Message." +
       "AuthenticationMessageH\000\022K\n\rnoticeMessage" +
       "\030\003 \001(\01322.dylanlaufenberg.cs300.proto.Mes" +
       "sage.NoticeMessageH\000\022G\n\013chatMessage\030\004 \001(" +
       "\01320.dylanlaufenberg.cs300.proto.Message." +
-      "ChatMessageH\000\032\241\002\n\025AuthenticationMessage\022" +
-      "c\n\017authMessageType\030\001 \001(\0162J.dylanlaufenbe" +
-      "rg.cs300.proto.Message.AuthenticationMes",
-      "sage.AuthMessageType\022\020\n\010userName\030\002 \001(\t\022\020" +
-      "\n\010password\030\003 \001(\t\"\177\n\017AuthMessageType\022\t\n\005U" +
-      "NSET\020\000\022\021\n\rAUTH_REGISTER\020\001\022\016\n\nAUTH_LOGIN\020" +
-      "\002\022\020\n\014AUTH_SUCCESS\020\003\022\023\n\017AUTH_ERROR_USER\020\004" +
-      "\022\027\n\023AUTH_ERROR_PASSWORD\020\005\032\273\001\n\rNoticeMess" +
-      "age\022_\n\021noticeMessageType\030\001 \001(\0162D.dylanla" +
-      "ufenberg.cs300.proto.Message.NoticeMessa" +
-      "ge.NoticeMessageType\022\020\n\010userName\030\002 \001(\t\"7" +
-      "\n\021NoticeMessageType\022\t\n\005UNSET\020\000\022\n\n\006ONLINE" +
-      "\020\001\022\013\n\007OFFLINE\020\002\032\333\001\n\013ChatMessage\022Y\n\017chatM",
-      "essageType\030\001 \001(\0162@.dylanlaufenberg.cs300" +
-      ".proto.Message.ChatMessage.ChatMessageTy" +
-      "pe\022\020\n\006sender\030\002 \001(\tH\000\022\022\n\010receiver\030\003 \001(\tH\000" +
-      "\022\014\n\004text\030\004 \001(\t\"5\n\017ChatMessageType\022\t\n\005UNS" +
-      "ET\020\000\022\n\n\006PUBLIC\020\001\022\013\n\007PRIVATE\020\002B\006\n\004userB\021\n" +
-      "\017messageContentsB;\n-com.dylanlaufenberg." +
-      "portlandstate.cs300.protoB\nNetMessageb\006p" +
-      "roto3"
+      "ChatMessageH\000\022A\n\010userList\030\005 \001(\0132-.dylanl" +
+      "aufenberg.cs300.proto.Message.UserListH\000" +
+      "\032\241\002\n\025AuthenticationMessage\022c\n\017authMessag",
+      "eType\030\001 \001(\0162J.dylanlaufenberg.cs300.prot" +
+      "o.Message.AuthenticationMessage.AuthMess" +
+      "ageType\022\020\n\010userName\030\002 \001(\t\022\020\n\010password\030\003 " +
+      "\001(\t\"\177\n\017AuthMessageType\022\t\n\005UNSET\020\000\022\021\n\rAUT" +
+      "H_REGISTER\020\001\022\016\n\nAUTH_LOGIN\020\002\022\020\n\014AUTH_SUC" +
+      "CESS\020\003\022\023\n\017AUTH_ERROR_USER\020\004\022\027\n\023AUTH_ERRO" +
+      "R_PASSWORD\020\005\032\273\001\n\rNoticeMessage\022_\n\021notice" +
+      "MessageType\030\001 \001(\0162D.dylanlaufenberg.cs30" +
+      "0.proto.Message.NoticeMessage.NoticeMess" +
+      "ageType\022\020\n\010userName\030\002 \001(\t\"7\n\021NoticeMessa",
+      "geType\022\t\n\005UNSET\020\000\022\n\n\006ONLINE\020\001\022\013\n\007OFFLINE" +
+      "\020\002\032\333\001\n\013ChatMessage\022Y\n\017chatMessageType\030\001 " +
+      "\001(\0162@.dylanlaufenberg.cs300.proto.Messag" +
+      "e.ChatMessage.ChatMessageType\022\020\n\006sender\030" +
+      "\002 \001(\tH\000\022\022\n\010receiver\030\003 \001(\tH\000\022\014\n\004text\030\004 \001(" +
+      "\t\"5\n\017ChatMessageType\022\t\n\005UNSET\020\000\022\n\n\006PUBLI" +
+      "C\020\001\022\013\n\007PRIVATE\020\002B\006\n\004user\032\030\n\010UserList\022\014\n\004" +
+      "user\030\001 \003(\tB\021\n\017messageContentsB;\n-com.dyl" +
+      "anlaufenberg.portlandstate.cs300.protoB\n" +
+      "NetMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3840,7 +4616,7 @@ public final class NetMessage {
     internal_static_dylanlaufenberg_cs300_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dylanlaufenberg_cs300_proto_Message_descriptor,
-        new java.lang.String[] { "AuthMessage", "NoticeMessage", "ChatMessage", "MessageContents", });
+        new java.lang.String[] { "AuthMessage", "NoticeMessage", "ChatMessage", "UserList", "MessageContents", });
     internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_descriptor =
       internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(0);
     internal_static_dylanlaufenberg_cs300_proto_Message_AuthenticationMessage_fieldAccessorTable = new
@@ -3859,6 +4635,12 @@ public final class NetMessage {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dylanlaufenberg_cs300_proto_Message_ChatMessage_descriptor,
         new java.lang.String[] { "ChatMessageType", "Sender", "Receiver", "Text", "User", });
+    internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor =
+      internal_static_dylanlaufenberg_cs300_proto_Message_descriptor.getNestedTypes().get(3);
+    internal_static_dylanlaufenberg_cs300_proto_Message_UserList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_dylanlaufenberg_cs300_proto_Message_UserList_descriptor,
+        new java.lang.String[] { "User", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
