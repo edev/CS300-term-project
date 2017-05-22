@@ -3,10 +3,7 @@ package com.dylanlaufenberg.portlandstate.cs300.gui;
 import com.dylanlaufenberg.portlandstate.cs300.ClientController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -14,6 +11,25 @@ import java.util.Comparator;
  * ChatScreen represents the main chat window visible to the user when the client is logged in.
  */
 public class ChatScreen {
+    // Text to be displayed on the label for the messageField (where the user types in messages)
+    private final String publicMessageFieldLabel = "Public message"; // Message displayed verbatim
+    private final String privateMessageFieldLabelPrefix = "Private message for "; // Message concatenated with user name
+
+    // Number of clicks in userList to activate a private message to a recipient.
+    private final int privateMessageClickCount = 2;
+
+    // Key that the user can press in messageField to cancel a private message
+    private final int privateMessageCancelKey = KeyEvent.VK_ESCAPE;
+
+    // Public/private message switching.
+    private enum SendMessageType {
+        PUBLIC,
+        PRIVATE
+    }
+    private SendMessageType sendType = SendMessageType.PUBLIC;
+    private String privateMessageRecipient; // Should be null when not in use.
+
+    // Swing elements
     private JFrame chatFrame;
     private JPanel rootPanel;
     private JList userList;
@@ -22,22 +38,6 @@ public class ChatScreen {
     private JTextField messageField;
     private JButton sendButton;
     private JLabel messageFieldLabel;
-
-    /**
-     * Automatically called through IDEA's generated UI code.
-     * Custom creation code goes here, corresponding to components for which "custom create" is set in ChatScreen.form.
-     */
-    private void createUIComponents() {
-        userListModel = new UserListModel();
-        userList = new JList<>(userListModel);
-    }
-
-    private enum SendMessageType {
-        PUBLIC,
-        PRIVATE
-    }
-    private SendMessageType sendType = SendMessageType.PUBLIC;
-    private String privateMessageRecipient;
 
     public ChatScreen() {
         initComponents();
@@ -60,6 +60,31 @@ public class ChatScreen {
                 }
             }
         });
+        userList.addMouseListener(new MouseAdapter() {
+            /**
+             * Triggers private message composition when double-clicking on a name in the list.
+             * @param e Mouse event.
+             */
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // FIXME userList resizes on click
+                // FIXME Since adding this and KeyListener below, users don't get removed from userList properly on logout.
+                super.mouseClicked(e);
+                if(e.getClickCount() >= privateMessageClickCount) {
+                    String selected = (String) userList.getSelectedValue();
+                    setPrivateMessageMode(selected);
+                }
+            }
+        });
+        messageField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(e.getKeyCode() == privateMessageCancelKey) {
+                    setPublicMessageMode();
+                }
+            }
+        });
     }
 
     private void initComponents() {
@@ -77,6 +102,15 @@ public class ChatScreen {
         });
 
         frame.pack();
+    }
+
+    /**
+     * Automatically called through IDEA's generated UI code.
+     * Custom creation code goes here, corresponding to components for which "custom create" is set in ChatScreen.form.
+     */
+    private void createUIComponents() {
+        userListModel = new UserListModel();
+        userList = new JList<>(userListModel);
     }
 
     public void show() {
@@ -128,6 +162,22 @@ public class ChatScreen {
         } else {
             System.err.println("ChatScreen.sendType is invalid! (Neither PUBLIC nor PRIVATE.)");
         }
+    }
+
+    private void setPrivateMessageMode(String recipient) {
+        if(recipient == null || recipient.equals("")) {
+            return;
+        }
+
+        privateMessageRecipient = recipient;
+        sendType = SendMessageType.PRIVATE;
+        messageFieldLabel.setText(privateMessageFieldLabelPrefix + recipient);
+    }
+
+    private void setPublicMessageMode() {
+        privateMessageRecipient = null;
+        sendType = SendMessageType.PUBLIC;
+        messageFieldLabel.setText(publicMessageFieldLabel);
     }
 
     /**
