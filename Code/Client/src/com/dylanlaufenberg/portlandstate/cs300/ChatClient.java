@@ -42,7 +42,7 @@ public class ChatClient {
                     pipeline.addLast("frameDecoder",
                             new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
                     pipeline.addLast("ProtobufDecoder", new ProtobufDecoder(NetMessage.Message.getDefaultInstance()));
-                    pipeline.addLast("ChannelInboundHandler", new ChatHandler());
+                    pipeline.addLast("ChannelInboundHandler", new ClientConnectionHandler());
 
                     // Encoders
                     pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
