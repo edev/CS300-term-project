@@ -10,7 +10,7 @@ import java.util.Comparator;
 /**
  * ChatScreen represents the main chat window visible to the user when the client is logged in.
  */
-public class ChatScreen {
+public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     // Text to be displayed on the label for the messageField (where the user types in messages)
     private final String publicMessageFieldLabel = "Public message"; // Message displayed verbatim
     private final String privateMessageFieldLabelPrefix = "Private message for "; // Message concatenated with user name
@@ -134,6 +134,17 @@ public class ChatScreen {
         }
     }
 
+    public void addPrivateMessage(String sender, String text, boolean outgoing) {
+        if(outgoing) {
+            addMessage("Private message to " + sender + ": " + text);
+        } else {
+            addMessage("Private message from " + sender + ": " + text);
+        }
+        if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+            System.err.println("ChatScreen addPrivateMessage NOT on Swing Event Dispatch Thread.");
+        }
+    }
+
     /**
      * Adds the specified message to the chat area, plus a newline.
      * @param message The text to add (newline will be added automatically).
@@ -148,9 +159,10 @@ public class ChatScreen {
         }
 
         if(sendType == SendMessageType.PRIVATE) {
-            if(privateMessageRecipient != null) {
+            if(privateMessageRecipient != null && !privateMessageRecipient.trim().equals("")) {
                 // Send private message.
-                // TODO Send private message and add to chat area
+                ClientController.sendPrivateMessage(privateMessageRecipient, message);
+                addPrivateMessage(ClientController.userName, message, true);
             } else {
                 System.err.println("Tried to send a private message without specifying a recipient. Ignoring.");
             }

@@ -230,7 +230,8 @@ public class ClientController {
                 break;
 
             case PRIVATE:
-                // TODO Implement private messages.
+                chatScreen.addPrivateMessage(message.getSender(), message.getText(), false);
+                // TODO Record private message on client if we're doing that.
                 break;
 
             case UNRECOGNIZED:
@@ -250,6 +251,7 @@ public class ClientController {
 
     public static void sendPublicMessage(String message) {
         if(message == null || message.equals("")) {
+            System.err.println("Tried to send public message without a message body..");
             return;
         }
 
@@ -268,6 +270,35 @@ public class ClientController {
                         )
                         .build()
         );
-        System.out.println("Public message sent!");
+    }
+
+    public static void sendPrivateMessage(String receiver, String message) {
+        if(message == null
+                || message.trim().equals("")) {
+            System.err.println("Tried to send private message without a message body.");
+            return;
+        }
+
+        if(receiver == null
+            || receiver.trim().equals("")) {
+            System.err.println("Tried to send private message without specifying a receiver.");
+        }
+
+        if(channel == null) {
+            System.err.println("Tried to send a public message without a valid channel. Ignoring.");
+            return;
+        }
+
+        channel.writeAndFlush(
+                NetMessage.Message.newBuilder()
+                        .setChatMessage(
+                                NetMessage.Message.ChatMessage.newBuilder()
+                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE)
+                                        .setReceiver(receiver)
+                                        .setText(message)
+                                        .build()
+                        )
+                        .build()
+        );
     }
 }

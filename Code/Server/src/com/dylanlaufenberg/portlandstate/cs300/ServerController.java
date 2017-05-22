@@ -154,7 +154,7 @@ class ServerController {
                 return publicMessage(user, message.getText());
 
             case PRIVATE:
-                return true; // TODO implement.
+                return privateMessage(user, message.getReceiver(), message.getText());
 
             case UNSET:
             default:
@@ -185,12 +185,20 @@ class ServerController {
         return true;
     }
 
-    private static boolean privateMessage(User sender, User receiver, String text) {
+    private static boolean privateMessage(User sender, String receiverName, String text) {
         if(sender == null
-                || receiver == null
+                || receiverName == null
+                || receiverName.trim().equals("")
                 || text == null
-                || text.equals("")
+                || text.trim().equals("")) {
+            System.err.println("Ignoring malformed private message:");
+            return false;
+        }
+
+        User receiver = users.get(receiverName);
+        if(receiver == null
                 || receiver.channel == null) {
+            System.err.println("Ignoring private message directed toward invalid or offline user.");
             return false;
         }
 
