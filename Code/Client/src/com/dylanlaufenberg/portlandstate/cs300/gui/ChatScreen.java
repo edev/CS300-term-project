@@ -77,11 +77,11 @@ public class ChatScreen {
         });
         messageField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(e.getKeyCode() == privateMessageCancelKey) {
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyChar() == privateMessageCancelKey) {
                     setPublicMessageMode();
                 }
+                super.keyTyped(e);
             }
         });
     }
