@@ -68,7 +68,6 @@ public class ChatScreen {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // FIXME userList resizes on click
-                // FIXME Since adding this and KeyListener below, users don't get removed from userList properly on logout.
                 super.mouseClicked(e);
                 if(e.getClickCount() >= privateMessageClickCount) {
                     String selected = (String) userList.getSelectedValue();
@@ -212,7 +211,7 @@ public class ChatScreen {
 
             users.add(user);
             users.sort(Comparator.naturalOrder());
-            fireIntervalAdded(this, 0, users.size() - 1);
+            fireIntervalAdded(this, 0, users.size());
         }
 
         public void remove(String user) {
@@ -221,7 +220,7 @@ public class ChatScreen {
             }
 
             users.remove(user);
-            fireIntervalRemoved(this, 0, users.size() - 1);
+            fireIntervalRemoved(this, 0, users.size());
         }
 
         @Override
