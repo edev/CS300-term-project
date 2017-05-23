@@ -3,6 +3,7 @@ package com.dylanlaufenberg.portlandstate.cs300.gui;
 import com.dylanlaufenberg.portlandstate.cs300.ClientController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,9 +12,6 @@ import java.util.Comparator;
  * ChatScreen represents the main chat window visible to the user when the client is logged in.
  */
 public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
-    // Text to be displayed on the label for the messageField (where the user types in messages)
-    private final String publicMessageFieldLabel = "Public message"; // Message displayed verbatim
-    private final String privateMessageFieldLabelPrefix = "Private message for "; // Message concatenated with user name
 
     // Number of clicks in userList to activate a private message to a recipient.
     private final int privateMessageClickCount = 2;
@@ -28,6 +26,14 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     }
     private SendMessageType sendType = SendMessageType.PUBLIC;
     private String privateMessageRecipient; // Should be null when not in use.
+
+    // Swing labels
+    private final String userListLabel = "Online users";
+    private final String chatAreaLabel = "Chat area";
+    private final String sendButtonText = "Send";
+    // Text to be displayed on the label for the messageField (where the user types in messages)
+    private final String publicMessageFieldLabel = "Public message"; // Message displayed verbatim
+    private final String privateMessageFieldLabelPrefix = "Private message for "; // Message concatenated with user name
 
     // Swing elements
     private JFrame chatFrame;
@@ -87,11 +93,9 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     }
 
     private void initComponents() {
-        JFrame frame = new JFrame("ChatScreen");
-        frame.setContentPane(rootPanel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        chatFrame = frame;
-
+        // Initialize frame.
+        chatFrame = new JFrame("ChatScreen");
+        chatFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         chatFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -99,17 +103,219 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
                 e.getWindow().dispose();
             }
         });
+        chatFrame.setPreferredSize(new Dimension(800, 600));
 
-        frame.pack();
-    }
-
-    /**
-     * Automatically called through IDEA's generated UI code.
-     * Custom creation code goes here, corresponding to components for which "custom create" is set in ChatScreen.form.
-     */
-    private void createUIComponents() {
+        // Initialize elements.
+        rootPanel = new JPanel(new GridBagLayout());
         userListModel = new UserListModel();
         userList = new JList<>(userListModel);
+        chatArea = new JTextArea();
+        messageField = new JTextField();
+        sendButton = new JButton(sendButtonText);
+        messageFieldLabel = new JLabel(publicMessageFieldLabel); // Initialize to public send mode.
+
+        // GroupLayout (primarily to have decent gaps between things, which you'd think would be easy to achieve....)
+        // First, create some locals we'll need here but don't need throughout the life of the frame.
+        JLabel userListLabel, chatAreaLabel;
+        JScrollPane userListPane, chatAreaPane;
+        userListPane = new JScrollPane(userList);
+        chatAreaPane = new JScrollPane(chatArea);
+        userListLabel = new JLabel(this.userListLabel);
+        chatAreaLabel = new JLabel(this.chatAreaLabel);
+        Dimension userListPreferredSize = new Dimension(120, 560);
+        Dimension userListMaximumSize = new Dimension(200, Integer.MAX_VALUE);
+        Dimension chatAreaPreferredSize = new Dimension(560, 560);
+        Dimension chatAreaMaximumSize = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        // Initialize primary layout.
+        GroupLayout mainLayout = new GroupLayout(rootPanel);
+        rootPanel.setLayout(mainLayout);
+        mainLayout.setAutoCreateGaps(true);
+        mainLayout.setAutoCreateContainerGaps(true);
+
+        // Now, create two panels, which will have their own layouts.
+        JPanel topPane = new JPanel();
+        JPanel bottomPane = new JPanel();
+        GroupLayout topPaneLayout = new GroupLayout(topPane);
+        GroupLayout bottomPaneLayout = new GroupLayout(bottomPane);
+        topPane.setLayout(topPaneLayout);
+        bottomPane.setLayout(bottomPaneLayout);
+        topPaneLayout.setAutoCreateGaps(true);
+//        topPaneLayout.setAutoCreateContainerGaps(true);
+        bottomPaneLayout.setAutoCreateGaps(true);
+//        bottomPaneLayout.setAutoCreateContainerGaps(true);
+
+        // Next, add all components to the panes where they belong, before we specify layout.
+        chatFrame.setContentPane(rootPanel);
+        rootPanel.add(topPane);
+        rootPanel.add(bottomPane);
+        topPane.add(userListLabel);
+        topPane.add(userListPane);
+        topPane.add(chatAreaLabel);
+        topPane.add(chatAreaPane);
+        bottomPane.add(messageFieldLabel);
+        bottomPane.add(messageField);
+        bottomPane.add(sendButton);
+
+        // Add topPane and bottomPane to rootPanel.
+        mainLayout.setVerticalGroup(
+                mainLayout.createSequentialGroup()
+                        .addComponent(topPane)
+                        .addComponent(bottomPane)
+        );
+        mainLayout.setHorizontalGroup(
+                mainLayout.createParallelGroup()
+                        .addComponent(topPane)
+                        .addComponent(bottomPane)
+        );
+
+        // Configure topPane, which holds the user list and the chat area, plus their labels.
+        topPaneLayout.setVerticalGroup(
+                topPaneLayout.createSequentialGroup()
+                        .addGroup(topPaneLayout.createParallelGroup()
+                                .addComponent(userListLabel)
+                                .addComponent(chatAreaLabel))
+                        .addGroup((topPaneLayout.createParallelGroup()
+                                .addComponent(userListPane, 0, userListPreferredSize.height, userListMaximumSize.height)
+                                .addComponent(chatAreaPane, 0, chatAreaPreferredSize.height, chatAreaMaximumSize.height)))
+        );
+        topPaneLayout.setHorizontalGroup(
+                topPaneLayout.createSequentialGroup()
+                        .addGroup(topPaneLayout.createParallelGroup()
+                                .addComponent(userListLabel)
+                                .addComponent(userListPane, userListPreferredSize.width, userListPreferredSize.width, userListMaximumSize.width))
+                        .addGroup(topPaneLayout.createParallelGroup()
+                                .addComponent(chatAreaLabel)
+                                .addComponent(chatAreaPane, 0, chatAreaPreferredSize.width, chatAreaMaximumSize.width))
+        );
+
+        // Configure bottomPane, which holds message field and label plus send button.
+        bottomPaneLayout.setVerticalGroup(
+                bottomPaneLayout.createSequentialGroup()
+                        .addComponent(messageFieldLabel)
+                        .addGroup(bottomPaneLayout.createParallelGroup()
+                                .addComponent(messageField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(sendButton))
+        );
+        bottomPaneLayout.setHorizontalGroup(
+                bottomPaneLayout.createParallelGroup()
+                        .addComponent(messageFieldLabel)
+                        .addGroup(bottomPaneLayout.createSequentialGroup()
+                                .addComponent(messageField)
+                                .addComponent(sendButton))
+        );
+
+
+
+/*      // BoxLayout - again, seems to be basically useless. Gaps don't do a damn thing, at least not reliably.
+        // First, create some panes to use.
+        JPanel topPane, bottomPane,leftPane, rightPane, bottomLeftPane;
+        topPane = new JPanel();
+        bottomPane = new JPanel();
+        leftPane = new JPanel();
+        rightPane = new JPanel();
+        bottomLeftPane = new JPanel();
+
+        // Next, set the panes' layouts. (Can't do this in constructor because of BoxLayout constructor. Ugh.)
+        rootPanel.setLayout(        new BoxLayout(rootPanel,        BoxLayout.PAGE_AXIS));
+        topPane.setLayout(          new BoxLayout(topPane,          BoxLayout.LINE_AXIS));
+        bottomPane.setLayout(       new BoxLayout(bottomPane,       BoxLayout.LINE_AXIS));
+        leftPane.setLayout(         new BoxLayout(leftPane,         BoxLayout.PAGE_AXIS));
+        rightPane.setLayout(        new BoxLayout(rightPane,        BoxLayout.PAGE_AXIS));
+        bottomLeftPane.setLayout(   new BoxLayout(bottomLeftPane,   BoxLayout.PAGE_AXIS));
+
+        // Now, to create some required local references to components we don't need after initialization....
+        JLabel userListLabel, chatAreaLabel;
+        JScrollPane userListPane, chatAreaPane;
+        userListPane = new JScrollPane(userList);
+        chatAreaPane = new JScrollPane(chatArea);
+        userListLabel = new JLabel(this.userListLabel);
+        chatAreaLabel = new JLabel(this.chatAreaLabel);
+        Dimension outerGapDimension = new Dimension(5, 5); // Between components and frame
+        Component outerGap = Box.createRigidArea(outerGapDimension);
+        Dimension innerGapDimension = new Dimension(10, 10); // Between components
+        Component innerGap = Box.createRigidArea(innerGapDimension);
+
+        // Then, add the panes to one another. Apologies for the fillers. BoxLayout is REALLY stupid.
+        rootPanel.add(topPane);
+        rootPanel.add(innerGap);
+        rootPanel.add(bottomPane);
+        topPane.add(leftPane);
+        topPane.add(innerGap);
+        topPane.add(rightPane);
+        bottomPane.add(bottomLeftPane);
+
+        // Add components to panes - almost done! Apologies for the fillers - BoxLayout is REALLY stupid.
+        chatFrame.setContentPane(rootPanel);
+        leftPane.add(userListLabel);
+        leftPane.add(userListPane);
+        rightPane.add(chatAreaLabel);
+        rightPane.add(chatAreaPane);
+        bottomLeftPane.add(messageFieldLabel);
+        bottomLeftPane.add(messageField);
+        bottomPane.add(innerGap);
+        bottomPane.add(sendButton);
+
+        // Finally, size components.
+        userListLabel.setAlignmentX((Component.LEFT_ALIGNMENT));
+        userListPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        userListPane.setPreferredSize(new Dimension(120, 560));
+        chatAreaPane.setPreferredSize(new Dimension(660, 560));
+*/
+
+/*      // GridBagLayout - not working adequately for my layout without hacks, it seems.
+        // Set up constraints.
+        final double x0weight = 0.2;
+        final double x1weight = 0.8;
+        final double y0weight = 0.9;
+        final int inset = 8;
+        final int gridWidth = 4;
+        GridBagConstraints userListConstraints, chatAreaConstraints, messageFieldConstraints, sendButtonConstraints, spacerConstraints;
+        userListConstraints = new GridBagConstraints();
+        userListConstraints.gridx = 0;
+        userListConstraints.gridy = 0;
+        userListConstraints.fill = GridBagConstraints.BOTH;
+        userListConstraints.weightx = x0weight;
+        userListConstraints.weighty = y0weight;
+        userListConstraints.insets = new Insets(inset, inset, inset/2, inset/2);
+        chatAreaConstraints = new GridBagConstraints();
+        chatAreaConstraints.gridx = 1;
+        chatAreaConstraints.gridy = 0;
+        chatAreaConstraints.gridwidth = gridWidth;
+        chatAreaConstraints.fill = GridBagConstraints.BOTH;
+        chatAreaConstraints.weightx = x1weight;
+        chatAreaConstraints.weighty = y0weight;
+        chatAreaConstraints.insets = new Insets(inset, inset/2, inset/2, inset);
+
+        // If we use this, need to Set a span of some kind to achieve desired result.
+
+        messageFieldConstraints = new GridBagConstraints();
+        messageFieldConstraints.gridx = 0;
+        messageFieldConstraints.gridy = 1;
+        messageFieldConstraints.gridwidth = gridWidth;
+        messageFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        messageFieldConstraints.weightx = 0.9;
+        messageFieldConstraints.insets = new Insets(inset/2, inset, inset, inset/2);
+        sendButtonConstraints = new GridBagConstraints();
+        sendButtonConstraints.gridx = GridBagConstraints.RELATIVE;
+        sendButtonConstraints.gridy = 1;
+        sendButtonConstraints.fill = GridBagConstraints.HORIZONTAL;
+        sendButtonConstraints.insets = new Insets(inset/2, inset/2, inset, inset);
+
+        // If we use this, need to add constraints for the labels, too, if we need them.
+
+        // Add elements to frame/pane.
+        chatFrame.setContentPane(rootPanel);
+//        rootPanel.add(new JLabel(userListLabel), userListConstraints);
+        rootPanel.add(userList, userListConstraints); // NEED TO Add userList inside a JScrollPane!
+//        rootPanel.add(new JLabel(chatAreaLabel), chatAreaConstraints);
+        rootPanel.add(chatArea, chatAreaConstraints); // NEED TO ADD chatArea inside a JScrollPane!
+//        rootPanel.add(messageFieldLabel, messageFieldConstraints);
+        rootPanel.add(messageField, messageFieldConstraints);
+//        rootPanel.add(sendButton, sendButtonConstraints);
+*/
+
+        chatFrame.pack();
     }
 
     public void show() {
