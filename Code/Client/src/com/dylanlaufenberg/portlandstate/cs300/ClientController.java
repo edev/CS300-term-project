@@ -170,6 +170,11 @@ public class ClientController {
         }
     }
 
+    public static void exit() {
+        shutdown();
+        System.exit(0);
+    }
+
     /**
      * Wrapper for LoginScreen's error display mechanism.
      * @param errorText A SHORT (one-line) description of the error.

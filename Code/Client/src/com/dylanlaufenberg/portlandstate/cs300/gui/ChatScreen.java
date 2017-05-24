@@ -110,6 +110,9 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
         });
         chatFrame.setPreferredSize(new Dimension(800, 600));
 
+        // Initialize menu
+        initializeMenu();
+
         // Initialize elements.
         rootPanel = new JPanel(new GridBagLayout());
         userListModel = new UserListModel();
@@ -324,6 +327,29 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
 */
 
         chatFrame.pack();
+    }
+
+    private void initializeMenu() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu chatMenu = new JMenu("Chat");
+        chatMenu.setMnemonic(KeyEvent.VK_C);
+        menuBar.add(chatMenu);
+
+        JMenuItem menuHistory = new JMenuItem("View History", KeyEvent.VK_H);
+        chatMenu.add(menuHistory);
+        chatMenu.add(new JSeparator());
+        JMenuItem menuLogout = new JMenuItem("Log out", KeyEvent.VK_L);
+        chatMenu.add(menuLogout);
+        JMenuItem menuExit = new JMenuItem("Quit", KeyEvent.VK_Q);
+        chatMenu.add(menuExit);
+
+        chatFrame.setJMenuBar(menuBar);
+
+        // Now add listeners.
+        // TODO Add history ActionListener here when implementing history.
+        menuLogout.addActionListener(e -> ClientController.goOffline());
+        menuExit.addActionListener(e -> ClientController.exit());
     }
 
     public void show() {
