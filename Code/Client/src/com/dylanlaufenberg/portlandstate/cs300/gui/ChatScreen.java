@@ -35,6 +35,10 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     private final String publicMessageFieldLabel = "Public message"; // Message displayed verbatim
     private final String privateMessageFieldLabelPrefix = "Private message for "; // Message concatenated with user name
 
+    // Window label. Format: prefix + " " + userName + " " + suffix. Use "" rather than null to blank out pre/suffix.
+    private final String windowLabelPrefix = "Chat Application: logged in as";
+    private final String windowLabelSuffix = "";
+
     // Swing elements
     private JFrame chatFrame;
     private JPanel rootPanel;
@@ -63,6 +67,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
                 String message = messageField.getText();
                 if(message != null && !message.trim().equals("")) {
                     sendMessage(message);
+
                 }
             }
         });
@@ -73,21 +78,21 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                // FIXME userList resizes on click
                 super.mouseClicked(e);
                 if(e.getClickCount() >= privateMessageClickCount) {
                     String selected = (String) userList.getSelectedValue();
                     setPrivateMessageMode(selected);
+                    messageField.requestFocus();
                 }
             }
         });
         messageField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+                super.keyTyped(e);
                 if(e.getKeyChar() == privateMessageCancelKey) {
                     setPublicMessageMode();
                 }
-                super.keyTyped(e);
             }
         });
     }
@@ -113,6 +118,9 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
         messageField = new JTextField();
         sendButton = new JButton(sendButtonText);
         messageFieldLabel = new JLabel(publicMessageFieldLabel); // Initialize to public send mode.
+
+        // Set basic element properties.
+        chatArea.setEditable(false);
 
         // GroupLayout (primarily to have decent gaps between things, which you'd think would be easy to achieve....)
         // First, create some locals we'll need here but don't need throughout the life of the frame.
@@ -319,6 +327,20 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     }
 
     public void show() {
+        // Update title.
+        StringBuilder title = new StringBuilder();
+        if(windowLabelPrefix != null) {
+            title.append(windowLabelPrefix);
+            title.append(" ");
+        }
+        title.append(ClientController.userName);
+        if(windowLabelSuffix != null) {
+            title.append(" ");
+            title.append(windowLabelSuffix);
+        }
+        chatFrame.setTitle(title.toString());
+
+        // Update visibility if needed.
         if(!chatFrame.isVisible()) {
             chatFrame.setVisible(true);
         }
@@ -369,6 +391,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
                 // Send private message.
                 ClientController.sendPrivateMessage(privateMessageRecipient, message);
                 addPrivateMessage(ClientController.userName, message, true);
+                messageField.setText("");
             } else {
                 System.err.println("Tried to send a private message without specifying a recipient. Ignoring.");
             }
@@ -376,6 +399,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
             // Send public message.
             addPublicMessage(ClientController.userName, message);
             ClientController.sendPublicMessage(message);
+            messageField.setText("");
         } else {
             System.err.println("ChatScreen.sendType is invalid! (Neither PUBLIC nor PRIVATE.)");
         }
