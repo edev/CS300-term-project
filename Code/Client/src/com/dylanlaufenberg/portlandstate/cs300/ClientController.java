@@ -5,6 +5,8 @@ import com.dylanlaufenberg.portlandstate.cs300.gui.LoginScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.Channel;
 
+import java.io.File;
+
 /**
  * Controller class for the client application. Handles the business logic and manages the GUI states.
  */
@@ -15,11 +17,54 @@ public class ClientController {
     public static String userName;
     public static ChatScreen chatScreen;
     public static LoginScreen loginScreen;
+    public static File logFile;
 
     public static void main(String[] args) throws Exception {
+        parseCommandLineOptions(args);
+
         loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
         chatScreen = new ChatScreen();
         loginScreen.show();
+    }
+
+    /**
+     * Parses command-line options. Valid options:
+     * --log LOG_PATH   Specifies that chat history should be logged to and retrieved from LOG_PATH,
+     *                  which should be a destination .log file. (One will be created if it does not already exist.)
+     * --nolog          Disables chat history logging for the session.
+     * @param args Command-line arguments, passed through from main.
+     */
+    private static void parseCommandLineOptions(String[] args) {
+        // I don't really have a plan for parsing these, nor many options to consider, so this may be a bit haphazard.
+        // If I find that I intend to implement a lot of stuff, I'll import a library to handle it.
+        for(int i = 0; i < args.length; ++i) {
+            switch(args[i]) {
+                case "--log":
+                    // TODO Implement.
+                    break;
+                case "--nolog":
+                    // TODO Implement.
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Parses "--log PATH" entries.
+     * @param args args from main.
+     * @param index index of PATH in args. Out-of-bounds index IS ALLOWED and will be checked.
+     */
+    private static void parseOptionLog(String args[], int index) {
+        if(index >= args.length) {
+            System.err.println("Found --log option without path. Ignoring.");
+            return;
+        }
+
+        logFile = new File(args[index]);
+        // TODO Figure out what kind of IO to use and implement it, including error reporting if there's a problem.
+        // TODO Create separate --log options for two different run configurations.
+        // TODO Verify behavior of two run attempts on the same file.
+
     }
 
     public static void processMessage(NetMessage.Message m) {
