@@ -95,6 +95,17 @@ public class ChatScreen {
                 }
             }
         });
+        messageField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                messageField.selectAll();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
     }
 
     private void initComponents() {
@@ -326,6 +337,7 @@ public class ChatScreen {
 */
 
         chatFrame.pack();
+        messageField.requestFocus();
     }
 
     private void initializeMenu() {

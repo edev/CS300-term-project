@@ -10,18 +10,17 @@ import java.awt.event.*;
  * Created by Dylan on 5/10/2017.
  */
 public class LoginScreen {
-    // TODO Implement http://stackoverflow.com/questions/1313390/is-there-any-way-to-accept-only-numeric-values-in-a-jtextfield
     private JFrame loginFrame;
     private JPasswordField passwordField;
     private JTextField hostnameField;
-    private JTextField portField; // TODO Restrict port field to only accept numbers.
+    private JTextField portField;
     private JTextField userNameField;
     private JButton registerButton;
     private JButton loginButton;
     private JPanel rootPanel;
     private JLabel statusText;
     private Operation currentOperation;
-    // TODO Add a focusListener to select all in all 4 fields.
+
     private enum Operation {
         NONE,
         LOGIN,
@@ -41,32 +40,52 @@ public class LoginScreen {
                 doRegister();
             }
         });
-        userNameField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                routeLoginEvent(e);
-            }
-        });
-        passwordField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                routeLoginEvent(e);
-            }
-        });
+//        userNameField.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                routeLoginEvent(e);
+//            }
+//        });
+//        passwordField.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                routeLoginEvent(e);
+//            }
+//        });
+//
+//        hostnameField.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                routeLoginEvent(e);
+//            }
+//        });
+//        portField.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                routeLoginEvent(e);
+//            }
+//        });
 
-        hostnameField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                routeLoginEvent(e);
-            }
-        });
-        portField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                routeLoginEvent(e);
-            }
-        });
+        JTextField[] fields = {userNameField, passwordField, hostnameField, portField};
+        for(JTextField field : fields) {
+            field.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    routeLoginEvent(e);
+                }
+            });
+            field.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    field.selectAll();
+                }
 
+                @Override
+                public void focusLost(FocusEvent e) {
+
+                }
+            });
+        }
     }
 
     private void routeLoginEvent(KeyEvent e) {
@@ -171,6 +190,7 @@ public class LoginScreen {
                 break;
 
             case NONE:
+            default:
                 break;
         }
         currentOperation = Operation.NONE;
@@ -187,6 +207,7 @@ public class LoginScreen {
                 break;
 
             case NONE:
+            default:
                 break;
         }
         currentOperation = Operation.NONE;

@@ -103,12 +103,6 @@ public class ClientController {
         }
 
         switch(m.getAuthMessageType()) {
-            case UNSET:
-            case AUTH_LOGIN:
-            case AUTH_REGISTER:
-            case UNRECOGNIZED:
-                break;
-
             case AUTH_SUCCESS:
                 goOnline();
                 break;
@@ -123,6 +117,9 @@ public class ClientController {
                 if(loginScreen != null) {
                     loginScreen.showPasswordErrorMessage();
                 }
+                break;
+
+            default:
                 break;
         }
     }
@@ -264,8 +261,6 @@ public class ClientController {
                 chatScreen.userRemoved(message.getUserName());
                 break;
 
-            case UNSET: // TODO Make sure other processXMessage switches have this triple-default-case structure, too. Or simply default.
-            case UNRECOGNIZED:
             default:
                 System.err.println("Received invalid notice message: ");
                 System.err.println(message.toString());
@@ -302,8 +297,9 @@ public class ClientController {
                 chatScreen.addPrivateMessage(message.getSender(), message.getText(), false);
                 break;
 
-            case UNRECOGNIZED:
+            default:
                 System.err.println("Received chat message with unrecognized ChatMessageType. Ignoring.");
+                break;
         }
     }
 

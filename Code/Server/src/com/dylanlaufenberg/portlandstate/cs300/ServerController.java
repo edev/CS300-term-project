@@ -47,7 +47,6 @@ class ServerController {
                 }
                 break;
 
-            case MESSAGECONTENTS_NOT_SET:
             default:
                 System.err.println("Invalid incoming message from " + user.name + ": " + message.toString());
                 break;
@@ -171,7 +170,6 @@ private static boolean processChatMessage(User user, NetMessage.Message.ChatMess
             case PRIVATE:
                 return privateMessage(user, message.getReceiver(), message.getText());
 
-            case UNSET:
             default:
                 return false;
         }
