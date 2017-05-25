@@ -4,8 +4,7 @@ import com.dylanlaufenberg.portlandstate.cs300.ClientController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * Created by Dylan on 5/10/2017.
@@ -42,30 +41,44 @@ public class LoginScreen {
                 doRegister();
             }
         });
-        userNameField.addActionListener(new ActionListener() {
+        userNameField.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                doLogin();
+            public void keyReleased(KeyEvent e) {
+                routeLoginEvent(e);
             }
         });
-        passwordField.addActionListener(new ActionListener() {
+        passwordField.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                doLogin();
+            public void keyReleased(KeyEvent e) {
+                routeLoginEvent(e);
             }
         });
-        hostnameField.addActionListener(new ActionListener() {
+
+        hostnameField.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                doLogin();
+            public void keyReleased(KeyEvent e) {
+                routeLoginEvent(e);
             }
         });
-        portField.addActionListener(new ActionListener() {
+        portField.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                doLogin();
+            public void keyReleased(KeyEvent e) {
+                routeLoginEvent(e);
             }
         });
+
+    }
+
+    private void routeLoginEvent(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if ((e.getModifiers() & InputEvent.SHIFT_MASK) == 0) {
+                // No shift. Login.
+                doLogin();
+            } else {
+                // Shift. Register.
+                doRegister();
+            }
+        }
     }
 
     public static LoginScreen createAndShow() {
