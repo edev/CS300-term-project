@@ -1,5 +1,6 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import com.dylanlaufenberg.portlandstate.cs300.gui.ChatHistoryScreen;
 import com.dylanlaufenberg.portlandstate.cs300.gui.ChatScreen;
 import com.dylanlaufenberg.portlandstate.cs300.gui.LoginScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
@@ -362,5 +363,24 @@ public class ClientController {
                 System.err.println(e.toString());
             }
         }
+    }
+
+    public static void showLog() {
+        if(logFile == null) {
+            JOptionPane.showMessageDialog(null, "No log file is available.");
+            return;
+        }
+
+        if(!logFile.canRead()) {
+            JOptionPane.showMessageDialog(null, "Cannot read from log file.");
+            return;
+        }
+
+        if(userName == null || userName.trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Cannot load chat history for blank user.");
+            return;
+        }
+
+        ChatHistoryScreen.screenFor(logFile, userName);
     }
 }

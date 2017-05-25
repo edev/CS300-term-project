@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * ChatScreen represents the main chat window visible to the user when the client is logged in.
  */
-public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
+public class ChatScreen {
 
     // Number of clicks in userList to activate a private message to a recipient.
     private final int privateMessageClickCount = 2;
@@ -100,12 +100,11 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
     private void initComponents() {
         // Initialize frame.
         chatFrame = new JFrame("ChatScreen");
-        chatFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         chatFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                ClientController.shutdown();
                 e.getWindow().dispose();
+                ClientController.exit();
             }
         });
         chatFrame.setPreferredSize(new Dimension(800, 600));
@@ -114,7 +113,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
         initializeMenu();
 
         // Initialize elements.
-        rootPanel = new JPanel(new GridBagLayout());
+        rootPanel = new JPanel();
         userListModel = new UserListModel();
         userList = new JList<>(userListModel);
         chatArea = new JTextArea();
@@ -347,7 +346,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
         chatFrame.setJMenuBar(menuBar);
 
         // Now add listeners.
-        // TODO Add history ActionListener here when implementing history.
+        menuHistory.addActionListener(e -> ClientController.showLog());
         menuLogout.addActionListener(e -> ClientController.goOffline());
         menuExit.addActionListener(e -> ClientController.exit());
     }
