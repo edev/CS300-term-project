@@ -5,12 +5,18 @@ import com.dylanlaufenberg.portlandstate.cs300.gui.LoginScreen;
 import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.Channel;
 
+import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Controller class for the client application. Handles the business logic and manages the GUI states.
  */
 public class ClientController {
+
+    private static final String logFileDirectory = "log";
 
     private static ChatClient client;
     private static Channel channel;
@@ -18,6 +24,7 @@ public class ClientController {
     public static ChatScreen chatScreen;
     public static LoginScreen loginScreen;
     public static File logFile;
+    private static FileOutputStream logger;
 
     public static void main(String[] args) throws Exception {
         loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
@@ -34,8 +41,21 @@ public class ClientController {
      * @return True if the new log file is open, false otherwise. If false, ClientController.logFile will be null.
      */
     private static boolean configureLog() {
-        // TODO Implement configureLog.
-        return false;
+
+        // Construct the File representation in Java.
+        String logFileName = logFileDirectory + "/" + userName + ".log";
+        logFile = new File(logFileName);
+
+        try {
+            // Try to open the file for writing.
+            logger = new FileOutputStream(logFile, true);
+        } catch(FileNotFoundException e) {
+            logFile = null;
+            logger = null;
+            System.err.println("Could not open log file " + logFileName + " for writing.");
+        }
+
+        return logger != null;
     }
 
     public static void processMessage(NetMessage.Message m) {
@@ -163,7 +183,10 @@ public class ClientController {
      * Closes the login screen and opens the chat screen.
      */
     public static void goOnline() { // TODO Refactor goOnline and goOffline with shutdown; integrate more closely with netty status.
-        // TODO Call configureLog() and display some kind of error on failure indicating that the session will not be logged.
+        if(!configureLog()) {
+            // Log couldn't be configured. We need to display a message to the user and then continue.
+            JOptionPane.showMessageDialog(null, "Could not open log file for writing. This session will not be recorded locally.");
+        }
         loginScreen.hide();
         chatScreen.show();
     }
@@ -178,12 +201,20 @@ public class ClientController {
     }
 
     /**
-     * Closes the server connection.
+     * Closes the server connection and the log file (if one is open).
      */
     public static void shutdown() {
         if(client != null) {
             client.stop();
             client = null;
+        }
+        if(logger != null) {
+            try {
+                logger.flush();
+                logger.close();
+            } catch(IOException e) {
+                System.err.println(e.toString());
+            }
         }
     }
 
