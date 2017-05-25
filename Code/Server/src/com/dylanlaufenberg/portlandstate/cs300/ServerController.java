@@ -59,15 +59,11 @@ class ServerController {
     private static User processAuthMessage(User user, NetMessage.Message.AuthenticationMessage message, Channel channel) {
         switch(message.getAuthMessageType()) {
             case AUTH_REGISTER:
-                // TODO Replace registration stub with real code.
                 user = register(message.getUserName(), message.getPassword(), channel);
                 break;
 
             case AUTH_LOGIN:
-                // Temporary response: user doesn't exist.
-                channel.writeAndFlush(
-                        ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER));
-                // TODO Allow login. Remove temporary response above.
+                user = login(message.getUserName(), message.getPassword(), channel);
                 break;
 
             default:
@@ -75,6 +71,20 @@ class ServerController {
                 break;
         }
         return user;
+    }
+
+    private static User login(String userName, String password, Channel channel) {
+        if(userName == null
+                || userName.length() == 0
+                || password == null
+                || password.length() == 0
+                || channel == null) {
+            // Error detected. We can't proceed. No new user will be activated.
+            return null;
+        }
+
+        User.AuthResult result = User.loadUser(userName, password);
+        return loginOrRegister(result, channel);
     }
 
     private static User register(String userName, String password, Channel channel) {
@@ -88,20 +98,24 @@ class ServerController {
         }
 
         User.AuthResult result = User.newUser(userName, password);
-        if(result.result == User.AuthResult.Result.BAD_USER) {
+        return loginOrRegister(result, channel);
+    }
+
+    private static User loginOrRegister(User.AuthResult result, Channel channel) {
+        if (result.result == User.AuthResult.Result.BAD_USER) {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
                     ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER));
 
-        } else if(result.result == User.AuthResult.Result.BAD_PASSWORD) {
+        } else if (result.result == User.AuthResult.Result.BAD_PASSWORD) {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
                     ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD)
             );
 
-        } else if(result.result == User.AuthResult.Result.SUCCESS && result.user != null) {
+        } else if (result.result == User.AuthResult.Result.SUCCESS && result.user != null) {
 
             // Success!
             User newUser = result.user;
@@ -114,7 +128,7 @@ class ServerController {
             channels.writeAndFlush(
                     ServerHelper.buildNoticeMessage(
                             NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE,
-                            userName
+                            result.user.name
                     )
             );
 
@@ -122,7 +136,7 @@ class ServerController {
             // Add new user to other users' broadcasts and to the user collection, and add channel to our channel group.
             users.forEach((name, user) -> user.broadcast.add(channel));
             NetMessage.Message userList = ServerHelper.buildUserListMessage(users); // Build this before adding newUser to users.
-            users.putIfAbsent(userName, newUser);
+            users.putIfAbsent(newUser.name, newUser);
             channels.add(channel);
 
             // Respond affirmatively to registration request. Then immediately send the user list.
@@ -132,7 +146,6 @@ class ServerController {
                     userList);
 
             return newUser;
-
         } else {
             // What the hell? Invalid result object!
         }
@@ -141,7 +154,9 @@ class ServerController {
         return null;
     }
 
-    private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
+
+
+private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
         if(user == null
                 || message == null
                 || channel == null) {
@@ -179,9 +194,6 @@ class ServerController {
                 )
         );
 
-        users.forEach((name, user)->{
-            // TODO Record message in history, if we're doing that on the server.
-        });
         return true;
     }
 
@@ -211,7 +223,6 @@ class ServerController {
                 )
         );
 
-        // TODO Record message in both users' histories, if we're doing that on the server.
         return true;
     }
 

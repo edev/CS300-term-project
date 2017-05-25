@@ -21,7 +21,7 @@ public class LoginScreen {
     private JPanel rootPanel;
     private JLabel statusText;
     private Operation currentOperation;
-
+    // TODO Add a focusListener to select all in all 4 fields.
     private enum Operation {
         NONE,
         LOGIN,

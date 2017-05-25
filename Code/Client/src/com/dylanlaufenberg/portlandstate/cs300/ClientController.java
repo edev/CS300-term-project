@@ -59,6 +59,20 @@ public class ClientController {
         return logger != null;
     }
 
+    private static void closeLog() {
+        if(logger == null) {
+            return;
+        }
+
+        try {
+            logger.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        logger = null;
+    }
+
     public static void processMessage(NetMessage.Message m) {
         switch(m.getMessageContentsCase()) {
             case AUTHMESSAGE:
@@ -196,6 +210,7 @@ public class ClientController {
      * Closes the connection to the server and returns to the login screen.
      */
     public static void goOffline() {
+        closeLog();
         chatScreen.hide();
         loginScreen.show();
         shutdown();

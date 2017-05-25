@@ -27,4 +27,4 @@ public class ClientConnectionHandler extends SimpleChannelInboundHandler<NetMess
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ClientController.showLoginError(cause.toString());
     }
-}
+} // FIXME Add channelInactive to handle connection loss, e.g. due to server going offline.

@@ -32,13 +32,15 @@ class ServerConnectionHandler extends SimpleChannelInboundHandler<NetMessage.Mes
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        ServerController.users.remove(user.name);
-        user.broadcast.writeAndFlush(
-                ServerHelper.buildNoticeMessage(
-                        NetMessage.Message.NoticeMessage.NoticeMessageType.OFFLINE,
-                        user.name
-                )
-        );
-        // ChannelGroups, i.e. ServerController.channels and user.broadcast, will be cleaned up automatically.
+        if(user != null) {
+            ServerController.users.remove(user.name);
+            user.broadcast.writeAndFlush(
+                    ServerHelper.buildNoticeMessage(
+                            NetMessage.Message.NoticeMessage.NoticeMessageType.OFFLINE,
+                            user.name
+                    )
+            );
+            // ChannelGroups, i.e. ServerController.channels and user.broadcast, will be cleaned up automatically.
+        }
     }
 }

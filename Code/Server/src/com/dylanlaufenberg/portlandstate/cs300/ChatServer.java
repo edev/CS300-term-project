@@ -39,6 +39,11 @@ public class ChatServer {
             }
         }
 
+        if(!User.loadUserFile()) {
+            System.err.println("Critical error loading user file. Exiting.");
+            System.exit(1);
+        }
+
         ChatServer server = new ChatServer(port);
     }
 
