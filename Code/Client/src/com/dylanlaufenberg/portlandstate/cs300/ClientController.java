@@ -20,51 +20,22 @@ public class ClientController {
     public static File logFile;
 
     public static void main(String[] args) throws Exception {
-        parseCommandLineOptions(args);
-
         loginScreen = LoginScreen.createAndShow(); // FIXME Refactor and reorganize appropriately
         chatScreen = new ChatScreen();
         loginScreen.show();
     }
 
     /**
-     * Parses command-line options. Valid options:
-     * --log LOG_PATH   Specifies that chat history should be logged to and retrieved from LOG_PATH,
-     *                  which should be a destination .log file. (One will be created if it does not already exist.)
-     * --nolog          Disables chat history logging for the session.
-     * @param args Command-line arguments, passed through from main.
+     * Attempts to close the current log file, if any, and open or create the log file for the current user
+     * (as specified by ClientController.userName). Displays errors to System.err, but other error reporting
+     * may be desired.
+     *
+     * A log file for a user is named after the userName, with a .log extension.
+     * @return True if the new log file is open, false otherwise. If false, ClientController.logFile will be null.
      */
-    private static void parseCommandLineOptions(String[] args) {
-        // I don't really have a plan for parsing these, nor many options to consider, so this may be a bit haphazard.
-        // If I find that I intend to implement a lot of stuff, I'll import a library to handle it.
-        for(int i = 0; i < args.length; ++i) {
-            switch(args[i]) {
-                case "--log":
-                    // TODO Implement.
-                    break;
-                case "--nolog":
-                    // TODO Implement.
-                    break;
-            }
-        }
-    }
-
-    /**
-     * Parses "--log PATH" entries.
-     * @param args args from main.
-     * @param index index of PATH in args. Out-of-bounds index IS ALLOWED and will be checked.
-     */
-    private static void parseOptionLog(String args[], int index) {
-        if(index >= args.length) {
-            System.err.println("Found --log option without path. Ignoring.");
-            return;
-        }
-
-        logFile = new File(args[index]);
-        // TODO Figure out what kind of IO to use and implement it, including error reporting if there's a problem.
-        // TODO Create separate --log options for two different run configurations.
-        // TODO Verify behavior of two run attempts on the same file.
-
+    private static boolean configureLog() {
+        // TODO Implement configureLog.
+        return false;
     }
 
     public static void processMessage(NetMessage.Message m) {
@@ -192,6 +163,7 @@ public class ClientController {
      * Closes the login screen and opens the chat screen.
      */
     public static void goOnline() { // TODO Refactor goOnline and goOffline with shutdown; integrate more closely with netty status.
+        // TODO Call configureLog() and display some kind of error on failure indicating that the session will not be logged.
         loginScreen.hide();
         chatScreen.show();
     }
