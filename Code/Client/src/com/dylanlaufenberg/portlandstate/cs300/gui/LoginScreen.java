@@ -202,6 +202,10 @@ public class LoginScreen {
         currentOperation = Operation.NONE;
     }
 
+    public void clearErrorMessage() {
+        setErrorText("");
+    }
+
     private void setErrorText(String text) {
         statusText.setForeground(Color.red);
         statusText.setText("<html>" + text + "</html>");

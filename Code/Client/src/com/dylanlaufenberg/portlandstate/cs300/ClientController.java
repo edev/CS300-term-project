@@ -202,6 +202,7 @@ public class ClientController {
             // Log couldn't be configured. We need to display a message to the user and then continue.
             JOptionPane.showMessageDialog(null, "Could not open log file for writing. This session will not be recorded locally.");
         }
+        loginScreen.clearErrorMessage();
         loginScreen.hide();
         chatScreen.show();
     }

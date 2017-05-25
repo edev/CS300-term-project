@@ -103,7 +103,7 @@
         </constraints>
         <properties>
           <autoscrolls value="true"/>
-          <text value=""/>
+          <text value=" "/>
         </properties>
       </component>
     </children>
