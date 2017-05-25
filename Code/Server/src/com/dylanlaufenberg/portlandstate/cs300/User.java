@@ -104,8 +104,10 @@ public class User {
                 e.printStackTrace();
             }
 
-            result.user = new User(keyFor(userName), password);
+            result.user = new User(userName, password);
             result.result = AuthResult.Result.SUCCESS;
+
+            users.put(keyFor(userName), result.user);
         }
 
         return result;
