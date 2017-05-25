@@ -279,12 +279,10 @@ public class ClientController {
         switch(message.getChatMessageType()) {
             case PUBLIC:
                 chatScreen.addPublicMessage(message.getSender(), message.getText());
-                // TODO Record public message on client if we're doing that.
                 break;
 
             case PRIVATE:
                 chatScreen.addPrivateMessage(message.getSender(), message.getText(), false);
-                // TODO Record private message on client if we're doing that.
                 break;
 
             case UNRECOGNIZED:
@@ -353,5 +351,16 @@ public class ClientController {
                         )
                         .build()
         );
+    }
+
+    public static void log(String message) {
+        if(logger != null && message != null && !message.equals("")) {
+            try {
+                logger.write(message.getBytes());
+                logger.flush();
+            } catch(IOException e) {
+                System.err.println(e.toString());
+            }
+        }
     }
 }

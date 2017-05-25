@@ -405,6 +405,7 @@ public class ChatScreen { // TODO Next: Improve chatting UX! It sucks! :-D
      */
     private void addMessage(String message) {
         chatArea.append(message + "\n");
+        ClientController.log(message + "\n");
     }
 
     private void sendMessage(String message) {
