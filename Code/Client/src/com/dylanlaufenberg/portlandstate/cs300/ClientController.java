@@ -167,7 +167,7 @@ public class ClientController {
                 || password == null
                 || password.length() == 0) {
             // Error detected.
-            System.err.println("Called ClientController.login(...) with invalid arguments. Ignoring.");
+            System.err.println("Called ClientController.loginOrRegister(...) with invalid arguments. Ignoring.");
         } else {
             ClientController.userName = userName;
             NetMessage.Message message = NetMessage.Message.newBuilder()
@@ -187,6 +187,7 @@ public class ClientController {
             client.host = hostname;
             client.port = port;
             channel = client.run(message);
+            return true;
         }
         return false;
     }
