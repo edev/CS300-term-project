@@ -39,6 +39,16 @@ public class User {
 
     private static FileOutputStream fout;
 
+    // Note: the loadUser method is a superb example of how I learned to structure code in my teen years.
+    // There are many failure cases, and in the interest of having a single return statement, I have used
+    // a fairly complex system of nested if-else statements. In reviewing this code, I notice very clearly
+    // that determining the actual outcome of any given failure case is non-trivial, even though the error
+    // conditions are trivial to check. I also notice that the success case is buried and difficult to find,
+    // and if not for the comments on each case, it would be even harder to locate. Very clearly, the better
+    // solution would be to include a return statement after each failure is detected. This resolves the nesting
+    // of if-else statements, provides a very clear code flow through error checks to success state, and in fact
+    // may be more efficient at run time due to the absence of nested conditionals. It's a simpler and cleraer
+    // approach, and that's good for everyone.
     public static AuthResult loadUser(String userName, String password) {
         AuthResult result = new AuthResult();
         User user;

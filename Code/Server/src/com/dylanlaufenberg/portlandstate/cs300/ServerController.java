@@ -55,6 +55,7 @@ class ServerController {
         return user;
     }
 
+    // TODO Remove user from parameters. It's not used.
     private static User processAuthMessage(User user, NetMessage.Message.AuthenticationMessage message, Channel channel) {
         switch(message.getAuthMessageType()) {
             case AUTH_REGISTER:
@@ -155,7 +156,7 @@ class ServerController {
 
 
 
-private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
+    private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
         if(user == null
                 || message == null
                 || channel == null) {
