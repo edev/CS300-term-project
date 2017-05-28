@@ -10,7 +10,7 @@ Term: Spring 2017 @ Portland State University
 
 [Course project page](http://web.cecs.pdx.edu/~linbin/cs300Spring2017/Project/wiki.html)
 
-[Grading ]
+[Grading Sheet](https://github.com/edev/CS300-term-project/blob/master/GradingSheet.pdf)
 
 ## Deliverables:
 
