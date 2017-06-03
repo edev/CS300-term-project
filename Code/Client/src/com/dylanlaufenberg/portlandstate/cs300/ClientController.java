@@ -323,15 +323,15 @@ public class ClientController {
         return true;
     }
 
-    public static void sendPublicMessage(String message) {
+    public static boolean sendPublicMessage(String message) {
         if(message == null || message.equals("")) {
             SharedHelper.error("Tried to send public message without a message body.");
-            return;
+            return false;
         }
 
         if(channel == null) {
             SharedHelper.error("Tried to send a public message without a valid channel. Ignoring.");
-            return;
+            return false;
         }
 
         channel.writeAndFlush(
@@ -344,23 +344,25 @@ public class ClientController {
                         )
                         .build()
         );
+        return true;
     }
 
-    public static void sendPrivateMessage(String receiver, String message) {
+    public static boolean sendPrivateMessage(String receiver, String message) {
         if(message == null
                 || message.trim().equals("")) {
             SharedHelper.error("Tried to send private message without a message body.");
-            return;
+            return false;
         }
 
         if(receiver == null
             || receiver.trim().equals("")) {
             SharedHelper.error("Tried to send private message without specifying a receiver.");
+            return false
         }
 
         if(channel == null) {
             SharedHelper.error("Tried to send a public message without a valid channel. Ignoring.");
-            return;
+            return false;
         }
 
         channel.writeAndFlush(
@@ -374,6 +376,7 @@ public class ClientController {
                         )
                         .build()
         );
+        return true;
     }
 
     public static void log(String message) {
