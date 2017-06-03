@@ -31,7 +31,7 @@ class ServerController {
         // See which type of message is actually present.
         switch(message.getMessageContentsCase()) {
             case AUTHMESSAGE:
-                user = processAuthMessage(user, message.getAuthMessage(), channel);
+                user = processAuthMessage(message.getAuthMessage(), channel);
                 break;
 
             case NOTICEMESSAGE:
@@ -55,71 +55,108 @@ class ServerController {
         return user;
     }
 
-    // TODO Remove user from parameters. It's not used.
-    private static User processAuthMessage(User user, NetMessage.Message.AuthenticationMessage message, Channel channel) {
+    private static User processAuthMessage(NetMessage.Message.AuthenticationMessage message, Channel channel) {
+        if(message == null) {
+            SharedHelper.error("processAuthMessage received a null message on the channel:.", channel);
+            return null;
+        }
+
+        if(channel == null) {
+            SharedHelper.error("processAuthMessage received the following message on a null channel:", message);
+            return null;
+        }
+
         switch(message.getAuthMessageType()) {
             case AUTH_REGISTER:
-                user = register(message.getUserName(), message.getPassword(), channel);
-                break;
+                return register(message.getUserName(), message.getPassword(), channel);
 
             case AUTH_LOGIN:
-                user = login(message.getUserName(), message.getPassword(), channel);
-                break;
+                return login(message.getUserName(), message.getPassword(), channel);
 
             default:
                 System.out.println("Unrecognized message type. (This may be an unimplemented feature.)");
-                break;
+                return null;
         }
-        return user;
     }
 
     private static User login(String userName, String password, Channel channel) {
         if(userName == null
-                || userName.length() == 0
-                || password == null
-                || password.length() == 0
-                || channel == null) {
-            // Error detected. We can't proceed. No new user will be activated.
+                || userName.length() == 0) {
+            SharedHelper.error("login called with no userName.");
+            return null;
+        }
+
+        if(password == null
+                || password.length() == 0) {
+            SharedHelper.error("login called for userName " + userName + " with no password.");
+            return null;
+        }
+
+        if(channel == null) {
+            SharedHelper.error("login called for userName " + userName + " with no channel.");
             return null;
         }
 
         User.AuthResult result = User.loadUser(userName, password);
-        return loginOrRegister(result, channel);
+        return processAuthResult(result, channel);
     }
 
     private static User register(String userName, String password, Channel channel) {
         if(userName == null
-                || userName.length() == 0
-                || password == null
-                || password.length() == 0
-                || channel == null) {
-            // Error detected. We can't proceed. No new user will be activated.
+                || userName.length() == 0) {
+            SharedHelper.error("register called with no userName.");
+            return null;
+        }
+
+        if(password == null
+                || password.length() == 0) {
+            SharedHelper.error("register called for userName " + userName + " with no password.");
+            return null;
+        }
+
+        if(channel == null) {
+            SharedHelper.error("register called for userName " + userName + " with no channel.");
             return null;
         }
 
         User.AuthResult result = User.newUser(userName, password);
-        return loginOrRegister(result, channel);
+        return processAuthResult(result, channel);
     }
 
-    private static User loginOrRegister(User.AuthResult result, Channel channel) {
+    private static User processAuthResult(User.AuthResult result, Channel channel) {
+        if(result == null) {
+            SharedHelper.error("processAuthResult called with no result.");
+            return null;
+        }
+
+        if(channel == null) {
+            SharedHelper.error("processAuthResult called with no channel, with result:", result);
+            return null;
+        }
+
         if (result.result == User.AuthResult.Result.BAD_USER) {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER));
+                    ServerHelper.buildAuthResponseMessage(
+                            NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER
+                    )
+            );
+            return null;
 
         } else if (result.result == User.AuthResult.Result.BAD_PASSWORD) {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD)
+                    ServerHelper.buildAuthResponseMessage(
+                            NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD
+                    )
             );
-
+            return null;
         } else if (result.result == User.AuthResult.Result.SUCCESS && result.user != null) {
 
-            // Success!
+            // Success! Configure the user's channels.
             User newUser = result.user;
-
             newUser.channel = channel;
             newUser.broadcast = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
             newUser.broadcast.addAll(channels);
@@ -132,10 +169,13 @@ class ServerController {
                     )
             );
 
-
             // Add new user to other users' broadcasts and to the user collection, and add channel to our channel group.
-            users.forEach((name, user) -> user.broadcast.add(channel));
-            NetMessage.Message userList = ServerHelper.buildUserListMessage(users); // Build this before adding newUser to users.
+            users.forEach(
+                    (name, user) -> user.broadcast.add(channel)
+            );
+
+            // Build this before adding newUser to users.
+            NetMessage.Message userList = ServerHelper.buildUserListMessage(users);
             users.putIfAbsent(newUser.name, newUser);
             channels.add(channel);
 
@@ -147,11 +187,11 @@ class ServerController {
 
             return newUser;
         } else {
-            // What the hell? Invalid result object!
-        }
 
-        // We haven't yet found and returned a user, so our result defaults to null.
-        return null;
+            // We've exhausted all valid cases, so if this code executes, we must have an invalid result object!
+            SharedHelper.error("processAuthResult received an invalid result!", result);
+            return null;
+        }
     }
 
 
