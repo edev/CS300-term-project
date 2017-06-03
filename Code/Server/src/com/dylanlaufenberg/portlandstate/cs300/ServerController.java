@@ -197,9 +197,18 @@ class ServerController {
 
 
     private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
-        if(user == null
-                || message == null
-                || channel == null) {
+        if(user == null) {
+            SharedHelper.error("processChatMessage called with no user.");
+            return false;
+        }
+
+        if(message == null) {
+            SharedHelper.error("processChatMessage called with no message for user " + user.name);
+            return false;
+        }
+
+        if(channel == null) {
+            SharedHelper.error("processChatMessage called with no channel for user " + user.name + " with message:", message);
             return false;
         }
 
@@ -217,10 +226,19 @@ class ServerController {
     }
 
     private static boolean publicMessage(User sender, String text) {
-        if(sender == null
-                || text == null
-                || text.equals("")
-                || sender.broadcast == null) {
+        if(sender == null) {
+            SharedHelper.error("publicMessage called with no sender.");
+            return false;
+        }
+
+        if(text == null
+                || text.trim().equals("")) {
+            SharedHelper.error("publicMessage called with no text, from sender " + sender);
+            return false;
+        }
+
+        if(sender.broadcast == null) {
+            SharedHelper.error("publicMessage called with sender " + sender.name + ", but that sender has no broadcast.");
             return false;
         }
 
@@ -237,19 +255,27 @@ class ServerController {
     }
 
     private static boolean privateMessage(User sender, String receiverName, String text) {
-        if(sender == null
-                || receiverName == null
-                || receiverName.trim().equals("")
-                || text == null
+        if(receiverName == null
+                || receiverName.trim().equals("")) {
+            SharedHelper.error("privateMessage called with no receiver.");
+            return false;
+        }
+
+        if(sender == null) {
+            SharedHelper.error("privateMessage called with no sender.");
+            return false;
+        }
+
+        if(text == null
                 || text.trim().equals("")) {
-            SharedHelper.error("Ignoring malformed private message:");
+            SharedHelper.error("privateMessage called with no text, from sender " + sender + ", to " + receiverName);
             return false;
         }
 
         User receiver = users.get(receiverName);
         if(receiver == null
                 || receiver.channel == null) {
-            SharedHelper.error("Ignoring private message directed toward invalid or offline user.");
+            SharedHelper.error("Ignoring private message for  invalid or offline receiver " + receiverName + ":", text);
             return false;
         }
 
