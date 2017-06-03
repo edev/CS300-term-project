@@ -124,20 +124,12 @@ public class ClientController {
         }
     }
 
-    public static void login(String hostname, int port, String userName, String password) {
-        if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN, hostname, port, userName, password)) {
-            // Login request sent.
-        } else {
-            // Login request was not sent.
-        }
+    public static boolean login(String hostname, int port, String userName, String password) {
+        return loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_LOGIN, hostname, port, userName, password);
     }
 
-    public static void register(String hostname, int port, String userName, String password) {
-        if(loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_REGISTER, hostname, port, userName, password)) {
-            // Register request sent.
-        } else {
-            // Register request was not sent.
-        }
+    public static boolean register(String hostname, int port, String userName, String password) {
+        return loginOrRegister(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_REGISTER, hostname, port, userName, password);
     }
 
 
@@ -162,12 +154,19 @@ public class ClientController {
                 || hostname == null
                 || hostname.length() == 0
                 || port <= 0
+                || port > 65535
                 || userName == null
                 || userName.length() == 0
                 || password == null
                 || password.length() == 0) {
             // Error detected.
-            SharedHelper.error("Called ClientController.loginOrRegister(...) with invalid arguments. Ignoring.");
+            SharedHelper.error("Called ClientController.loginOrRegister(...) with invalid arguments. Ignoring:\n" +
+                    "messageType:\n" +
+                    messageType.toString() +
+                    "hostname: " + hostname + "\n" +
+                    "port: " + port + "\n" +
+                    "userName: " + userName + "\n" +
+                    "password: (" + (password == null ? "null" : password.length()) + " characters)");
         } else {
             ClientController.userName = userName;
             NetMessage.Message message = NetMessage.Message.newBuilder()
