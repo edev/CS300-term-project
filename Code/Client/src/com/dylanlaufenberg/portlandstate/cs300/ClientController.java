@@ -199,9 +199,19 @@ public class ClientController {
             // Log couldn't be configured. We need to display a message to the user and then continue.
             JOptionPane.showMessageDialog(null, "Could not open log file for writing. This session will not be recorded locally.");
         }
-        loginScreen.clearErrorMessage();
-        loginScreen.hide();
-        chatScreen.show();
+
+        if(loginScreen != null) {
+            loginScreen.clearErrorMessage();
+            loginScreen.hide();
+        } else {
+            SharedHelper.error("Tried to goOnline() without a valid loginScreen.");
+        }
+
+        if(chatScreen != null) {
+            chatScreen.show();
+        } else {
+            SharedHelper.error("Tried to goOnline() without a valid chatScreen.");
+        }
     }
 
     /**
@@ -209,8 +219,18 @@ public class ClientController {
      */
     public static void goOffline() {
         closeLog();
-        chatScreen.hide();
-        loginScreen.show();
+
+        if(chatScreen != null) {
+            chatScreen.hide();
+        } else {
+            SharedHelper.error("Tried to goOnline() without a valid chatScreen.");
+        }
+
+        if(loginScreen != null) {
+            loginScreen.show();
+        } else {
+            SharedHelper.error("Tried to goOnline() without a valid loginScreen.");
+        }
         shutdown();
     }
 
