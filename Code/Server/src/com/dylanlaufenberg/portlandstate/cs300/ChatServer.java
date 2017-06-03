@@ -24,7 +24,7 @@ public class ChatServer {
      */
     public static void main(String[] args) throws Exception {
         if(args.length > 1) {
-            System.err.println("Too many arguments supplied. (Valid arguments: none, or port number.)");
+            SharedHelper.error("Too many arguments supplied. (Valid arguments: none, or port number.)");
             System.exit(1);
         }
 
@@ -34,13 +34,13 @@ public class ChatServer {
             try {
                 port = Integer.parseInt(args[0]);
             } catch(NumberFormatException e) {
-                System.err.println("Argument" + args[0] + " must be an integer port number (0 through 65535, greater than 1024 recommended).");
+                SharedHelper.error("Argument" + args[0] + " must be an integer port number (0 through 65535, greater than 1024 recommended).");
                 System.exit(1);
             }
         }
 
         if(!User.loadUserFile()) {
-            System.err.println("Critical error loading user file. Exiting.");
+            SharedHelper.error("Critical error loading user file. Exiting.");
             System.exit(1);
         }
 

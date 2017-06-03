@@ -1,6 +1,7 @@
 package com.dylanlaufenberg.portlandstate.cs300.gui;
 
 import com.dylanlaufenberg.portlandstate.cs300.ClientController;
+import com.dylanlaufenberg.portlandstate.cs300.SharedHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -395,7 +396,7 @@ public class ChatScreen {
     public void addPublicMessage(String sender, String text) {
         addMessage(sender + ": " + text);
         if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
-            System.err.println("ChatScreen addPublicMessage NOT on Swing Event Dispatch Thread.");
+            SharedHelper.error("ChatScreen addPublicMessage NOT on Swing Event Dispatch Thread.");
         }
     }
 
@@ -406,7 +407,7 @@ public class ChatScreen {
             addMessage("Private message from " + sender + ": " + text);
         }
         if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
-            System.err.println("ChatScreen addPrivateMessage NOT on Swing Event Dispatch Thread.");
+            SharedHelper.error("ChatScreen addPrivateMessage NOT on Swing Event Dispatch Thread.");
         }
     }
 
@@ -431,7 +432,7 @@ public class ChatScreen {
                 addPrivateMessage(ClientController.userName, message, true);
                 messageField.setText("");
             } else {
-                System.err.println("Tried to send a private message without specifying a recipient. Ignoring.");
+                SharedHelper.error("Tried to send a private message without specifying a recipient. Ignoring.");
             }
         } else if(sendType == SendMessageType.PUBLIC) {
             // Send public message.
@@ -439,7 +440,7 @@ public class ChatScreen {
             ClientController.sendPublicMessage(message);
             messageField.setText("");
         } else {
-            System.err.println("ChatScreen.sendType is invalid! (Neither PUBLIC nor PRIVATE.)");
+            SharedHelper.error("ChatScreen.sendType is invalid! (Neither PUBLIC nor PRIVATE.)");
         }
     }
 

@@ -43,12 +43,12 @@ class ServerController {
             case CHATMESSAGE:
                 if(!processChatMessage(user, message.getChatMessage(), channel)) {
                     // message not successfully delivered.
-                    System.err.println("Could not process message from " + user.name + ": " + message.toString());
+                    SharedHelper.error("Could not process message from " + user.name + ": " + message.toString());
                 }
                 break;
 
             default:
-                System.err.println("Invalid incoming message from " + user.name + ": " + message.toString());
+                SharedHelper.error("Invalid incoming message from " + user.name + ": " + message.toString());
                 break;
         }
 
@@ -202,14 +202,14 @@ class ServerController {
                 || receiverName.trim().equals("")
                 || text == null
                 || text.trim().equals("")) {
-            System.err.println("Ignoring malformed private message:");
+            SharedHelper.error("Ignoring malformed private message:");
             return false;
         }
 
         User receiver = users.get(receiverName);
         if(receiver == null
                 || receiver.channel == null) {
-            System.err.println("Ignoring private message directed toward invalid or offline user.");
+            SharedHelper.error("Ignoring private message directed toward invalid or offline user.");
             return false;
         }
 

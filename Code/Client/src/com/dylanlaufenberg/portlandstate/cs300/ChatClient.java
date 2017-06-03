@@ -73,7 +73,7 @@ public class ChatClient {
 
             return channel;
         } catch (Exception e) {
-            System.err.println(e.toString());
+            SharedHelper.error(e.toString());
             workerGroup.shutdownGracefully();
             return null;
         }

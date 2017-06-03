@@ -53,7 +53,7 @@ public class ClientController {
         } catch(FileNotFoundException e) {
             logFile = null;
             logger = null;
-            System.err.println("Could not open log file " + logFileName + " for writing.");
+            SharedHelper.error("Could not open log file " + logFileName + " for writing.");
         }
 
         return logger != null;
@@ -73,54 +73,54 @@ public class ClientController {
         logger = null;
     }
 
-    public static void processMessage(NetMessage.Message m) {
+    public static boolean processMessage(NetMessage.Message m) {
+        if(m == null) {
+            return false;
+        }
+
         switch(m.getMessageContentsCase()) {
             case AUTHMESSAGE:
-                processAuthMessage(m.getAuthMessage());
-                break;
+                return processAuthMessage(m.getAuthMessage());
 
             case NOTICEMESSAGE:
-                processNotice(m.getNoticeMessage());
-                break;
+                return processNotice(m.getNoticeMessage());
 
             case CHATMESSAGE:
-                processChatMessage(m.getChatMessage());
-                break;
+                return processChatMessage(m.getChatMessage());
 
             case USERLIST:
-                processUserList(m.getUserList());
-                break;
+                return processUserList(m.getUserList());
 
             default:
-                System.err.println("Received a message of an unknown type:");
-                System.err.println(m.toString());
+                SharedHelper.error("Received a message of an unknown type:", m.toString());
+                return false;
         }
     }
 
-    private static void processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
+    private static boolean processAuthMessage(NetMessage.Message.AuthenticationMessage m) {
         if(m == null) {
-            return;
+            return false;
         }
 
         switch(m.getAuthMessageType()) {
             case AUTH_SUCCESS:
                 goOnline();
-                break;
+                return true;
 
             case AUTH_ERROR_USER:
                 if(loginScreen != null) {
                     loginScreen.showUserErrorMessage();
                 }
-                break;
+                return false;
 
             case AUTH_ERROR_PASSWORD:
                 if(loginScreen != null) {
                     loginScreen.showPasswordErrorMessage();
                 }
-                break;
+                return false;
 
             default:
-                break;
+                return false;
         }
     }
 
@@ -167,7 +167,7 @@ public class ClientController {
                 || password == null
                 || password.length() == 0) {
             // Error detected.
-            System.err.println("Called ClientController.loginOrRegister(...) with invalid arguments. Ignoring.");
+            SharedHelper.error("Called ClientController.loginOrRegister(...) with invalid arguments. Ignoring.");
         } else {
             ClientController.userName = userName;
             NetMessage.Message message = NetMessage.Message.newBuilder()
@@ -228,7 +228,7 @@ public class ClientController {
                 logger.flush();
                 logger.close();
             } catch(IOException e) {
-                System.err.println(e.toString());
+                SharedHelper.error(e.toString());
             }
         }
     }
@@ -246,82 +246,92 @@ public class ClientController {
         loginScreen.showErrorMessage(errorText);
     }
 
-    private static void processNotice(NetMessage.Message.NoticeMessage message) {
+    private static boolean processNotice(NetMessage.Message.NoticeMessage message) {
         if(message == null
                 || message.getUserName().equals("")) {
             // Required information is missing.
-            return;
+            return false;
+        }
+
+        if(chatScreen == null) {
+            SharedHelper.error("Received notice message without a valid chatScreen:", message.toString());
+            return false;
         }
 
         switch(message.getNoticeMessageType()) {
             case ONLINE:
                 chatScreen.userAdded(message.getUserName());
-                break;
+                return true;
 
             case OFFLINE:
                 chatScreen.userRemoved(message.getUserName());
-                break;
+                return true;
 
             default:
-                System.err.println("Received invalid notice message: ");
-                System.err.println(message.toString());
-                break;
+                SharedHelper.error("Received invalid notice message: ", message.toString());
+                return false;
 
         }
     }
 
-    private static void processChatMessage(NetMessage.Message.ChatMessage message) {
+    private static boolean processChatMessage(NetMessage.Message.ChatMessage message) {
         if (message == null
                 || message.getChatMessageType() == NetMessage.Message.ChatMessage.ChatMessageType.UNSET
                 || message.getUserCase() != NetMessage.Message.ChatMessage.UserCase.SENDER
                 || message.getText().trim().equals("")) {
 
             // A field is flatly missing.
-            return;
+            return false;
 
         } else if (chatScreen == null) {
 
             // We're in the wrong state! We can't display this, and we really shouldn't have received it.
-            System.err.println("Received chat message while not in chat mode:");
-            System.err.println(message.toString());
-            System.err.println();
-            return;
+            SharedHelper.error("Received chat message while not in chat mode:", message.toString());
+            return false;
         }
 
         // Else, the message has everything it needs: a type, a sender, and a text body.
         switch(message.getChatMessageType()) {
             case PUBLIC:
                 chatScreen.addPublicMessage(message.getSender(), message.getText());
-                break;
+                return true;
 
             case PRIVATE:
                 chatScreen.addPrivateMessage(message.getSender(), message.getText(), false);
-                break;
+                return true;
 
             default:
-                System.err.println("Received chat message with unrecognized ChatMessageType. Ignoring.");
-                break;
+                SharedHelper.error("Received chat message with unrecognized ChatMessageType. Ignoring.");
+                return false;
         }
     }
 
-    private static void processUserList(NetMessage.Message.UserList users) {
-        if(chatScreen == null) {
-            return;
+    private static boolean processUserList(NetMessage.Message.UserList users) {
+        if(users == null) {
+            SharedHelper.error("processUserList received a null UserList.");
+            return false;
         }
 
+        if(chatScreen == null) {
+            SharedHelper.error("Received UserList without a valid chatScreen:", users);
+            return false;
+        }
+
+        // Note: users.getUserCount() == 0 is a valid state, and the loop handles it correctly.
         for(String user : users.getUserList()) {
             chatScreen.userAdded(user);
         }
+        return true;
     }
 
     public static void sendPublicMessage(String message) {
         if(message == null || message.equals("")) {
-            System.err.println("Tried to send public message without a message body..");
+            SharedHelper.error("Tried to send public message without a message body.");
             return;
         }
 
         if(channel == null) {
-            System.err.println("Tried to send a public message without a valid channel. Ignoring.");
+            SharedHelper.error("Tried to send a public message without a valid channel. Ignoring.");
             return;
         }
 
@@ -340,17 +350,17 @@ public class ClientController {
     public static void sendPrivateMessage(String receiver, String message) {
         if(message == null
                 || message.trim().equals("")) {
-            System.err.println("Tried to send private message without a message body.");
+            SharedHelper.error("Tried to send private message without a message body.");
             return;
         }
 
         if(receiver == null
             || receiver.trim().equals("")) {
-            System.err.println("Tried to send private message without specifying a receiver.");
+            SharedHelper.error("Tried to send private message without specifying a receiver.");
         }
 
         if(channel == null) {
-            System.err.println("Tried to send a public message without a valid channel. Ignoring.");
+            SharedHelper.error("Tried to send a public message without a valid channel. Ignoring.");
             return;
         }
 
@@ -373,7 +383,7 @@ public class ClientController {
                 logger.write(message.getBytes());
                 logger.flush();
             } catch(IOException e) {
-                System.err.println(e.toString());
+                SharedHelper.error(e.toString());
             }
         }
     }

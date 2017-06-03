@@ -110,7 +110,7 @@ public class User {
             try {
                 buildRecord(userName, password).writeDelimitedTo(fout);
             } catch(IOException e) {
-                System.err.println("Cannot write user record to disk. Printing stack trace.");
+                SharedHelper.error("Cannot write user record to disk. Printing stack trace.");
                 e.printStackTrace();
             }
 
@@ -164,22 +164,28 @@ public class User {
                 while (message != null) {
                     // Verify that message is valid
                     if (message.getMessageContentsCase() != NetMessage.Message.MessageContentsCase.AUTHMESSAGE) {
-                        System.err.println("User.loadUserFile(): read message with wrong MessageContents. Discarding:");
-                        System.err.println(message.toString());
+                        SharedHelper.error(
+                                "User.loadUserFile(): read message with wrong MessageContents. Discarding:",
+                                message.toString()
+                        );
                         continue;
                     }
                     String userName = message.getAuthMessage().getUserName();
                     String password = message.getAuthMessage().getPassword();
 
                     if (userName.trim().equals("")) {
-                        System.err.println("User.loadUserFile(): read user with no name. Discarding:");
-                        System.err.println(message.toString());
+                        SharedHelper.error(
+                                "User.loadUserFile(): read user with no name. Discarding:",
+                                message.toString()
+                        );
                         continue;
                     }
 
                     if (password.trim().equals("")) {
-                        System.err.println("User.loadUserFile(): read user with no name. Discarding:");
-                        System.err.println(message.toString());
+                        SharedHelper.error(
+                                "User.loadUserFile(): read user with no name. Discarding:",
+                                message.toString()
+                        );
                         continue;
                     }
 
@@ -188,7 +194,7 @@ public class User {
                     if (users.putIfAbsent(keyFor(userName), newUser) == null) {
                         System.out.println("Loaded user: " + userName);
                     } else {
-                        System.err.println("User.loadUserFile(): duplicate user found in user file: " + userName);
+                        SharedHelper.error("User.loadUserFile(): duplicate user found in user file: " + userName);
                     }
 
                     message = NetMessage.Message.parseDelimitedFrom(fin);

@@ -1,5 +1,7 @@
 package com.dylanlaufenberg.portlandstate.cs300.gui;
 
+import com.dylanlaufenberg.portlandstate.cs300.SharedHelper;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -47,7 +49,7 @@ public class ChatHistoryScreen {
             chs.textArea.read(bufferedReader, null);
             bufferedReader.close();
         } catch(IOException e) {
-            System.err.println(e.toString());
+            SharedHelper.error(e.toString());
             chs.textArea.setText(e.toString());
         }
 
