@@ -4,10 +4,7 @@ import com.dylanlaufenberg.portlandstate.cs300.proto.NetMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -37,7 +34,11 @@ public class User {
     // Always the same as the persisted user data.
     private static SortedMap<String, User> users = Collections.synchronizedSortedMap((new TreeMap<String, User>()));
 
-    private static FileOutputStream fout;
+    /* fout is the output stream used to save new users. It's package-private to allow the test suite to mock it
+     * and an OutputStream rather than a FileOutputStream for the same reason. It must be initialized by loadUserFile()
+     * in order for User to be in an initialized and ready state.
+     */
+    static OutputStream fout;
 
     // Note: the loadUser method is a superb example of how I learned to structure code in my teen years.
     // There are many failure cases, and in the interest of having a single return statement, I have used
