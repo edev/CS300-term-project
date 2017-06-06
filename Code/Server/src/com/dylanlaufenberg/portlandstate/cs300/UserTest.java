@@ -1,8 +1,10 @@
 package com.dylanlaufenberg.portlandstate.cs300;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -14,11 +16,17 @@ import static org.junit.Assert.assertThat;
 public class UserTest {
     private static final String userName = "johndoe";
     private static final String password = "mynameisjohn";
+    private static final String testUserFile = "test.dat";
 
     @BeforeClass
     public static void createUsers() throws Exception {
-        User.fout = new FileOutputStream("test.dat"); // Stubbed. No file output.
+        User.fout = new FileOutputStream(testUserFile); // Stubbed. No file output.
         User.newUser(userName, password);
+    }
+
+    @AfterClass
+    public static void cleanUpUsers() throws Exception {
+        new File(testUserFile).delete();
     }
 
     @Test
