@@ -169,14 +169,7 @@ public class ClientController {
                     "password: (" + (password == null ? "null" : password.length()) + " characters)");
         } else {
             ClientController.userName = userName;
-            NetMessage.Message message = NetMessage.Message.newBuilder()
-                    .setAuthMessage(
-                            NetMessage.Message.AuthenticationMessage.newBuilder()
-                                    .setAuthMessageType(messageType)
-                                    .setUserName(userName)
-                                    .setPassword(password)
-                                    .build())
-                    .build();
+            NetMessage.Message message = SharedHelper.buildAuthMessage(messageType, userName, password);
 
             if(client != null) {
                 client.stop();
@@ -355,14 +348,7 @@ public class ClientController {
         }
 
         channel.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setChatMessage(
-                                NetMessage.Message.ChatMessage.newBuilder()
-                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC)
-                                        .setText(message)
-                                        .build()
-                        )
-                        .build()
+                SharedHelper.buildPublicMessage(message)
         );
         return true;
     }
@@ -386,15 +372,7 @@ public class ClientController {
         }
 
         channel.writeAndFlush(
-                NetMessage.Message.newBuilder()
-                        .setChatMessage(
-                                NetMessage.Message.ChatMessage.newBuilder()
-                                        .setChatMessageType(NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE)
-                                        .setReceiver(receiver)
-                                        .setText(message)
-                                        .build()
-                        )
-                        .build()
+                SharedHelper.buildPrivateMessage(receiver, message)
         );
         return true;
     }

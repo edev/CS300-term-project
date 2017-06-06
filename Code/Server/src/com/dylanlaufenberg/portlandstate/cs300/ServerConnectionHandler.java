@@ -35,7 +35,7 @@ class ServerConnectionHandler extends SimpleChannelInboundHandler<NetMessage.Mes
         if(user != null) {
             ServerController.users.remove(user.name);
             user.broadcast.writeAndFlush(
-                    ServerHelper.buildNoticeMessage(
+                    SharedHelper.buildNoticeMessage(
                             NetMessage.Message.NoticeMessage.NoticeMessageType.OFFLINE,
                             user.name
                     )

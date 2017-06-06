@@ -14,7 +14,7 @@ import java.util.TreeMap;
  * Controller for the server program. Receives and routes incoming requests from ChatConnections.
  */
 class ServerController {
-    public static SortedMap<String, User> users = Collections.synchronizedSortedMap((new TreeMap<String, User>()));
+    public static SortedMap<String, User> users = Collections.synchronizedSortedMap(new TreeMap<String, User>());
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     /**
@@ -55,7 +55,8 @@ class ServerController {
         return user;
     }
 
-    private static User processAuthMessage(NetMessage.Message.AuthenticationMessage message, Channel channel) {
+    // Package private for testing. Do not use outside of ServerController.
+    static User processAuthMessage(NetMessage.Message.AuthenticationMessage message, Channel channel) {
         if(message == null) {
             SharedHelper.error("processAuthMessage received a null message on the channel:.", channel);
             return null;
@@ -138,7 +139,7 @@ class ServerController {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    ServerHelper.buildAuthResponseMessage(
+                    SharedHelper.buildAuthResponseMessage(
                             NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER
                     )
             );
@@ -148,7 +149,7 @@ class ServerController {
 
             // Respond no to the registration request. Don't sever the connection - it will be closed by the channel handler.
             channel.writeAndFlush(
-                    ServerHelper.buildAuthResponseMessage(
+                    SharedHelper.buildAuthResponseMessage(
                             NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD
                     )
             );
@@ -163,7 +164,7 @@ class ServerController {
 
             // Write login notification message to online users
             channels.writeAndFlush(
-                    ServerHelper.buildNoticeMessage(
+                    SharedHelper.buildNoticeMessage(
                             NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE,
                             result.user.name
                     )
@@ -175,13 +176,13 @@ class ServerController {
             );
 
             // Build this before adding newUser to users.
-            NetMessage.Message userList = ServerHelper.buildUserListMessage(users);
+            NetMessage.Message userList = SharedHelper.buildUserListMessage(users);
             users.putIfAbsent(newUser.name, newUser);
             channels.add(channel);
 
             // Respond affirmatively to registration request. Then immediately send the user list.
             channel.write(
-                    ServerHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS));
+                    SharedHelper.buildAuthResponseMessage(NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS));
             channel.writeAndFlush(
                     userList);
 
@@ -196,7 +197,8 @@ class ServerController {
 
 
 
-    private static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
+    // Package private for testing. Do not use outside of ServerController.
+    static boolean processChatMessage(User user, NetMessage.Message.ChatMessage message, Channel channel) {
         if(user == null) {
             SharedHelper.error("processChatMessage called with no user.");
             return false;
@@ -244,7 +246,7 @@ class ServerController {
 
         // Send the message to everyone else, with the sender marked.
         sender.broadcast.writeAndFlush(
-                ServerHelper.buildChatResponseMessage(
+                SharedHelper.buildChatResponseMessage(
                         NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC,
                         sender.name,
                         text
@@ -281,7 +283,7 @@ class ServerController {
 
         // Send the message to the receiver, with the sender marked.
         receiver.channel.writeAndFlush(
-                ServerHelper.buildChatResponseMessage(
+                SharedHelper.buildChatResponseMessage(
                         NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE,
                         sender.name,
                         text

@@ -38,25 +38,25 @@ public class ClientControllerTest {
                 // AUTH TESTS
                 new TestCase(
                         "Auth Success",
-                        ServerHelper.buildAuthResponseMessage(
+                        SharedHelper.buildAuthResponseMessage(
                                 NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_SUCCESS),
                         true
                 ),
                 new TestCase(
                         "Auth Error - User",
-                        ServerHelper.buildAuthResponseMessage(
+                        SharedHelper.buildAuthResponseMessage(
                                 NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_USER),
                         false
                 ),
                 new TestCase(
                         "Auth Error - Password",
-                        ServerHelper.buildAuthResponseMessage(
+                        SharedHelper.buildAuthResponseMessage(
                                 NetMessage.Message.AuthenticationMessage.AuthMessageType.AUTH_ERROR_PASSWORD),
                         false
                 ),
                 new TestCase(
                         "Auth Error - Other",
-                        ServerHelper.buildAuthResponseMessage(
+                        SharedHelper.buildAuthResponseMessage(
                                 NetMessage.Message.AuthenticationMessage.AuthMessageType.UNSET),
                         false
                 ),
@@ -64,21 +64,21 @@ public class ClientControllerTest {
                 // NOTICE TESTS
                 new TestCase(
                         "Notice - Online",
-                        ServerHelper.buildNoticeMessage(
+                        SharedHelper.buildNoticeMessage(
                                 NetMessage.Message.NoticeMessage.NoticeMessageType.ONLINE,
                                 "John"),
                         true
                 ),
                 new TestCase(
                         "Notice - Offline",
-                        ServerHelper.buildNoticeMessage(
+                        SharedHelper.buildNoticeMessage(
                                 NetMessage.Message.NoticeMessage.NoticeMessageType.OFFLINE,
                                 "John"),
                         true
                 ),
                 new TestCase(
                         "Notice - Other",
-                        ServerHelper.buildNoticeMessage(
+                        SharedHelper.buildNoticeMessage(
                                 NetMessage.Message.NoticeMessage.NoticeMessageType.UNSET,
                                 "John"),
                         false
@@ -87,7 +87,7 @@ public class ClientControllerTest {
                 // CHAT MESSAGE TESTS
                 new TestCase(
                         "Chat - Public",
-                        ServerHelper.buildChatResponseMessage(
+                        SharedHelper.buildChatResponseMessage(
                                 NetMessage.Message.ChatMessage.ChatMessageType.PUBLIC,
                                 "Joe",
                                 "Hello there"
@@ -96,7 +96,7 @@ public class ClientControllerTest {
                 ),
                 new TestCase(
                         "Chat - Private",
-                        ServerHelper.buildChatResponseMessage(
+                        SharedHelper.buildChatResponseMessage(
                                 NetMessage.Message.ChatMessage.ChatMessageType.PRIVATE,
                                 "Joe",
                                 "Hello there"
@@ -105,7 +105,7 @@ public class ClientControllerTest {
                 ),
                 new TestCase(
                         "Chat - Other",
-                        ServerHelper.buildChatResponseMessage(
+                        SharedHelper.buildChatResponseMessage(
                                 NetMessage.Message.ChatMessage.ChatMessageType.UNSET,
                                 "Joe",
                                 "Hello there"
