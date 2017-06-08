@@ -21,3 +21,6 @@ Design (due 5/9/2017):
 
 Test Plan (due 5/30/2017):
 [Test Plan.doc](https://github.com/edev/CS300-term-project/blob/master/Documentation/Test%20Plan/Test%20Plan.doc?raw=true)
+
+Project Report (due 6/8/2017):
+[Project Report.docx](https://github.com/edev/CS300-term-project/blob/master/Documentation/Project%20Report.docx?raw=true)
